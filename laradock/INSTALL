@@ -1,0 +1,11 @@
+git clone https://github.com/Laradock/laradock.git
+
+cp env-example .env
+
+docker-compose up -d nginx mysql phpmyadmin redis workspace
+
+nano .env
+
+DB_HOST=mysql
+REDIS_HOST=redis
+QUEUE_HOST=beanstalkd
