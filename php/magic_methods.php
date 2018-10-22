@@ -1,67 +1,112 @@
 <?php
 
 class Magician {
+
+    private $isReal = 'very real';
+    public $born = 'toBeRemoved';
+
+    public function getIsReal()
+    {
+        return $this->isReal . PHP_EOL;
+    }
+
     public function __construct()
     {
+        echo __CLASS__ . ' instance created' . PHP_EOL;
     }
 
     public function __destruct()
     {
-        // TODO: Implement __destruct() method.
+        echo __CLASS__ . ' instance removed' . PHP_EOL;
     }
 
     public function __call($name, $arguments)
     {
-        // TODO: Implement __call() method.
+        echo $name . ' called as method with arguments' . json_encode($arguments) . PHP_EOL;
     }
 
     public function __clone()
     {
-        // TODO: Implement __clone() method.
+        $this->isReal = 'naaah, just a clone';
     }
 
     public function __get($name)
     {
-        // TODO: Implement __get() method.
+        echo 'Trying to get ' . $name . PHP_EOL;
     }
 
     public function __set($name, $value)
     {
-        // TODO: Implement __set() method.
+        echo 'Trying to set ' . $name . ' value ' . $value . PHP_EOL;
     }
 
-    public function __invoke()
+    public function __invoke($args)
     {
-        // TODO: Implement __invoke() method.
+        echo 'Wow, somebody called me as a method with params ' . json_encode($args) . PHP_EOL;
     }
 
     public function __isset($name)
     {
-        // TODO: Implement __isset() method.
+        echo "Do we have a property {$name}?" . PHP_EOL;
     }
 
     public function __unset($name)
     {
-        // TODO: Implement __unset() method.
+        echo "Hey, don\'t remove {$name} property, I need it!" . PHP_EOL;
     }
 
     public function __sleep()
     {
-        // TODO: Implement __sleep() method.
+        echo 'Oh no, somebody serialized me' . PHP_EOL;
     }
 
     public function __wakeup()
     {
-        // TODO: Implement __wakeup() method.
+        echo 'Great, I am unserialized again' . PHP_EOL;
     }
 
     public function __toString()
     {
-        // TODO: Implement __toString() method.
+        return 'I am an object, not a string!' . PHP_EOL;
     }
 
     public function __debugInfo()
     {
-        // TODO: Implement __debugInfo() method.
+        return ['What did you expect to see here?'];
     }
 }
+
+$magician = new Magician();
+$magician->showTrick('rabbitOne', 'rabbitTwo');
+echo $magician->getIsReal();
+$magician2 = clone $magician;
+echo $magician2->getIsReal();
+$magician->rabbit;
+$magician->hat = 'Has rabbit';
+$magician('Do a barrel roll', 'please');
+isset($magician->tricks);
+unset($magician->grumpyFace);
+$serializedMagician = serialize($magician);
+unserialize($serializedMagician);
+echo $magician;
+var_dump($magician);
+unset($magician);
+
+
+
+class A {
+    public $a = 0;
+    protected $b = 1;
+    private $c = 2;
+
+    public function __set($name, $value)
+    {
+        echo $name , ' = ' , $value;
+    }
+}
+
+$a = new A;
+$a->a = 5;
+$a->b = 10;
+$a->c = 15;
+$a->d = 20;
