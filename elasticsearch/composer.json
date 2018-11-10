@@ -1,0 +1,12 @@
+{
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Application\\" : "./"
+        }
+    },
+    "require": {
+        "elasticsearch/elasticsearch": "^6.0",
+        "ext-readline": "*"
+    }
+}
