@@ -1,6 +1,6 @@
 <?php
 
-function isArmstrong(int $n): string 
+function isArmstrong(int $n): string
 {
     $a = $n % 10;
     $b = ($n % 100 - $a) / 10;
