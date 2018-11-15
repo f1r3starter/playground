@@ -2,6 +2,9 @@
 
 apt-get install siege
 
+docker pull ecliptik/docker-siege
+docker run -it --rm -v $(pwd):/app ecliptik/docker-siege -c 50 -f /app/urls.txt -R /app/siege.conf
+
 or 
 
 https://github.com/JoeDog/siege
