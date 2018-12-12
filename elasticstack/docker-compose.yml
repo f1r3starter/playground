@@ -1,0 +1,35 @@
+version: '3.3'
+
+services:
+  elasticsearch:
+    image: elasticsearch:6.5.2
+    ports:
+      - 9200:9200
+      - 9300:9300
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+      nofile:
+        soft: 65536
+        hard: 65536
+  logstash:
+    image: logstash:6.5.2
+    ports:
+      - 5044:5044
+    links:
+      - elasticsearch
+  kibana:
+    image: kibana:6.5.2
+    hostname: kibana
+    ports:
+      - 5601:5601
+    links:
+      - elasticsearch
+  filebeat:
+    image: prima/filebeat:6.2.3
+    volumes:
+      - ./filebeat.yml:/filebeat.yml
+      - ./logs:/var/log
+    links:
+      - logstash
