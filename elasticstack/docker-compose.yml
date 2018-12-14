@@ -17,6 +17,8 @@ services:
     image: logstash:6.5.2
     ports:
       - 5044:5044
+    volumes:
+      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     links:
       - elasticsearch
   kibana:
