@@ -1,0 +1,12 @@
+{
+    "require": {
+        "symfony/dependency-injection": "^4.2",
+        "symfony/monolog-bundle": "^3.3",
+        "symfony/yaml": "^4.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": ""
+        }
+    }
+}
