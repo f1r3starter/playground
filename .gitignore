@@ -1,0 +1,5 @@
+# Default ignored files
+.idea
+vendor
+rest-client.private.env.json
+http-client.private.env.json
