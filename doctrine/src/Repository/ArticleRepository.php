@@ -31,7 +31,20 @@ class ArticleRepository extends ServiceEntityRepository
             ->getResult()
         ;
     }
-
+    public function findByMax()
+return $repo->createQueryBuilder( 'a' )
+                ->select( 'a' )
+                ->leftJoin(
+                    'AppBundle\Entity\Score',
+                    'b',
+                    'WITH',
+                    'a.name = b.name AND a.score < b.score'
+                )
+                ->where( 'b.score IS NULL' )
+                ->orderBy( 'a.score','DESC' )
+                ->getQuery()
+                ->getResult();
+}
     /*
     public function findOneBySomeField($value): ?Article
     {
