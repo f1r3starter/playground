@@ -26,7 +26,10 @@ class ArticleAdminController extends AbstractController
         $article->setTitle('Blah blah')
             ->setSlug('blah-blah' . rand(100,200))
             ->setContent('blah blah')
-            ->setPublishedAt(new \DateTime(sprintf('-%d days', rand(1, 100))));
+            ->setPublishedAt(new \DateTime(sprintf('-%d days', rand(1, 100))))
+            ->setAuthor('Blah blah')
+            ->setLikes(rand(5,100))
+            ->setImage('asteroid.jpeg');
         $entityManager->persist($article);
         $entityManager->flush();
 
