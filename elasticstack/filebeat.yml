@@ -21,11 +21,11 @@ filebeat.inputs:
   - type: log
 
     # Change to true to enable this input configuration.
-    enabled: false
+    enabled: true
 
     # Paths that should be crawled and fetched. Glob based paths.
     paths:
-      - /var/log/*.log
+      - /var/log/*
       #- c:\programdata\elasticsearch\logs\*
 
     # Exclude lines. A list of regular expressions to match. It drops the lines that are
@@ -70,10 +70,10 @@ filebeat.config.modules:
   path: ${path.config}/modules.d/*.yml
 
   # Set to true to enable config reloading
-  reload.enabled: false
+  reload.enabled: true
 
   # Period on which files under path should be checked for changes
-  #reload.period: 10s
+  reload.period: 10s
 
 #==================== Elasticsearch template setting ==========================
 
@@ -120,7 +120,7 @@ setup.kibana:
 # Scheme and port can be left out and will be set to the default (http and 5601)
 # In case you specify and additional path, the scheme is required: http://localhost:5601/path
 # IPv6 addresses should always be defined as: https://[2001:db8::1]:5601
-#host: "localhost:5601"
+ host: "kibana:5601"
 
 # Kibana Space ID
 # ID of the Kibana Space into which the dashboards should be loaded. By default,
@@ -184,7 +184,13 @@ processors:
 
 # Sets log level. The default log level is info.
 # Available log levels are: error, warning, info, debug
-#logging.level: debug
+logging.level: debug
+logging.to_files: true
+logging.files:
+  path: /var/log/filebeat
+  name: filebeat
+  keepfiles: 7
+  permissions: 0644
 
 # At debug level, you can selectively enable logging only for some components.
 # To enable all selectors use ["*"]. Examples of other selectors are "beat",
