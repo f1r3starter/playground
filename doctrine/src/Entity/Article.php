@@ -144,4 +144,11 @@ class Article
     {
         return 'images/' . $this->image;
     }
+
+    public function incrementHeartCounts(): self
+    {
+        ++$this->likes;
+
+        return $this;
+    }
 }
