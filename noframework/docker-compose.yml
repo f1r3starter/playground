@@ -1,0 +1,21 @@
+version: '3.7'
+
+services:
+  php:
+    image: php:7.3.0-fpm
+    restart: always
+    volumes:
+      - ./project:/project
+
+  nginx:
+    depends_on:
+      - php
+    image: nginx:latest
+    ports:
+      - "8008:80"
+    restart: always
+    volumes:
+      - ./project:/project
+      - ./default.conf:/etc/nginx/conf.d/default.conf
+volumes:
+  db_data: {}
