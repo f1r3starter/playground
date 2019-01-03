@@ -12,8 +12,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TestController
 {
-    public function index($year)
+    public function index($var)
     {
-        return new Response('Nope, this is not a leap year.');
+        return new Response('Blah blah' . $var);
     }
 }

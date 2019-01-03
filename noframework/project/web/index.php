@@ -7,12 +7,10 @@ require __DIR__.'/../vendor/autoload.php';
 use Symfony\Component\HttpFoundation\{Request, Response};
 
 $request = Request::createFromGlobals();
-$response = new Response();
+$routes = include __DIR__ . '/../config/routes.php';
 
-$map = [
-    '/hello' => __DIR__ . '/../src/pages/hello.php',
-    '/bye' => __DIR__ . '/../src/pages/bye.php'
-];
+$context = new \Symfony\Component\Routing\RequestContext();
+$matcher = new \Symfony\Component\Routing\Matcher\UrlMatcher($routes, $context);
 
 $path = $request->getPathInfo();
 if (isset($map[$path])) {
