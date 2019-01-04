@@ -2,10 +2,13 @@ version: '3.7'
 
 services:
   php:
-    image: php:7.3.0-fpm
+    build:
+      context: ./Docker/php
     restart: always
     volumes:
       - ./project:/project
+    environment:
+      PHP_IDE_CONFIG: "serverName=docker"
 
   nginx:
     depends_on:
