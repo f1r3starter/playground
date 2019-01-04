@@ -1,6 +1,6 @@
 <?php
 
-namespace Application;
+namespace App;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -36,7 +36,7 @@ class Framework {
             $controller = $this->controllerResolver->getController($request);
             $arguments = $this->argumentResolver->getArguments($request, $controller);
 
-            return $controller($arguments);
+            return call_user_func_array($controller, $arguments);
         } catch (ResourceNotFoundException $exception) {
             return new Response('Not Found', 404);
         } catch (\Exception $exception) {

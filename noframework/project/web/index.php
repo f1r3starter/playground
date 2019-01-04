@@ -4,7 +4,7 @@ declare(strict_types = 1);
 
 require __DIR__.'/../vendor/autoload.php';
 
-use Symfony\Component\HttpFoundation\{Request, Response};
+use Symfony\Component\HttpFoundation\Request;
 
 $request = Request::createFromGlobals();
 $routes = include __DIR__ . '/../config/routes.php';
@@ -12,14 +12,10 @@ $routes = include __DIR__ . '/../config/routes.php';
 $context = new \Symfony\Component\Routing\RequestContext();
 $matcher = new \Symfony\Component\Routing\Matcher\UrlMatcher($routes, $context);
 
-$path = $request->getPathInfo();
-if (isset($map[$path])) {
-    ob_start();
-    include $map[$path];
-    $response->setContent(ob_get_clean());
-} else {
-    $response->setStatusCode(404);
-    $response->setContent('Not found');
-}
+$controllerResolver = new \Symfony\Component\HttpKernel\Controller\ControllerResolver();
+$argumentResolver = new \Symfony\Component\HttpKernel\Controller\ArgumentResolver();
+
+$framework = new \App\Framework($matcher, $controllerResolver, $argumentResolver);
+$response = $framework->handle($request);
 
 $response->send();
