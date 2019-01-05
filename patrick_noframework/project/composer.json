@@ -1,0 +1,19 @@
+{
+    "name": "f1r3starter/noframework",
+    "type": "project",
+    "require": {
+        "symfony/http-foundation": "^4.2",
+        "tracy/tracy": "^2.5"
+    },
+    "authors": [
+        {
+            "name": "f1r3starter",
+            "email": "andrey.filenochko@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "SocialNews\\": "src/"
+        }
+    }
+}
