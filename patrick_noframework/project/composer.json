@@ -4,7 +4,8 @@
     "require": {
         "symfony/http-foundation": "^4.2",
         "tracy/tracy": "^2.5",
-        "nikic/fast-route": "^1.3"
+        "nikic/fast-route": "^1.3",
+        "twig/twig": "^2.6"
     },
     "authors": [
         {
