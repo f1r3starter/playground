@@ -2,19 +2,18 @@ version: '3.3'
 
 services:
   elasticsearch:
-    image: elasticsearch:6.5.2
-    ports:
-      - 9200:9200
-      - 9300:9300
+    image: docker.elastic.co/elasticsearch/elasticsearch:6.5.4
+    container_name: elasticsearch
     environment:
-      ES_JAVA_OPTS: "-Xms750m -Xmx750m"
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
     ulimits:
       memlock:
         soft: -1
         hard: -1
-      nofile:
-        soft: 65536
-        hard: 65536
+    ports:
+      - 9200:9200
   logstash:
     image: logstash:6.5.2
     ports:
@@ -31,9 +30,11 @@ services:
     links:
       - elasticsearch
   filebeat:
-    image: prima/filebeat:6.2.3
+    image: docker.elastic.co/beats/filebeat:6.2.3
+    container_name: filebeat
+    user: root
     volumes:
-      - ./filebeat.yml:/filebeat.yml
+      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./logs:/var/log
     links:
       - logstash
