@@ -15,7 +15,7 @@ services:
     ports:
       - 9200:9200
   logstash:
-    image: logstash:6.5.2
+    image: logstash:6.5.4
     ports:
       - 5044:5044
     volumes:
@@ -23,14 +23,14 @@ services:
     links:
       - elasticsearch
   kibana:
-    image: kibana:6.5.2
+    image: kibana:6.5.4
     hostname: kibana
     ports:
       - 5601:5601
     links:
       - elasticsearch
   filebeat:
-    image: docker.elastic.co/beats/filebeat:6.2.3
+    image: docker.elastic.co/beats/filebeat:6.5.4
     container_name: filebeat
     user: root
     volumes:
