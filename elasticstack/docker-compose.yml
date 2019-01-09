@@ -19,7 +19,7 @@ services:
     ports:
       - 5044:5044
     volumes:
-      - ./logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+      - ./configs/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     links:
       - elasticsearch
   kibana:
@@ -34,7 +34,7 @@ services:
     container_name: filebeat
     user: root
     volumes:
-      - ./filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
+      - ./configs/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./logs:/var/log
     links:
       - logstash
