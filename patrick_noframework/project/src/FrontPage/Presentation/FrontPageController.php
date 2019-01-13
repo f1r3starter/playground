@@ -27,6 +27,7 @@ class FrontPageController
 
     public function show(Request $request)
     {
-        return new Response('Hello ' . $request->get('name', 'anonymous'));
+        $response = $this->templateRenderer->render('FrontPage.html.twig');
+        return new Response($response);
     }
 }
