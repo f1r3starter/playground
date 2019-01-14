@@ -1,0 +1,8 @@
+{% extends "Layout.html.twig" %}
+{% block content %}
+    <ul>
+        {% for link in submissions %}
+            <a href="{{ link.url }}">{{ link.title }}</a>
+        {% endfor %}
+    </ul>
+{% endblock %}
