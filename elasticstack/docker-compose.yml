@@ -1,4 +1,4 @@
-version: '3.3'
+version: '2.1'
 
 services:
   elasticsearch:
@@ -9,35 +9,51 @@ services:
       - bootstrap.memory_lock=true
       - "ES_JAVA_OPTS=-Xms1g -Xmx1g"
     volumes:
-      - esdata1:/usr/share/elasticsearch/data
+      - elasticdata:/usr/share/elasticsearch/data
     ulimits:
       memlock:
         soft: -1
         hard: -1
     ports:
       - 9200:9200
+    networks:
+      - elasticstacknet
     healthcheck:
-      test: /
-  create_template:
+      test: ["CMD-SHELL", "curl --fail localhost:9200/_cluster/health || exit 1"]
+      interval: 3m
+      timeout: 3m
+      retries: 6
+  create_index_pattern:
     build:
-      context: ./images/create_template
-    links:
-      - elasticsearch
+      context: ./images/create_index_pattern
+    networks:
+      - elasticstacknet
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
   logstash:
     image: logstash:6.5.4
     ports:
       - 5044:5044
     volumes:
       - ./configs/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
-    links:
-      - elasticsearch
+    networks:
+      - elasticstacknet
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
   kibana:
     image: kibana:6.5.4
     hostname: kibana
     ports:
       - 5601:5601
-    links:
-      - elasticsearch
+    networks:
+      - elasticstacknet
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
   filebeat:
     image: docker.elastic.co/beats/filebeat:6.5.4
     container_name: filebeat
@@ -45,5 +61,15 @@ services:
     volumes:
       - ./configs/filebeat.yml:/usr/share/filebeat/filebeat.yml:ro
       - ./logs:/var/log
-    links:
-      - logstash
+    networks:
+      - elasticstacknet
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+
+volumes:
+  elasticdata:
+    driver: local
+
+networks:
+  elasticstacknet:
