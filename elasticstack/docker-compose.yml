@@ -1,4 +1,4 @@
-version: '2.1'
+version: '3.3'
 
 services:
   elasticsearch:
@@ -18,21 +18,11 @@ services:
       - 9200:9200
     networks:
       - elasticstacknet
-    healthcheck:
-      test: ["CMD-SHELL", "curl --fail localhost:9200/_cluster/health || exit 1"]
-      interval: 3m
-      timeout: 3m
-      retries: 6
   create_index_pattern:
     build:
       context: ./images/create_index_pattern
     networks:
       - elasticstacknet
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
-      kibana:
-        condition: service_healthy
   logstash:
     image: logstash:6.5.4
     ports:
@@ -41,9 +31,6 @@ services:
       - ./configs/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
     networks:
       - elasticstacknet
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
   kibana:
     image: kibana:6.5.4
     hostname: kibana
@@ -51,9 +38,6 @@ services:
       - 5601:5601
     networks:
       - elasticstacknet
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
   filebeat:
     image: docker.elastic.co/beats/filebeat:6.5.4
     container_name: filebeat
@@ -63,9 +47,6 @@ services:
       - ./logs:/var/log
     networks:
       - elasticstacknet
-    depends_on:
-      elasticsearch:
-        condition: service_healthy
 
 volumes:
   elasticdata:
