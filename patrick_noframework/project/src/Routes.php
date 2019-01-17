@@ -1,11 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: andreyfilenko
- * Date: 2019-01-06
- * Time: 21:51
- */
-
 declare(strict_types = 1);
 
 return [
@@ -22,7 +15,6 @@ return [
     [
         'POST',
         '/submit',
-        'SocialNews\Submission\Presentation\SubmissionController#show'
+        'SocialNews\Submission\Presentation\SubmissionController#submit'
     ],
-        
 ];
