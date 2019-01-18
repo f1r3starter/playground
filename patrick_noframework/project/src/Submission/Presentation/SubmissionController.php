@@ -9,9 +9,8 @@
 namespace SocialNews\Submission\Presentation;
 
 
-use SocialNews\Framework\Csrf\StoredTokenValidator;
-use SocialNews\Framework\Csrf\Token;
 use SocialNews\Framework\Rendering\TemplateRenderer;
+use SocialNews\Submission\Application\SubmitLinkHandler;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -24,20 +23,25 @@ class SubmissionController
      */
     private $templateRenderer;
     /**
-     * @var StoredTokenValidator
-     */
-    private $storedTokenValidator;
-    /**
      * @var Session
      */
     private $session;
+    /**
+     * @var SubmitLinkHandler
+     */
+    private $submitLinkHandler;
+    /**
+     * @var SubmissionFormFactory
+     */
+    private $submissionFormFactory;
 
-    public function __construct(TemplateRenderer $templateRenderer, StoredTokenValidator $storedTokenValidator, Session $session)
+    public function __construct(TemplateRenderer $templateRenderer, SubmissionFormFactory $submissionFormFactory, Session $session, SubmitLinkHandler $submitLinkHandler)
     {
 
         $this->templateRenderer = $templateRenderer;
-        $this->storedTokenValidator = $storedTokenValidator;
         $this->session = $session;
+        $this->submitLinkHandler = $submitLinkHandler;
+        $this->submissionFormFactory = $submissionFormFactory;
     }
     
     public function show()
@@ -51,16 +55,19 @@ class SubmissionController
     public function submit(Request $request): Response
     {
         $response = new RedirectResponse('/submit');
+        $form = $this->submissionFormFactory->createFromRequest($request);
+        if ($form->hasValidationErrors()) {
+            foreach ($form->getValidationErrors() as $error) {
+                $this->session->getFlashBag()->add('errors', $error);
+            }
 
-        if (!$this->storedTokenValidator->validate(
-            'submission',
-            new Token((string)$request->get('token'))
-        )) {
-            $this->session->getFlashBag()->add('errors', 'Invalid token');
             return $response;
         }
-
-        $this->session->getFlashBag()->add('success', 'Your url was submitted successfully');
+        $this->submitLinkHandler->handle($form->toCommand());
+        $this->session->getFlashBag()->add(
+            'success',
+            'Your url was submitted successfully'
+        );
 
         return $response;
     }
