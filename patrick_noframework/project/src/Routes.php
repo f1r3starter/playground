@@ -22,4 +22,9 @@ return [
         '/register',
         'SocialNews\User\Presentation\RegistrationController#show'
     ],
+    [
+        'POST',
+        '/register',
+        'SocialNews\User\Presentation\RegistrationController#register'
+    ],
 ];

@@ -22,7 +22,6 @@ class RegisterUser
 
     public function __construct(string $nickname, string $password)
     {
-
         $this->nickname = $nickname;
         $this->password = $password;
     }
