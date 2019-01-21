@@ -11,6 +11,7 @@ namespace SocialNews\User\Presentation;
 
 use SocialNews\Framework\Csrf\StoredTokenValidator;
 use SocialNews\Framework\Csrf\Token;
+use SocialNews\User\Application\NicknameTakenQuery;
 use SocialNews\User\Application\RegisterUser;
 
 class RegistrationUserForm
@@ -31,13 +32,18 @@ class RegistrationUserForm
      * @var string
      */
     private $password;
+    /**
+     * @var NicknameTakenQuery
+     */
+    private $nicknameTakenQuery;
 
-    public function __construct(StoredTokenValidator $storedTokenValidator, string $token, string $nickname, string $password)
+    public function __construct(NicknameTakenQuery $nicknameTakenQuery, StoredTokenValidator $storedTokenValidator, string $token, string $nickname, string $password)
     {
         $this->storedTokenValidator = $storedTokenValidator;
         $this->token = $token;
         $this->nickname = $nickname;
         $this->password = $password;
+        $this->nicknameTakenQuery = $nicknameTakenQuery;
     }
 
     public function getValidationErrors(): array
@@ -49,6 +55,11 @@ class RegistrationUserForm
             new Token($this->token)
         )) {
             $errors[] = 'Invalid token';
+        }
+
+        if ($this->nicknameTakenQuery->execute($this->nickname))
+        {
+            $errors[] = 'Nickname has been already taken';
         }
 
         if (strlen($this->nickname) < 3 || strlen($this->nickname) > 20) {

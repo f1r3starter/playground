@@ -1,0 +1,93 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: andreyfilenko
+ * Date: 2019-01-21
+ * Time: 21:17
+ */
+
+namespace SocialNews\User\Infrastructure;
+
+
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\Types\Type;
+use Ramsey\Uuid\Uuid;
+use SocialNews\User\Domain\User;
+use SocialNews\User\Domain\UserRepository;
+
+class DbalUserRepository implements UserRepository
+{
+    /**
+     * @var Connection
+     */
+    private $connection;
+
+    public function __construct(Connection $connection)
+    {
+
+        $this->connection = $connection;
+    }
+
+    public function add(User $user): void
+    {
+        $qb = $this->connection->createQueryBuilder();
+        $qb->insert('users');
+        $qb->values([
+            'id' => $qb->createNamedParameter($user->getId()->toString()),
+            'nickname' => $qb->createNamedParameter($user->getNickname()),
+            'password_hash' => $qb->createNamedParameter($user->getPasswordHash()),
+            'created_at' => $qb->createNamedParameter($user->getCreatedAt(), Type::DATETIME),
+        ]);
+
+        $qb->execute();
+    }
+
+    public function save(User $user): void
+    {
+        $qb = $this->connection->createQueryBuilder();
+        $qb->update('users')
+            ->set('nickname', $qb->createNamedParameter($user->getNickname()))
+            ->set('password_hash', $qb->createNamedParameter($user->getPasswordHash()))
+            ->set('failed_login_attempts', $qb->createNamedParameter($user->getFailedAttempts()))
+            ->set('last_failed_login_attempt', $qb->createNamedParameter($user->getLastFailedLoginAttempt(), Type::DATETIME))
+            ->execute();
+    }
+
+    public function findByNickname(string $nickname): ?User
+    {
+        $qb = $this->connection->createQueryBuilder();
+        $query = $qb->select('users.*')
+            ->from('users')
+            ->where('nickname = ' . $qb->createNamedParameter($nickname))
+            ->execute();
+        $row = $query->fetch();
+        if ($row) {
+            return $this->createUserFromRow($row);
+        }
+
+        return null;
+    }
+
+    private function createUserFromRow(array $row): ?User
+    {
+        if (!$row)
+        {
+            return null;
+        }
+
+        $lastFailedLoginAttempt = null;
+        if ($row['last_failed_login_attempt'])
+        {
+            $lastFailedLoginAttempt = new \DateTimeImmutable($row['last_failed_login_attempt']);
+        }
+
+        return new User(
+            Uuid::fromString($row['id']),
+            $row['nickname'],
+            $row['password_hash'],
+            new \DateTimeImmutable($row['created_at']),
+            $row['failed_login_attempts'],
+            $lastFailedLoginAttempt
+        );
+    }
+}

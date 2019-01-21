@@ -17,7 +17,7 @@ class User
     /**
      * @var UuidInterface
      */
-    private $uuid;
+    private $id;
     /**
      * @var string
      */
@@ -30,19 +30,30 @@ class User
      * @var \DateTimeImmutable
      */
     private $createdAt;
+    /**
+     * @var int
+     */
+    private $failedAttempts;
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    private $lastFailedLoginAttempt;
 
     public function __construct(
-        UuidInterface $uuid,
+        UuidInterface $id,
         string $nickname,
         string $passwordHash,
-        \DateTimeImmutable $createdAt
+        \DateTimeImmutable $createdAt,
+        int $failedAttempts,
+        ?\DateTimeImmutable $lastFailedLoginAttempt
     )
     {
-
-        $this->uuid = $uuid;
+        $this->id = $id;
         $this->nickname = $nickname;
         $this->passwordHash = $passwordHash;
         $this->createdAt = $createdAt;
+        $this->failedAttempts = $failedAttempts;
+        $this->lastFailedLoginAttempt = $lastFailedLoginAttempt;
     }
 
     public static function register(string $nickname, string $password): self
@@ -51,7 +62,69 @@ class User
             Uuid::uuid4(),
             $nickname,
             password_hash($password, PASSWORD_DEFAULT),
-            new \DateTimeImmutable()
+            new \DateTimeImmutable(),
+            0,
+            null
         );
+    }
+
+    public function login(string $password): void
+    {
+        if (password_verify($password, $this->passwordHash)) {
+            $this->failedAttempts = 0;
+            $this->lastFailedLoginAttempt = null;
+            return;
+        }
+
+        $this->failedAttempts++;
+        $this->lastFailedLoginAttempt = new \DateTimeImmutable();
+    }
+
+    /**
+     * @return UuidInterface
+     */
+    public function getId(): UuidInterface
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNickname(): string
+    {
+        return $this->nickname;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPasswordHash(): string
+    {
+        return $this->passwordHash;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getCreatedAt(): \DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return int
+     */
+    public function getFailedAttempts(): int
+    {
+        return $this->failedAttempts;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getLastFailedLoginAttempt(): ?\DateTimeImmutable
+    {
+        return $this->lastFailedLoginAttempt;
     }
 }
