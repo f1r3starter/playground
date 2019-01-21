@@ -13,7 +13,7 @@ use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Schema\Schema;
 use Doctrine\DBAL\Types\Type;
 
-class Migration20190114 implements Migratable
+class Migration20190114
 {
     private $connection;
 
