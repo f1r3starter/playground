@@ -9,6 +9,8 @@
 namespace SocialNews\Submission\Presentation;
 
 
+use SocialNews\Framework\Rbac\Permission\SubmitLink;
+use SocialNews\Framework\Rbac\User;
 use SocialNews\Framework\Rendering\TemplateRenderer;
 use SocialNews\Submission\Application\SubmitLinkHandler;
 use Symfony\Component\HttpFoundation\RedirectResponse;
@@ -35,17 +37,36 @@ class SubmissionController
      */
     private $submissionFormFactory;
 
-    public function __construct(TemplateRenderer $templateRenderer, SubmissionFormFactory $submissionFormFactory, Session $session, SubmitLinkHandler $submitLinkHandler)
+    /**
+     * @var User
+     */
+    private $user;
+
+    public function __construct(TemplateRenderer $templateRenderer,
+                                SubmissionFormFactory $submissionFormFactory,
+                                Session $session,
+                                SubmitLinkHandler $submitLinkHandler,
+                                User $user
+    )
     {
 
         $this->templateRenderer = $templateRenderer;
         $this->session = $session;
         $this->submitLinkHandler = $submitLinkHandler;
         $this->submissionFormFactory = $submissionFormFactory;
+        $this->user = $user;
     }
-    
+
     public function show()
     {
+        if (!$this->user->hasPermissions(new SubmitLink())) {
+            $this->session->getFlashBag()->add(
+                'error',
+                'Your do not have permission to submit a link'
+            );
+
+            return new RedirectResponse('/login');
+        }
         $content = $this->templateRenderer->render('Submission.html.twig');
         return new Response(
             $content
@@ -54,6 +75,14 @@ class SubmissionController
 
     public function submit(Request $request): Response
     {
+        if (!$this->user->hasPermissions(new SubmitLink())) {
+            $this->session->getFlashBag()->add(
+                'error',
+                'Your do not have permission to submit a link'
+            );
+
+            return new RedirectResponse('/login');
+        }
         $response = new RedirectResponse('/submit');
         $form = $this->submissionFormFactory->createFromRequest($request);
         if ($form->hasValidationErrors()) {

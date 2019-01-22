@@ -55,6 +55,8 @@ class LoginController
 
     public function logIn(Request $request): Response
     {
+        $this->session->remove('userId');
+
         if (!$this->storedTokenValidator->validate(
             'login',
             new Token((string)$request->get('token'))
@@ -67,6 +69,12 @@ class LoginController
             $request->get('nickname'),
             $request->get('password')
         ));
+
+        if ($this->session->get('userId') === null)
+        {
+            $this->session->getFlashBag()->add('errors', 'Invalid username or password');
+            return new RedirectResponse('/login');
+        }
 
         $this->session->getFlashBag()->add('success', 'You have logged in');
         return new RedirectResponse('/');

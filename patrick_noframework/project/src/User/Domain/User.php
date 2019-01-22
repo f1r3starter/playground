@@ -39,6 +39,11 @@ class User
      */
     private $lastFailedLoginAttempt;
 
+    /**
+     * @var array
+     */
+    private $recordedEvents = [];
+
     public function __construct(
         UuidInterface $id,
         string $nickname,
@@ -78,6 +83,7 @@ class User
 
         $this->failedAttempts++;
         $this->lastFailedLoginAttempt = new \DateTimeImmutable();
+        $this->recordedEvents[] = new UserWasLoggedIn();
     }
 
     /**
@@ -126,5 +132,15 @@ class User
     public function getLastFailedLoginAttempt(): ?\DateTimeImmutable
     {
         return $this->lastFailedLoginAttempt;
+    }
+
+    public function getRecordedEvents(): array
+    {
+        return $this->recordedEvents;
+    }
+
+    public function clearRecordedEvents(): void
+    {
+        $this->recordedEvents = [];
     }
 }

@@ -14,6 +14,9 @@ use Doctrine\DBAL\Types\Type;
 use Ramsey\Uuid\Uuid;
 use SocialNews\User\Domain\User;
 use SocialNews\User\Domain\UserRepository;
+use SocialNews\User\Domain\UserWasLoggedIn;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\Process\Exception\LogicException;
 
 class DbalUserRepository implements UserRepository
 {
@@ -22,10 +25,16 @@ class DbalUserRepository implements UserRepository
      */
     private $connection;
 
-    public function __construct(Connection $connection)
+    /**
+     * @var Session
+     */
+    private $session;
+
+    public function __construct(Connection $connection, Session $session)
     {
 
         $this->connection = $connection;
+        $this->session = $session;
     }
 
     public function add(User $user): void
@@ -44,6 +53,17 @@ class DbalUserRepository implements UserRepository
 
     public function save(User $user): void
     {
+        foreach ($user->getRecordedEvents() as $recordedEvent)
+        {
+            if ($recordedEvent instanceof UserWasLoggedIn)
+            {
+                $this->session->set('userId', $user->getId()->toString());
+                continue;
+            }
+            throw new LogicException(get_class($recordedEvent) . ' was not handled');
+        }
+
+        $user->clearRecordedEvents();
         $qb = $this->connection->createQueryBuilder();
         $qb->update('users')
             ->set('nickname', $qb->createNamedParameter($user->getNickname()))
