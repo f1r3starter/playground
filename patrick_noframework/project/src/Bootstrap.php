@@ -6,6 +6,9 @@ define('ROOTDIR', dirname(__DIR__));
 
 require ROOTDIR . '/vendor/autoload.php';
 
+use FastRoute\Dispatcher;
+use Symfony\Component\HttpFoundation\Response;
+
 \Tracy\Debugger::enable(false);
 
 $request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
@@ -20,13 +23,13 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
 $routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
 
 switch ($routeInfo[0]) {
-    case FastRoute\Dispatcher::NOT_FOUND:
-        $response = new \Symfony\Component\HttpFoundation\Response('Not found', 404);
+    case Dispatcher::NOT_FOUND:
+        $response = new Response('Not found', 404);
         break;
-    case \FastRoute\Dispatcher::METHOD_NOT_ALLOWED:
-        $response = new \Symfony\Component\HttpFoundation\Response('Method not allowed', 405);
+    case Dispatcher::METHOD_NOT_ALLOWED:
+        $response = new Response('Method not allowed', 405);
         break;
-    case \FastRoute\Dispatcher::FOUND:
+    case Dispatcher::FOUND:
         [$controllerClass, $method] = explode('#', $routeInfo[1]);
         $vars = $routeInfo[2];
         $injector = require __DIR__ . '/Dependencies.php';
