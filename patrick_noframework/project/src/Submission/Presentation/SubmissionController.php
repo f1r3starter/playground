@@ -9,6 +9,7 @@
 namespace SocialNews\Submission\Presentation;
 
 
+use SocialNews\Framework\Rbac\AuthenticatedUser;
 use SocialNews\Framework\Rbac\Permission\SubmitLink;
 use SocialNews\Framework\Rbac\User;
 use SocialNews\Framework\Rendering\TemplateRenderer;
@@ -49,7 +50,6 @@ class SubmissionController
                                 User $user
     )
     {
-
         $this->templateRenderer = $templateRenderer;
         $this->session = $session;
         $this->submitLinkHandler = $submitLinkHandler;
@@ -92,7 +92,13 @@ class SubmissionController
 
             return $response;
         }
-        $this->submitLinkHandler->handle($form->toCommand());
+
+        if (!$this->user instanceof AuthenticatedUser)
+        {
+            throw new \LogicException('Only authenticated user can submit links');
+        }
+
+        $this->submitLinkHandler->handle($form->toCommand($this->user));
         $this->session->getFlashBag()->add(
             'success',
             'Your url was submitted successfully'

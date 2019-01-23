@@ -41,5 +41,7 @@ class Migration20190114
         $table->addColumn('url', Type::STRING);
         $table->addColumn('title', Type::STRING);
         $table->addColumn('created_at', Type::DATETIME);
+        $table->addColumn('author_user_id', Type::GUID);
+        $table->addForeignKeyConstraint('user', ['author_user_id'], ['id']);
     }
 }

@@ -19,12 +19,16 @@ class Submission
      * @var string
      */
     private $title;
+    /**
+     * @var string
+     */
+    private $author;
 
-    public function __construct(string $url, string $title)
+    public function __construct(string $url, string $title, string $author)
     {
-
         $this->url = $url;
         $this->title = $title;
+        $this->author = $author;
     }
 
     /**
@@ -36,16 +40,6 @@ class Submission
     }
 
     /**
-     * @param string $url
-     * @return Submission
-     */
-    public function setUrl(string $url): Submission
-    {
-        $this->url = $url;
-        return $this;
-    }
-
-    /**
      * @return string
      */
     public function getTitle(): string
@@ -54,12 +48,10 @@ class Submission
     }
 
     /**
-     * @param string $title
-     * @return Submission
+     * @return string
      */
-    public function setTitle(string $title): Submission
+    public function getAuthor(): string
     {
-        $this->title = $title;
-        return $this;
+        return $this->author;
     }
 }

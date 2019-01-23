@@ -29,16 +29,23 @@ class DbalSubmissionQuery implements SubmissionQuery
     {
         $qb = $this->connection->createQueryBuilder();
 
-        $qb->addSelect('url')
-            ->addSelect('title');
-        $qb->from('submissions');
-        $qb->orderBy('created_at', 'DESC');
+        $qb->addSelect('s.url')
+            ->addSelect('s.title')
+            ->addSelect('a.nickname')
+            ->from('submissions', 's')
+            ->innerJoin(
+                's',
+                'users',
+                'a',
+                's.author_user_id = a.id'
+            )
+            ->orderBy('s.created_at', 'DESC');
         $rows = $qb->execute()->fetchAll();
 
         $submissions = [];
         foreach ($rows as $row)
         {
-            $submissions[] = new Submission($row['url'], $row['title']);
+            $submissions[] = new Submission($row['url'], $row['title'], $row['nickname']);
         }
 
         return $submissions;
