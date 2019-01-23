@@ -78,12 +78,12 @@ class User
         if (password_verify($password, $this->passwordHash)) {
             $this->failedAttempts = 0;
             $this->lastFailedLoginAttempt = null;
+            $this->recordedEvents[] = new UserWasLoggedIn();
             return;
         }
 
         $this->failedAttempts++;
         $this->lastFailedLoginAttempt = new \DateTimeImmutable();
-        $this->recordedEvents[] = new UserWasLoggedIn();
     }
 
     /**
