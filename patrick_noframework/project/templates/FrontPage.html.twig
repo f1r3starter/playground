@@ -3,6 +3,7 @@
     <ul>
         {% for link in submissions %}
             <a href="{{ link.url }}">{{ link.title }}</a>
+            <small>Submitted by: <b>{{ link.author }}</b></small>
         {% endfor %}
     </ul>
 {% endblock %}

@@ -28,6 +28,7 @@ class SubmitLinkHandler
     public function handle(SubmitLink $command): void
     {
         $submission = Submission::submit(
+            $command->getAuthorId(),
             $command->getUrl(),
             $command->getTitle()
         );

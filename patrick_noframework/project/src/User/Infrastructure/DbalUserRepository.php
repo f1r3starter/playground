@@ -78,7 +78,7 @@ class DbalUserRepository implements UserRepository
         $qb = $this->connection->createQueryBuilder();
         $query = $qb->select('users.*')
             ->from('users')
-            ->where('nickname = ' . $qb->createNamedParameter($nickname))
+            ->where('users.nickname = ' . $qb->createNamedParameter($nickname))
             ->execute();
         $row = $query->fetch();
         if ($row) {

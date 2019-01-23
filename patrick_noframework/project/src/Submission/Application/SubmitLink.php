@@ -9,6 +9,8 @@
 namespace SocialNews\Submission\Application;
 
 
+use Ramsey\Uuid\UuidInterface;
+
 class SubmitLink
 {
     /**
@@ -20,9 +22,14 @@ class SubmitLink
      */
     private $title;
 
-    public function __construct(string $url, string $title)
-    {
+    /**
+     * @var UuidInterface
+     */
+    private $authorId;
 
+    public function __construct(UuidInterface $authorId, string $url, string $title)
+    {
+        $this->authorId = $authorId;
         $this->url = $url;
         $this->title = $title;
     }
@@ -41,5 +48,10 @@ class SubmitLink
     public function getTitle(): string
     {
         return $this->title;
+    }
+
+    public function getAuthorId(): UuidInterface
+    {
+        return $this->authorId;
     }
 }
