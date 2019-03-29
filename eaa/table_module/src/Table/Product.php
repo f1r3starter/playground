@@ -1,15 +1,20 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: andreyfilenko
- * Date: 2019-03-28
- * Time: 21:50
- */
 
 namespace App\Table;
 
-
-class Product
+class Product extends Table
 {
+    public const TYPE_WORD = 'w';
+    public const TYPE_DATABASE = 'd';
+    public const TYPE_SPREADSHEET = 's';
 
+    protected function getTableName(): string
+    {
+        return 'products';
+    }
+
+    public function getProductType(string $id): string
+    {
+        return $this->findById($id)['type'];
+    }
 }
