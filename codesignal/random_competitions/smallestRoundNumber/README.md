@@ -15,4 +15,3 @@ Guaranteed constraints:
 10 ≤ value ≤ 130.
 
 [output] integer
-
