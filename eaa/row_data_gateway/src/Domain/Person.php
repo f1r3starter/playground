@@ -2,85 +2,18 @@
 
 namespace App\Domain;
 
-use App\DB\MyPDO;
+use App\Table\PersonGateway;
 
 class Person
 {
     /**
-     * @var int
+     * @var PersonGateway
      */
-    private $id;
+    private $data;
 
-    /**
-     * @var string
-     */
-    private $firstName;
-
-    /**
-     * @var string
-     */
-    private $lastName;
-
-    /**
-     * @var string
-     */
-    private $email;
-
-    /**
-     * @var MyPDO
-     */
-    protected $pdo;
-
-    /**
-     * @param MyPDO $pdo
-     */
-    private function __construct(MyPDO $pdo)
+    public function __construct(PersonGateway $data)
     {
-        $this->pdo = $pdo;
-    }
-
-    public static function load(MyPDO $pdo, array $row): self
-    {
-        $person = new self($pdo);
-        $person->id = $row['id'];
-        $person->firstName = $row['first_name'];
-        $person->lastName = $row['last_name'];
-        $person->email = $row['email'];
-
-        return $person;
-    }
-
-    public static function create(MyPDO $pdo): self
-    {
-        $person = new self($pdo);
-        $person->id = $person->insert();
-        return $person;
-    }
-
-    public function save(): void
-    {
-        $this->pdo->prepare(
-            "UPDATE person SET first_name = ?, last_name = ?, email = ? WHERE id = ?"
-        )->execute([$this->firstName, $this->lastName, $this->email, $this->id]);
-    }
-
-    public function delete(): void
-    {
-        $this->pdo->prepare(
-            "DELETE FROM person WHERE id = ?"
-        )->execute([$this->id]);
-    }
-
-    /**
-     * @return int
-     */
-    private function insert(): int
-    {
-        $this->pdo->prepare(
-            "INSERT INTO person"
-        )->execute();
-
-        return $this->pdo->lastInsertId();
+        $this->data = $data;
     }
 
     /**
@@ -88,7 +21,7 @@ class Person
      */
     public function getId(): int
     {
-        return $this->id;
+        return $this->data->getId();
     }
 
     /**
@@ -96,7 +29,7 @@ class Person
      */
     public function getFirstName(): string
     {
-        return $this->firstName;
+        return $this->data->getFirstName();
     }
 
     /**
@@ -106,7 +39,7 @@ class Person
      */
     public function setFirstName(string $firstName): self
     {
-        $this->firstName = $firstName;
+        $this->data->setFirstName($firstName);
 
         return $this;
     }
@@ -116,7 +49,7 @@ class Person
      */
     public function getLastName(): string
     {
-        return $this->lastName;
+        return $this->data->getLastName();
     }
 
     /**
@@ -126,7 +59,7 @@ class Person
      */
     public function setLastName(string $lastName): self
     {
-        $this->lastName = $lastName;
+        $this->data->setLastName($lastName);
 
         return $this;
     }
@@ -136,7 +69,7 @@ class Person
      */
     public function getEmail(): string
     {
-        return $this->email;
+        return $this->data->getEmail();
     }
 
     /**
@@ -146,8 +79,18 @@ class Person
      */
     public function setEmail(string $email): self
     {
-        $this->email = $email;
+        $this->data->setEmail($email);
 
         return $this;
+    }
+
+    public function save(): void
+    {
+        $this->data->save();
+    }
+
+    public function delete(): void
+    {
+        $this->data->delete();
     }
 }

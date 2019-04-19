@@ -29,6 +29,6 @@ class PersonFinder
             throw new DomainException(sprintf('Person with id %s not found', $id));
         }
 
-        return Person::load($this->pdo, $row);
+        return new Person(PersonGateway::load($this->pdo, $row));
     }
 }
