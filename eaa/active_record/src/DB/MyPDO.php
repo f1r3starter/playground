@@ -21,7 +21,7 @@ class MyPDO extends PDO
             PDO::ATTR_EMULATE_PREPARES => false,
             PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
         ];
-        $options = array_replace($defaultOptions, $options);
+        $options = array_replace($defaultOptions, $options ?? []);
         parent::__construct($dsn, $username, $password, $options);
     }
 

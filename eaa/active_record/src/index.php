@@ -2,26 +2,25 @@
 
 require('../vendor/autoload.php');
 
-use App\Table\PersonFinder;
-use App\Table\PersonGateway;
-use App\Domain\Person;
 use App\DB\MyPDO;
+use App\Model\Person;
 
 $myPdo = new MyPDO('mysql:host=localhost;dbname=test;charset=utf8', '', '', null);
 
-$newPerson = new Person(PersonGateway::create($myPdo));
-$newPerson
-    ->setFirstName('Elon')
+$newPerson = new Person($myPdo);
+
+$newPerson->setFirstName('Elon')
     ->setLastName('Musk')
     ->setEmail('elon@spacex.com');
+
 $newPerson->save();
 
-$personFinder = new PersonFinder($myPdo);
-$oldPerson = $personFinder->findById(13);
+$oldPerson =  new Person($myPdo);
 
-$oldPerson->setFirstName('Neil')
-    ->setLastName('Armstrong')
-    ->setEmail('neil@nasa.gov');
+$oldPerson->findById(1)
+    ->setFirstName('Neil')
+    ->setLastName('Armstrong');
+
 $oldPerson->save();
 
 $newPerson->delete();
