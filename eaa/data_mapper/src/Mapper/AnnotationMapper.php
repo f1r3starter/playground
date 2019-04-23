@@ -4,7 +4,7 @@ namespace App\Mapper;
 
 class AnnotationMapper implements Mapper
 {
-    private const DOC_BLOCK_PATTERN = "#(@[a-zA-Z]+\s*[a-zA-Z0-9, ()_].*)#";
+    private const DOC_BLOCK_PATTERN = '/(?>\@Mapper\()?(?:(?<key>[^=,(\s]+)=(?<value>[^,|\)\s]+))+/';
 
     /**
      * @var \ReflectionClass
@@ -16,18 +16,21 @@ class AnnotationMapper implements Mapper
         $this->class = $class;
     }
 
-    public function mapFields(): array
+    public function mapFields(): array 
     {
         $fields = [];
         foreach ($this->class->getProperties() as $property) {
-            $property->getDocComment();
-            $property->getValue();
+            $this->parseDocBlock($property->getDocComment());
         }
     }
 
 
-    private function parseDocBlock()
+    private function parseDocBlock(string $docBlock)
     {
-        preg_match_all($pattern, $comment_string, $matches, PREG_PATTERN_ORDER);
+        preg_match_all(self::DOC_BLOCK_PATTERN, $docBlock, $docParams, PREG_SET_ORDER, 0);
+
+        foreach ($docParams as $docParam) {
+            print_r($docParam['value']);
+        }
     }
 }
