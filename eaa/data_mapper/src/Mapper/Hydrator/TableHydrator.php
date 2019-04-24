@@ -34,7 +34,14 @@ class TableHydrator implements Hydrator
 
     public function dehydrate($object): array
     {
-        return [];
+        $row = [];
+        foreach ($this->table->getColumns() as $column) {
+            if ($this->getProperty($object, $column->getPropertyName())) {
+                $row[$column->getName()] = $this->getProperty($object, $column->getPropertyName());
+            }
+        }
+
+        return $row;
     }
 
     private function getProperty($object, $attribute) {
