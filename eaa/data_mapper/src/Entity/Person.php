@@ -2,26 +2,96 @@
 
 namespace App\Entity;
 
+/**
+ * @Table(name=PERSON)
+ */
 class Person
 {
     /**
-     * @Mapper(type=int,field=ID)
+     * @Column(primary,name=ID)
      */
     private $id;
 
     /**
-     * @var int
-     * @Mapper(type=string,field=FIRST_NAME)
+     * @Column(name=FIRST_NAME)
      */
     private $firstName;
 
     /**
-     * @Mapper(type=string,field=LAST_NAME)
+     * @Column(name=LAST_NAME)
      */
     private $lastName;
 
     /**
-     * @Mapper(type=int,field=EMAIL_ID,relatedClass=App\Entity\Email,mappedBy=id)
+     * @Column(name=EMAIL_ID,relatedClass=App\Entity\Email)
      */
     private $email;
+
+    /**
+     * @return int
+     */
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    /**
+     * @return string
+     */
+    public function getFirstName(): string
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * @param string $firstName
+     *
+     * @return self
+     */
+    public function setFirstName(string $firstName): Person
+    {
+        $this->firstName = $firstName;
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getLastName(): string
+    {
+        return $this->lastName;
+    }
+
+    /**
+     * @param string $lastName
+     *
+     * @return self
+     */
+    public function setLastName(string $lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * @return Email
+     */
+    public function getEmail(): Email
+    {
+        return $this->email;
+    }
+
+    /**
+     * @param Email $email
+     *
+     * @return self
+     */
+    public function setEmail(Email $email)
+    {
+        $this->email = $email;
+
+        return $this;
+    }
 }
