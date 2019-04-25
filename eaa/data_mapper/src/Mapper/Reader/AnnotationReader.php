@@ -11,6 +11,12 @@ class AnnotationReader implements MetadataReader
     private const TABLE_CONVENTION = 'Table';
     private const BLOCK_PATTERN = '/(?>\@%s\()?(?:(?<key>[^=,(\s]+)=(?<value>[^,|\)\s]+))+/';
 
+    /**
+     * @param string $className
+     *
+     * @return Table
+     * @throws \ReflectionException
+     */
     public function prepareTable(string $className): Table
     {
         $class = new \ReflectionClass($className);
@@ -41,8 +47,13 @@ class AnnotationReader implements MetadataReader
         return $table;
     }
 
-
-    private function parseDocBlock(string $docBlock, string $context)
+    /**
+     * @param string $docBlock
+     * @param string $context
+     *
+     * @return array
+     */
+    private function parseDocBlock(string $docBlock, string $context): array
     {
         preg_match_all(sprintf(self::BLOCK_PATTERN, $context), $docBlock, $docParams, PREG_SET_ORDER, 0);
 

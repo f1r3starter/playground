@@ -11,11 +11,20 @@ class TableHydrator implements Hydrator
      */
     private $table;
 
+    /**
+     * @param Table $table
+     */
     public function __construct(Table $table)
     {
         $this->table = $table;
     }
 
+    /**
+     * @param array  $row
+     * @param string $className
+     *
+     * @return mixed
+     */
     public function hydrate(array $row, string $className)
     {
         $entity = new $className;
@@ -32,6 +41,11 @@ class TableHydrator implements Hydrator
         return $entity;
     }
 
+    /**
+     * @param $object
+     *
+     * @return array
+     */
     public function dehydrate($object): array
     {
         $row = [];
@@ -44,12 +58,25 @@ class TableHydrator implements Hydrator
         return $row;
     }
 
-    private function getProperty($object, $attribute) {
+    /**
+     * @param $object
+     * @param $attribute
+     *
+     * @return mixed
+     */
+    private function getProperty($object, $attribute)
+    {
         $getter = function() use ($attribute) {return $this->$attribute;};
+
         return \Closure::bind($getter, $object, get_class($object))();
     }
 
-    private function setProperty($object, string $attribute, $value)
+    /**
+     * @param        $object
+     * @param string $attribute
+     * @param        $value
+     */
+    private function setProperty($object, string $attribute, $value): void
     {
         $setter = function($value) use ($attribute) {$this->$attribute = $value;};
         \Closure::bind($setter, $object, get_class($object))($value);
