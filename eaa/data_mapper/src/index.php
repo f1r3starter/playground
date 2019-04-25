@@ -2,25 +2,16 @@
 
 require('../vendor/autoload.php');
 
-use App\DB\MyPDO;
+use App\Mapper\Reader\AnnotationReader;
 use App\Entity\Person;
 
-$myPdo = new MyPDO('mysql:host=localhost;dbname=test;charset=utf8', '', '', null);
+//$myPdo = new MyPDO('mysql:host=localhost;dbname=test;charset=utf8', '', '', null);
 
-$newPerson = new Person($myPdo);
+$newPerson = new Person();
 
-$newPerson->setFirstName('Elon')
-    ->setLastName('Musk')
-    ->setEmail('elon@spacex.com');
+$mapper = new AnnotationReader();
+$table = $mapper->prepareTable(Person::class);
 
-$newPerson->save();
+$hydrator = new \App\Mapper\Hydrator\TableHydrator($table);
 
-$oldPerson =  new Person($myPdo);
-
-$oldPerson->findById(1)
-    ->setFirstName('Neil')
-    ->setLastName('Armstrong');
-
-$oldPerson->save();
-
-$newPerson->delete();
+print_r($hydrator->hydrate(['ID' => 123, 'FIRST_NAME' => 'aa', 'LAST_NAME' => 'bb'], Person::class));

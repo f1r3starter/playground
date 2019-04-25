@@ -2,52 +2,37 @@
 
 namespace App\Entity;
 
+/**
+ * @Table(name=PERSON)
+ */
 class Person
 {
     /**
-     * @var int
+     * @Column(primary,name=ID)
      */
-    protected $id;
+    private $id;
 
     /**
-     * @var string
+     * @Column(name=FIRST_NAME)
      */
-    protected $firstName;
+    private $firstName;
 
     /**
-     * @var string
+     * @Column(name=LAST_NAME)
      */
-    protected $lastName;
+    private $lastName;
 
     /**
-     * @var string
+     * @Column(name=EMAIL_ID,relatedClass=App\Entity\Email)
      */
-    protected $email;
-
-    protected function getAttributes(): array
-    {
-        return ['firstName', 'lastName', 'email'];
-    }
-
-    protected function getTableName(): string
-    {
-        return 'person';
-    }
+    private $email;
 
     /**
-     * @return int|null
+     * @return int
      */
-    public function getId(): ?int
+    public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @param int $id
-     */
-    public function setId(int $id): void
-    {
-        $this->id = $id;
     }
 
     /**
@@ -61,9 +46,9 @@ class Person
     /**
      * @param string $firstName
      *
-     * @return Person
+     * @return self
      */
-    public function setFirstName(string $firstName): self
+    public function setFirstName(string $firstName): Person
     {
         $this->firstName = $firstName;
 
@@ -81,9 +66,9 @@ class Person
     /**
      * @param string $lastName
      *
-     * @return Person
+     * @return self
      */
-    public function setLastName(string $lastName): self
+    public function setLastName(string $lastName)
     {
         $this->lastName = $lastName;
 
@@ -91,19 +76,19 @@ class Person
     }
 
     /**
-     * @return string
+     * @return Email
      */
-    public function getEmail(): string
+    public function getEmail(): Email
     {
         return $this->email;
     }
 
     /**
-     * @param string $email
+     * @param Email $email
      *
-     * @return Person
+     * @return self
      */
-    public function setEmail(string $email): self
+    public function setEmail(Email $email)
     {
         $this->email = $email;
 
