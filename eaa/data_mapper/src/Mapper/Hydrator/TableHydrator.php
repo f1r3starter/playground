@@ -2,38 +2,49 @@
 
 namespace App\Mapper\Hydrator;
 
-use App\Mapper\Structure\Table;
+use App\Mapper\ProperyAccessor;
+use App\Mapper\Reader\MetadataReader;
 
 class TableHydrator implements Hydrator
 {
-    /**
-     * @var Table
-     */
-    private $table;
+    use ProperyAccessor;
 
     /**
-     * @param Table $table
+     * @var MetadataReader
      */
-    public function __construct(Table $table)
+    private $reader;
+
+    /**
+     * @param MetadataReader $reader
+     */
+    public function __construct(MetadataReader $reader)
     {
-        $this->table = $table;
+        $this->reader = $reader;
     }
 
     /**
-     * @param array  $row
+     * @param array $row
      * @param string $className
      *
      * @return mixed
      */
     public function hydrate(array $row, string $className)
     {
+        $table = $this->createTableForClass($className);
         $entity = new $className;
-        foreach ($this->table->getColumns() as $column) {
-            if (isset($row[$column->getName()])) {
+        foreach ($table->getColumns() as $column) {
+            if ($column->getRelatedClass()) {
+                $relatedObject = $this->hydrate($row, $column->getRelatedClass());
                 $this->setProperty(
                     $entity,
                     $column->getPropertyName(),
-                    $row[$column->getName()]
+                    $relatedObject
+                );
+            } elseif (isset($row[$table->getName() . $column->getName()])) {
+                $this->setProperty(
+                    $entity,
+                    $column->getPropertyName(),
+                    $row[$table->getName() . $column->getName()]
                 );
             }
         }
@@ -48,37 +59,20 @@ class TableHydrator implements Hydrator
      */
     public function dehydrate($object): array
     {
+        $table = $this->createTableForClass(get_class($object));
         $row = [];
-        foreach ($this->table->getColumns() as $column) {
-            if ($this->getProperty($object, $column->getPropertyName())) {
-                $row[$column->getName()] = $this->getProperty($object, $column->getPropertyName());
-            }
+        foreach ($table->getColumns() as $column) {
+            $row[$table->getName() . $column->getName()] =
+                $this->getProperty($object, $column->getPropertyName())
+                    ? $this->getProperty($object, $column->getPropertyName())
+                    : null;
         }
 
         return $row;
     }
 
-    /**
-     * @param $object
-     * @param $attribute
-     *
-     * @return mixed
-     */
-    private function getProperty($object, $attribute)
+    private function createTableForClass(string $className)
     {
-        $getter = function() use ($attribute) {return $this->$attribute;};
-
-        return \Closure::bind($getter, $object, get_class($object))();
-    }
-
-    /**
-     * @param        $object
-     * @param string $attribute
-     * @param        $value
-     */
-    private function setProperty($object, string $attribute, $value): void
-    {
-        $setter = function($value) use ($attribute) {$this->$attribute = $value;};
-        \Closure::bind($setter, $object, get_class($object))($value);
+        return $this->reader->prepareTable($className);
     }
 }

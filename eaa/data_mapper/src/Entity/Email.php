@@ -8,12 +8,12 @@ namespace App\Entity;
 class Email
 {
     /**
-     * @Column(primary,name=ID)
+     * @Column(primary=true,name=ID)
      */
     private $id;
 
     /**
-     * @Column(name=EMAIL_ID,relatedClass=App\Entity\Email)
+     * @Column(name=EMAIL)
      */
     private $email;
 

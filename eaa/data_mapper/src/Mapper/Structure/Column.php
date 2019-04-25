@@ -25,20 +25,25 @@ class Column
     private $relatedClass = null;
 
     /**
+     * @var Table|null
+     */
+    private $relatedTable = null;
+
+    /**
+     * Column constructor.
      * @param string $columnName
      * @param string $propertyName
      * @param bool $primary
-     * @param string|null $relatedClass
+     * @param string $relatedClass
+     * @param Table|null $relatedTable
      */
-    public function __construct(string $columnName, string $propertyName, bool $primary = false, string $relatedClass = null)
+    public function __construct(string $columnName, string $propertyName, bool $primary = false, string $relatedClass = null, Table $relatedTable = null)
     {
         $this->name = $columnName;
         $this->propertyName = $propertyName;
         $this->primary = $primary;
-        if ($relatedClass && !class_exists($relatedClass)) {
-            throw new \InvalidArgumentException(sprintf('Related class %s does not exists', $relatedClass));
-        }
         $this->relatedClass = $relatedClass;
+        $this->relatedTable = $relatedTable;
     }
 
     /**
@@ -71,5 +76,13 @@ class Column
     public function getRelatedClass(): ?string
     {
         return $this->relatedClass;
+    }
+
+    /**
+     * @return Table|null
+     */
+    public function getRelatedTable(): ?Table
+    {
+        return $this->relatedTable;
     }
 }

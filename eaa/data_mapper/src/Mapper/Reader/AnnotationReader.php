@@ -19,6 +19,10 @@ class AnnotationReader implements MetadataReader
      */
     public function prepareTable(string $className): Table
     {
+        if (!class_exists($className)) {
+            throw new \InvalidArgumentException(sprintf('Class %s does not exists', $className));
+        }
+
         $class = new \ReflectionClass($className);
         $tableParams = $this->parseDocBlock($class->getDocComment(), self::TABLE_CONVENTION);
 
@@ -34,12 +38,14 @@ class AnnotationReader implements MetadataReader
                 throw new \ParseError(sprintf('Table name for property %s in class %s is required', $property->getName(), $className));
             }
 
+            $relatedClass = $columnParams['relatedClass'] ?? null;
             $table->addColumn(
                 new Column(
                     $columnParams['name'],
                     $property->getName(),
                     isset($columnParams['primary']),
-                    $columnParams['relatedClass'] ?? null
+                    $relatedClass,
+                    $relatedClass ? $this->prepareTable($relatedClass) : null
                 )
             );
         }

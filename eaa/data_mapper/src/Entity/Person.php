@@ -3,12 +3,12 @@
 namespace App\Entity;
 
 /**
- * @Table(name=PERSON)
+ * @Table(name=PERSONN)
  */
 class Person
 {
     /**
-     * @Column(primary,name=ID)
+     * @Column(primary=true,name=ID)
      */
     private $id;
 
