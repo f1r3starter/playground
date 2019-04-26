@@ -14,8 +14,9 @@ interface Hydrator
 
     /**
      * @param $object
+     * @param bool $withRelated
      *
      * @return array
      */
-    public function dehydrate($object): array;
+    public function dehydrate($object, bool $withRelated): array;
 }

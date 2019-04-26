@@ -73,11 +73,12 @@ class DataMapper
 
     public function save($entity)
     {
-        $values = $this->hydrator->dehydrate($entity);
         if ($identity = $this->getProperty($entity, $this->table->getPrimaryKey()->getPropertyName())) {
+            $values = $this->hydrator->dehydrate($entity);
             $values[] = $identity;
             $query = $this->statementBuilder->update();
         } else {
+            $values = $this->hydrator->dehydrate($entity, false);
             $query = $this->statementBuilder->insert();
         }
 
@@ -96,6 +97,6 @@ class DataMapper
 
         $this->pdo->prepare(
             $this->statementBuilder->delete()
-        )->execute($identity);
+        )->execute([$identity]);
     }
 }

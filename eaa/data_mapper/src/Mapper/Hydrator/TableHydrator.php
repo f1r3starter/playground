@@ -57,15 +57,21 @@ class TableHydrator implements Hydrator
      *
      * @return array
      */
-    public function dehydrate($object): array
+    public function dehydrate($object, bool $withRelated = true): array
     {
         $table = $this->createTableForClass(get_class($object));
         $row = [];
         foreach ($table->getColumns() as $column) {
-            $row[$table->getName() . $column->getName()] =
-                $this->getProperty($object, $column->getPropertyName())
-                    ? $this->getProperty($object, $column->getPropertyName())
-                    : null;
+            $row[$table->getName() . $column->getName()] = null;
+            if ($column->getRelatedClass()) {
+                $relatedRow = $this->dehydrate($this->getProperty($object, $column->getPropertyName()), $withRelated);
+                $row[$table->getName() . $column->getName()] = $relatedRow[$column->getRelatedTable()->getName() . $column->getRelatedTable()->getPrimaryKey()->getName()];
+                if ($withRelated) {
+                    $row = array_merge($row, $relatedRow);
+                }
+            } elseif ($this->getProperty($object, $column->getPropertyName())) {
+                $row[$table->getName() . $column->getName()] = $this->getProperty($object, $column->getPropertyName());
+            }
         }
 
         return $row;

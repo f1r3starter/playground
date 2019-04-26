@@ -3,14 +3,26 @@
 require('../vendor/autoload.php');
 
 use App\Entity\Person;
+use App\Entity\Email;
+use App\Mapper\DataMapper;
 use App\DB\MyPDO;
 
-$myPdo = new MyPDO('mysql:host=127.0.0.1;dbname=space;charset=utf8', 'doctrine_user', 'zxcvbnm1', null);
+$myPdo = new MyPDO('mysql:host=127.0.0.1;dbname=;charset=utf8', '', '', null);
+
+$personMapper = new DataMapper(Person::class, $myPdo);
+$emailMapper = new DataMapper(Email::class, $myPdo);
+
+$newEmail = new Email();
+$newEmail->setEmail('elon@musk.com');
+
+$emailMapper->save($newEmail);
 
 $newPerson = new Person();
-$newPerson->setLastName('vasya');
+$newPerson->setFirstName('Elon')
+    ->setLastName('Musk')
+    ->setEmail($newEmail);
 
-$mapper = new \App\Mapper\DataMapper(Person::class, $myPdo);
-$first = $mapper->find(1);
-$first->setFirstName('Grisha');
-$mapper->save($first);
+$personMapper->save($newPerson);
+
+$oldPerson = $personMapper->find(1);
+$personMapper->delete($oldPerson);

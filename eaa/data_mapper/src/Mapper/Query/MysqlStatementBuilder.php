@@ -37,7 +37,7 @@ class MysqlStatementBuilder implements StatementBuilder
      */
     public function insert(): string
     {
-        $columns = $this->getColumns();
+        $columns = $this->getColumns(false, false);
         $dumbValues = implode(',', array_fill(0, count($columns), '?'));
         $columns = implode(', ', $columns);
         return "INSERT INTO {$this->table->getName()} ({$columns})
@@ -51,11 +51,12 @@ class MysqlStatementBuilder implements StatementBuilder
     {
         $parameters = array_map(function ($column) {
             return "$column = ?";
-        }, $this->getColumns(true));
+        }, $this->getColumns());
+        $joins = implode(" ", $this->getJoins());
 
         $parametersString = implode(', ', $parameters);
 
-        return "UPDATE {$this->table->getName()} 
+        return "UPDATE {$this->table->getName()} {$joins}
                 SET $parametersString 
                 WHERE {$this->table->getName()}.{$this->table->getPrimaryKey()->getName()} = ?";
     }
@@ -69,16 +70,18 @@ class MysqlStatementBuilder implements StatementBuilder
     }
 
     /**
+     * @param bool $aliased
+     * @param bool $includeRelated
+     *
      * @return array
      */
-    private function getColumns(bool $aliased = false): array
+    private function getColumns(bool $aliased = false, bool $includeRelated = true): array
     {
-        return array_reduce($this->table->getColumns()->getArrayCopy(), function (array $columns, Column $column) use ($aliased) {
-            if ($column->getRelatedTable() && $aliased) {
+        return array_reduce($this->table->getColumns()->getArrayCopy(), function (array $columns, Column $column) use ($aliased, $includeRelated) {
+            $columnName = $this->table->getName() . '.' . $column->getName();
+            $columns[] = $aliased ? $columnName . ' as ' . $this->table->getName() . $column->getName() : $columnName;
+            if ($includeRelated && $column->getRelatedTable()) {
                 $columns = array_merge($columns, (new self($column->getRelatedTable()))->getColumns($aliased));
-            } else {
-                $columnName = $this->table->getName() . '.' . $column->getName();
-                $columns[] = $aliased ? $columnName . ' as ' . $this->table->getName() . $column->getName() : $columnName;
             }
 
             return $columns;
