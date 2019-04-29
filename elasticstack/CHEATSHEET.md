@@ -24,3 +24,13 @@ PUT test_index/_doc/1
 }
 ```
 
+Partial update:
+```json
+POST test_index/_update/1
+{
+  "_doc" : {
+    "user": "test2"
+  }
+}
+
+```
