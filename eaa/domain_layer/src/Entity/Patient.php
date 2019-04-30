@@ -2,55 +2,64 @@
 
 namespace App\Entity;
 
-class Patient extends Person
+class Patient
 {
     /**
-     * @var string[]
+     * @var string
      */
-    private $illnessHistory = [];
+    private $illness = '';
 
     /**
-     * @var string[]
+     * @var \Person
      */
-    private $allergiesHistory = [];
+    private $idPerson;
+
 
     /**
-     * @return string[]
-     */
-    public function getIllnessHistory(): array
-    {
-        return $this->illnessHistory;
-    }
-
-    /**
+     * Set illness.
+     *
      * @param string $illness
      *
-     * @return self
+     * @return Patient
      */
-    public function diagnoseIllness(string $illness): self
+    public function setIllness($illness)
     {
-        $this->illnessHistory[] = $illness;
+        $this->illness = $illness;
 
         return $this;
     }
 
     /**
-     * @return string[]
-     */
-    public function getAllergiesHistory(): array
-    {
-        return $this->allergiesHistory;
-    }
-
-    /**
-     * @param string $allergy
+     * Get illness.
      *
-     * @return self
+     * @return string
      */
-    public function diagnoseAllergy(string $allergy): self
+    public function getIllness()
     {
-        $this->allergiesHistory[] = $allergy;
+        return $this->illness;
+    }
+
+    /**
+     * Set idPerson.
+     *
+     * @param \Person $idPerson
+     *
+     * @return Patient
+     */
+    public function setIdPerson(\Person $idPerson)
+    {
+        $this->idPerson = $idPerson;
 
         return $this;
+    }
+
+    /**
+     * Get idPerson.
+     *
+     * @return \Person
+     */
+    public function getIdPerson()
+    {
+        return $this->idPerson;
     }
 }

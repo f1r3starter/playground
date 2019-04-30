@@ -5,91 +5,105 @@ namespace App\Entity;
 class Appointment
 {
     /**
-     * @var Doctor
-     */
-    private $doctor;
-
-    /**
-     * @var Patient
-     */
-    private $patient;
-
-    /**
      * @var \DateTime
      */
     private $dateTime;
 
     /**
-     * Appointment constructor.
+     * @var int
+     */
+    private $idAppointment;
+
+    /**
+     * @var \Patient
+     */
+    private $idPatient;
+
+    /**
+     * @var \Doctor
+     */
+    private $idDoctor;
+
+
+    /**
+     * Set dateTime.
      *
-     * @param Doctor $doctor
-     * @param Patient $patient
      * @param \DateTime $dateTime
+     *
+     * @return Appointment
      */
-    public function __construct(Doctor $doctor, Patient $patient, \DateTime $dateTime)
+    public function setDateTime($dateTime)
     {
-        $this->doctor = $doctor;
-        $this->patient = $patient;
         $this->dateTime = $dateTime;
-    }
-
-    /**
-     * @return Doctor
-     */
-    public function getDoctor(): Doctor
-    {
-        return $this->doctor;
-    }
-
-    /**
-     * @param Doctor $doctor
-     *
-     * @return self
-     */
-    public function setDoctor(Doctor $doctor): self
-    {
-        $this->doctor = $doctor;
 
         return $this;
     }
 
     /**
-     * @return Patient
-     */
-    public function getPatient(): Patient
-    {
-        return $this->patient;
-    }
-
-    /**
-     * @param Patient $patient
+     * Get dateTime.
      *
-     * @return self
-     */
-    public function setPatient(Patient $patient): self
-    {
-        $this->patient = $patient;
-
-        return $this;
-    }
-
-    /**
      * @return \DateTime
      */
-    public function getDateTime(): \DateTime
+    public function getDateTime()
     {
         return $this->dateTime;
     }
 
     /**
-     * @param \DateTime $dateTime
+     * Get idAppointment.
      *
-     * @return self
+     * @return int
      */
-    public function setDateTime(\DateTime $dateTime): self
+    public function getIdAppointment()
     {
-        $this->dateTime = $dateTime;
+        return $this->idAppointment;
+    }
+
+    /**
+     * Set idPatient.
+     *
+     * @param \Patient|null $idPatient
+     *
+     * @return Appointment
+     */
+    public function setIdPatient(\Patient $idPatient = null)
+    {
+        $this->idPatient = $idPatient;
 
         return $this;
+    }
+
+    /**
+     * Get idPatient.
+     *
+     * @return \Patient|null
+     */
+    public function getIdPatient()
+    {
+        return $this->idPatient;
+    }
+
+    /**
+     * Set idDoctor.
+     *
+     * @param \Doctor|null $idDoctor
+     *
+     * @return Appointment
+     */
+    public function setIdDoctor(\Doctor $idDoctor = null)
+    {
+        $this->idDoctor = $idDoctor;
+
+        return $this;
+    }
+
+    /**
+     * Get idDoctor.
+     *
+     * @return \Doctor|null
+     */
+    public function getIdDoctor()
+    {
+        return $this->idDoctor;
     }
 }

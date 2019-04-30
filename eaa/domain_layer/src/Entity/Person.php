@@ -5,55 +5,104 @@ namespace App\Entity;
 class Person
 {
     /**
-     * Person constructor.
+     * @var string
+     */
+    private $firstName = '';
+
+    /**
+     * @var string
+     */
+    private $lastName = '';
+
+    /**
+     * @var string
+     */
+    private $gender = 'm';
+
+    /**
+     * @var int
+     */
+    private $idPerson;
+
+    /**
+     * Set firstName.
      *
      * @param string $firstName
-     * @param string $lastName
-     * @param string $gender
+     *
+     * @return Person
      */
-    public function __construct(string $firstName, string $lastName, string $gender)
+    public function setFirstName($firstName)
     {
         $this->firstName = $firstName;
-        $this->lastName = $lastName;
-        $this->gender = $gender;
+
+        return $this;
     }
 
     /**
-     * @var string
-     */
-    protected $firstName;
-
-    /**
-     * @var string
-     */
-    protected $lastName;
-
-    /**
-     * @var string
-     */
-    protected $gender;
-
-    /**
+     * Get firstName.
+     *
      * @return string
      */
-    public function getFirstName(): string
+    public function getFirstName()
     {
         return $this->firstName;
     }
 
     /**
+     * Set lastName.
+     *
+     * @param string $lastName
+     *
+     * @return Person
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+
+        return $this;
+    }
+
+    /**
+     * Get lastName.
+     *
      * @return string
      */
-    public function getLastName(): string
+    public function getLastName()
     {
         return $this->lastName;
     }
 
     /**
+     * Set gender.
+     *
+     * @param string $gender
+     *
+     * @return Person
+     */
+    public function setGender($gender)
+    {
+        $this->gender = $gender;
+
+        return $this;
+    }
+
+    /**
+     * Get gender.
+     *
      * @return string
      */
-    public function getGender(): string
+    public function getGender()
     {
         return $this->gender;
+    }
+
+    /**
+     * Get idPerson.
+     *
+     * @return int
+     */
+    public function getIdPerson()
+    {
+        return $this->idPerson;
     }
 }
