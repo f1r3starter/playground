@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="Appointment" table="appointment">
+  <entity name="App\Entity\Appointment" repository-class="App\Repository\AppointmentRepository" table="appointment">
     <indexes>
       <index name="appointment_patient_fk_idx" columns="id_patient"/>
       <index name="appointment_doctor_fk_idx" columns="id_doctor"/>
     </indexes>
-    <id name="idAppointment" type="integer" column="id_appointment">
+    <id name="id" type="integer" column="id_appointment">
       <generator strategy="IDENTITY"/>
     </id>
     <field name="dateTime" type="datetime" column="date_time" nullable="false"/>
-    <many-to-one field="idPatient" target-entity="Patient" fetch="LAZY">
+    <many-to-one field="patient" target-entity="App\Entity\Patient" fetch="LAZY">
       <join-columns>
-        <join-column name="id_patient" referenced-column-name="id_person"/>
+        <join-column name="id_patient" referenced-column-name="id_person" nullable="false"/>
       </join-columns>
     </many-to-one>
-    <many-to-one field="idDoctor" target-entity="Doctor" fetch="LAZY">
+    <many-to-one field="doctor" target-entity="App\Entity\Doctor" fetch="LAZY">
       <join-columns>
-        <join-column name="id_doctor" referenced-column-name="id_person"/>
+        <join-column name="id_doctor" referenced-column-name="id_person" nullable="false"/>
       </join-columns>
     </many-to-one>
   </entity>

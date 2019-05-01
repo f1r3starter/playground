@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <doctrine-mapping xmlns="http://doctrine-project.org/schemas/orm/doctrine-mapping" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://doctrine-project.org/schemas/orm/doctrine-mapping https://www.doctrine-project.org/schemas/orm/doctrine-mapping.xsd">
-  <entity name="IllnessHistory" table="illness_history">
+  <entity name="App\Entity\IllnessHistory" repository-class="App\Repository\IllnessHistoryRepository" table="illness_history">
     <indexes>
       <index name="illness_history_patient_id_idx" columns="id_patient"/>
+      <index name="illness_history_doctor_id_idx" columns="diagnosed_by"/>
     </indexes>
-    <id name="idIllness" type="integer" column="id_illness">
+    <id name="id" type="integer" column="id_illness">
       <generator strategy="IDENTITY"/>
     </id>
     <field name="name" type="string" column="name" length="45" nullable="false">
@@ -21,9 +22,14 @@
     </field>
     <field name="dateTimeFound" type="datetime" column="date_time_found" nullable="false"/>
     <field name="dateTimeHealed" type="datetime" column="date_time_healed" nullable="true"/>
-    <many-to-one field="idPatient" target-entity="Patient" fetch="LAZY">
+    <many-to-one field="patient" target-entity="App\Entity\Patient" fetch="LAZY">
       <join-columns>
-        <join-column name="id_patient" referenced-column-name="id_person"/>
+        <join-column name="id_patient" referenced-column-name="id_person" nullable="false"/>
+      </join-columns>
+    </many-to-one>
+    <many-to-one field="diagnosedBy" target-entity="App\Entity\Doctor" fetch="LAZY">
+      <join-columns>
+        <join-column name="diagnosed_by" referenced-column-name="id_person" nullable="false"/>
       </join-columns>
     </many-to-one>
   </entity>
