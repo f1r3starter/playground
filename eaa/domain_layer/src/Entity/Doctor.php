@@ -2,27 +2,41 @@
 
 namespace App\Entity;
 
-class Doctor
+/**
+ * Doctor
+ */
+class Doctor extends Person
 {
     /**
-     * @var string|null
+     * @var string
      */
     private $speciality;
 
     /**
-     * @var \Person
+     * @param string $firstName
+     * @param string $lastName
+     * @param string $gender
+     * @param string $speciality
+     *
+     * @return self
      */
-    private $idPerson;
+    public static function hireDoctor(string $firstName, string $lastName, string $gender, string $speciality): self
+    {
+        return new self($firstName, $lastName, $gender, $speciality);
+    }
 
+    protected function __construct(string $firstName, string $lastName, string $gender, string $speciality)
+    {
+        $this->speciality = $speciality;
+        parent::__construct($firstName, $lastName, $gender);
+    }
 
     /**
-     * Set speciality.
-     *
-     * @param string|null $speciality
+     * @param string $speciality
      *
      * @return Doctor
      */
-    public function setSpeciality($speciality = null)
+    public function changeSpeciality($speciality)
     {
         $this->speciality = $speciality;
 
@@ -30,36 +44,10 @@ class Doctor
     }
 
     /**
-     * Get speciality.
-     *
      * @return string|null
      */
-    public function getSpeciality()
+    public function tellSpeciality()
     {
         return $this->speciality;
-    }
-
-    /**
-     * Set idPerson.
-     *
-     * @param \Person $idPerson
-     *
-     * @return Doctor
-     */
-    public function setIdPerson(\Person $idPerson)
-    {
-        $this->idPerson = $idPerson;
-
-        return $this;
-    }
-
-    /**
-     * Get idPerson.
-     *
-     * @return \Person
-     */
-    public function getIdPerson()
-    {
-        return $this->idPerson;
     }
 }

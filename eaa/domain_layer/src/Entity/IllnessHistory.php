@@ -5,6 +5,11 @@ namespace App\Entity;
 class IllnessHistory
 {
     /**
+     * @var int
+     */
+    private $id;
+
+    /**
      * @var string
      */
     private $name = '';
@@ -25,24 +30,44 @@ class IllnessHistory
     private $dateTimeHealed;
 
     /**
-     * @var int
+     * @var Patient
      */
-    private $idIllness;
+    private $patient;
 
     /**
-     * @var \Patient
+     * @var Doctor
      */
-    private $idPatient;
+    private $diagnosedBy;
 
+    public static function addRecordToIllnessHistory(string $name, string $description, \DateTime $dateTimeFound, Patient $patient, Doctor $diagnosedBy, ?\DateTime $dateTimeHealed = null)
+    {
+        return new self($name, $description, $dateTimeFound, $patient, $diagnosedBy, $dateTimeHealed);
+    }
+
+    private function __construct(string $name, string $description, \DateTime $dateTimeFound, Patient $patient, Doctor $diagnosedBy, ?\DateTime $dateTimeHealed)
+    {
+        $this->name = $name;
+        $this->description = $description;
+        $this->dateTimeFound = $dateTimeFound;
+        $this->dateTimeHealed = $dateTimeHealed;
+        $this->patient = $patient;
+        $this->diagnosedBy = $diagnosedBy;
+    }
 
     /**
-     * Set name.
-     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
+
+    /**
      * @param string $name
      *
      * @return IllnessHistory
      */
-    public function setName($name)
+    public function changeIllnessName($name)
     {
         $this->name = $name;
 
@@ -50,23 +75,19 @@ class IllnessHistory
     }
 
     /**
-     * Get name.
-     *
      * @return string
      */
-    public function getName()
+    public function getIllnessName()
     {
         return $this->name;
     }
 
     /**
-     * Set description.
-     *
      * @param string $description
      *
      * @return IllnessHistory
      */
-    public function setDescription($description)
+    public function changeDescription($description)
     {
         $this->description = $description;
 
@@ -74,8 +95,6 @@ class IllnessHistory
     }
 
     /**
-     * Get description.
-     *
      * @return string
      */
     public function getDescription()
@@ -84,22 +103,6 @@ class IllnessHistory
     }
 
     /**
-     * Set dateTimeFound.
-     *
-     * @param \DateTime $dateTimeFound
-     *
-     * @return IllnessHistory
-     */
-    public function setDateTimeFound($dateTimeFound)
-    {
-        $this->dateTimeFound = $dateTimeFound;
-
-        return $this;
-    }
-
-    /**
-     * Get dateTimeFound.
-     *
      * @return \DateTime
      */
     public function getDateTimeFound()
@@ -108,8 +111,6 @@ class IllnessHistory
     }
 
     /**
-     * Set dateTimeHealed.
-     *
      * @param \DateTime|null $dateTimeHealed
      *
      * @return IllnessHistory
@@ -131,37 +132,24 @@ class IllnessHistory
         return $this->dateTimeHealed;
     }
 
+
     /**
-     * Get idIllness.
+     * Get patient.
      *
-     * @return int
+     * @return Patient|null
      */
-    public function getIdIllness()
+    public function getPatient()
     {
-        return $this->idIllness;
+        return $this->patient;
     }
 
     /**
-     * Set idPatient.
+     * Get diagnosedBy.
      *
-     * @param \Patient|null $idPatient
-     *
-     * @return IllnessHistory
+     * @return Doctor|null
      */
-    public function setIdPatient(\Patient $idPatient = null)
+    public function getDiagnosedBy()
     {
-        $this->idPatient = $idPatient;
-
-        return $this;
-    }
-
-    /**
-     * Get idPatient.
-     *
-     * @return \Patient|null
-     */
-    public function getIdPatient()
-    {
-        return $this->idPatient;
+        return $this->diagnosedBy;
     }
 }

@@ -2,27 +2,30 @@
 
 namespace App\Entity;
 
-class Patient
+class Patient extends Person
 {
     /**
      * @var string
      */
     private $illness = '';
 
-    /**
-     * @var \Person
-     */
-    private $idPerson;
+    public static function createPatientCard(string $firstName, string $lastName, string $gender, string $illness): self
+    {
+        return new self($firstName, $lastName, $gender, $illness);
+    }
 
+    protected function __construct(string $firstName, string $lastName, string $gender, string $illness)
+    {
+        $this->illness = $illness;
+        parent::__construct($firstName, $lastName, $gender);
+    }
 
     /**
-     * Set illness.
-     *
      * @param string $illness
      *
      * @return Patient
      */
-    public function setIllness($illness)
+    public function diagnoseIllness($illness)
     {
         $this->illness = $illness;
 
@@ -30,36 +33,10 @@ class Patient
     }
 
     /**
-     * Get illness.
-     *
      * @return string
      */
-    public function getIllness()
+    public function tellIllness()
     {
         return $this->illness;
-    }
-
-    /**
-     * Set idPerson.
-     *
-     * @param \Person $idPerson
-     *
-     * @return Patient
-     */
-    public function setIdPerson(\Person $idPerson)
-    {
-        $this->idPerson = $idPerson;
-
-        return $this;
-    }
-
-    /**
-     * Get idPerson.
-     *
-     * @return \Person
-     */
-    public function getIdPerson()
-    {
-        return $this->idPerson;
     }
 }

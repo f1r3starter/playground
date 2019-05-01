@@ -5,24 +5,41 @@ namespace App\Entity;
 class Person
 {
     /**
-     * @var string
-     */
-    private $firstName = '';
-
-    /**
-     * @var string
-     */
-    private $lastName = '';
-
-    /**
-     * @var string
-     */
-    private $gender = 'm';
-
-    /**
      * @var int
      */
-    private $idPerson;
+    protected $id;
+
+    /**
+     * @var string
+     */
+    protected $firstName = '';
+
+    /**
+     * @var string
+     */
+    protected $lastName = '';
+
+    /**
+     * @var string
+     */
+    protected $gender = 'm';
+
+    protected function __construct(string $firstName, string $lastName, string $gender)
+    {
+        $this->firstName = $firstName;
+        $this->lastName = $lastName;
+        $this->gender = $gender;
+    }
+
+    /**
+     * Get id.
+     *
+     * @return int
+     */
+    public function getId()
+    {
+        return $this->id;
+    }
 
     /**
      * Set firstName.
@@ -94,15 +111,5 @@ class Person
     public function getGender()
     {
         return $this->gender;
-    }
-
-    /**
-     * Get idPerson.
-     *
-     * @return int
-     */
-    public function getIdPerson()
-    {
-        return $this->idPerson;
     }
 }
