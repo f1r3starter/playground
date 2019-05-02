@@ -1,0 +1,14 @@
+{
+    "name": "andreyfilenko/connection_pool",
+    "authors": [
+        {
+            "name": "f1r3starter",
+            "email": "andrey.filenochko@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\" : "src/"
+        }
+    }
+}
