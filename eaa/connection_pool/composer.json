@@ -13,6 +13,7 @@
     },
     "require": {
         "react/event-loop": "^1.1",
-        "react/socket": "^1.2"
+        "react/socket": "^1.2",
+        "react/http": "^0.8.4"
     }
 }
