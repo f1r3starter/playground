@@ -9,7 +9,7 @@ require '../vendor/autoload.php';
 
 $loop = React\EventLoop\Factory::create();
 $socket = new React\Socket\Server('127.0.0.1:8080', $loop);
-$connections = [123,321,456,745];
+$connectionPool = new \App\DB\ConnectionPool();
 
 
 $server = new Server(function (ServerRequestInterface $request) use (&$connections) {
