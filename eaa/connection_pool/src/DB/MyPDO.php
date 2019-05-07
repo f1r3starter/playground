@@ -44,4 +44,9 @@ class MyPDO extends PDO
 
         return $this->query($sql);
     }
+
+    public function someLongQuery(): void
+    {
+        sleep(3);
+    }
 }

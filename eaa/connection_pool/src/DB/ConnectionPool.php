@@ -60,7 +60,14 @@ class ConnectionPool
     {
         if (in_array($PDO, $this->busy)) {
             unset($this->busy[array_search($PDO, $this->busy)]);
+        } else {
+            throw new \InvalidArgumentException('There are no such connection in this pool');
         }
         $this->available[] = $PDO;
+    }
+
+    public function countConnections()
+    {
+        return sprintf('Currently there are %s busy, %s available connections', count($this->busy), count($this->available));
     }
 }

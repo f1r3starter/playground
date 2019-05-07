@@ -9,18 +9,20 @@ require '../vendor/autoload.php';
 
 $loop = React\EventLoop\Factory::create();
 $socket = new React\Socket\Server('127.0.0.1:8080', $loop);
-$connectionPool = new \App\DB\ConnectionPool();
+$connectionPool = new \App\DB\ConnectionPool('mysql:host=localhost;dbname=test;charset=utf8', '', '', null);
 
+$server = new Server(function (ServerRequestInterface $request) use ($connectionPool) {
 
-$server = new Server(function (ServerRequestInterface $request) use (&$connections) {
-    $x = array_pop($connections);
-    sleep(10);
+    $connection = $connectionPool->getConnection();
+    $connection->someLongQuery();
+    $connectionPool->closeConnection($connection);
+
     return new Response(
         200,
         array(
             'Content-Type' => 'text/plain'
         ),
-        (string)($x)
+        $connectionPool->countConnections()
     );
 });
 
