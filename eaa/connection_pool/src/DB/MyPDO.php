@@ -5,7 +5,7 @@ namespace App\DB;
 use PDO;
 use PDOStatement;
 
-class MyPDO extends PDO
+class MyPDO extends PDO implements Connection
 {
     /**
      * MyPDO constructor.
@@ -25,12 +25,6 @@ class MyPDO extends PDO
         parent::__construct($dsn, $username, $password, $options);
     }
 
-    /**
-     * @param string $sql
-     * @param array|null $args
-     *
-     * @return bool|false|PDOStatement
-     */
     public function run(string $sql, ?array $args)
     {
         if ($args)

@@ -44,7 +44,7 @@ class ConnectionPool
         $this->options = $options;
     }
 
-    public function getConnection(): MyPDO
+    public function getConnection(): Connection
     {
         if (empty($this->available)) {
             $connection = new MyPDO($this->dsn, $this->username, $this->password, $this->options);
@@ -56,14 +56,14 @@ class ConnectionPool
         return $connection;
     }
 
-    public function closeConnection(MyPDO $PDO): void
+    public function closeConnection(Connection $connection): void
     {
-        if (in_array($PDO, $this->busy)) {
-            unset($this->busy[array_search($PDO, $this->busy)]);
+        if (in_array($connection, $this->busy)) {
+            unset($this->busy[array_search($connection, $this->busy)]);
         } else {
             throw new \InvalidArgumentException('There are no such connection in this pool');
         }
-        $this->available[] = $PDO;
+        $this->available[] = $connection;
     }
 
     public function countConnections()
