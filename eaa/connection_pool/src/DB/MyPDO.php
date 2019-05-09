@@ -3,7 +3,6 @@
 namespace App\DB;
 
 use PDO;
-use PDOStatement;
 
 class MyPDO extends PDO implements Connection
 {
