@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "baf5cac32adbc6bd044d132959c34ca9",
+    "content-hash": "eb3c527aaff0c0d87b3f841ec339afc8",
     "packages": [
         {
             "name": "evenement/evenement",
@@ -273,6 +273,52 @@
                 "streaming"
             ],
             "time": "2019-01-16T07:26:32+00:00"
+        },
+        {
+            "name": "react/mysql",
+            "version": "v0.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/friends-of-reactphp/mysql.git",
+                "reference": "c420ca0d199f2867854508473f5eccecbcb692f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/friends-of-reactphp/mysql/zipball/c420ca0d199f2867854508473f5eccecbcb692f1",
+                "reference": "c420ca0d199f2867854508473f5eccecbcb692f1",
+                "shasum": ""
+            },
+            "require": {
+                "evenement/evenement": "^3.0 || ^2.1 || ^1.1",
+                "php": ">=5.4.0",
+                "react/event-loop": "^1.0 || ^0.5",
+                "react/promise": "^2.7",
+                "react/promise-stream": "^1.1",
+                "react/promise-timer": "^1.5",
+                "react/socket": "^1.1"
+            },
+            "require-dev": {
+                "clue/block-react": "^1.2",
+                "phpunit/phpunit": "^7.0 || ^6.0 || ^5.0 || ^4.8.35"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "React\\MySQL\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Async MySQL database client for ReactPHP.",
+            "keywords": [
+                "async",
+                "database",
+                "mysql",
+                "reactphp"
+            ],
+            "time": "2019-04-03T12:50:22+00:00"
         },
         {
             "name": "react/promise",
