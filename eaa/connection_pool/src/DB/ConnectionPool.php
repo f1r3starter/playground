@@ -1,73 +1,67 @@
 <?php
 
-
 namespace App\DB;
 
+use React\EventLoop\LoopInterface;
+use React\MySQL\Factory;
+use SplObjectStorage;
 
 class ConnectionPool
 {
     /**
-     * @var MyPDO[]
+     * @var SplObjectStorage|MyPDO[]
      */
-    private $available = [];
+    private $available;
 
     /**
-     * @var MyPDO[]
+     * @var SplObjectStorage|MyPDO[]
      */
-    private $busy = [];
+    private $busy;
 
     /**
-     * @var string|null
+     * @var string
      */
-    private $dsn;
+    private $connectionUri;
 
     /**
-     * @var string|null
+     * @var Factory
      */
-    private $username;
+    private $factory;
 
-    /**
-     * @var string|null
-     */
-    private $password;
-
-    /**
-     * @var array|null
-     */
-    private $options;
-
-    public function __construct(?string $dsn = null, ?string $username = null, ?string $password = null, ?array $options = null)
+    public function __construct(LoopInterface $loop, string $connectionUri)
     {
-        $this->dsn = $dsn;
-        $this->username = $username;
-        $this->password = $password;
-        $this->options = $options;
+        $this->connectionUri = $connectionUri;
+        $this->available = new SplObjectStorage();
+        $this->busy = new SplObjectStorage();
+        $this->factory = new Factory($loop);
     }
 
     public function getConnection(): Connection
     {
-        if (empty($this->available)) {
-            $connection = new MyPDO($this->dsn, $this->username, $this->password, $this->options);
-            $this->busy[] = $connection;
+        if ($this->available->count() > 0) {
+            $this->available->rewind();
+            $connection = $this->available->current();
+            $this->available->detach($connection);
         } else {
-            $connection = array_pop($this->available);
+            $connection = new MyConnection($this->factory->createLazyConnection($this->connectionUri));
         }
+        $this->busy->attach($connection);
 
         return $connection;
     }
 
     public function closeConnection(Connection $connection): void
     {
-        if (in_array($connection, $this->busy)) {
-            unset($this->busy[array_search($connection, $this->busy)]);
+        if ($this->busy->contains($connection)) {
+            $this->busy->detach($connection);
         } else {
             throw new \InvalidArgumentException('There are no such connection in this pool');
         }
-        $this->available[] = $connection;
+        $this->available->attach($connection);
     }
 
     public function countConnections()
     {
-        return sprintf('Currently there are %s busy, %s available connections', count($this->busy), count($this->available));
+        return sprintf('Currently there are %s busy, %s available connections', $this->busy->count(), $this->available->count());
     }
 }
