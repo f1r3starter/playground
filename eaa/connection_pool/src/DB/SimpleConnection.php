@@ -5,7 +5,7 @@ namespace App\DB;
 use React\MySQL\ConnectionInterface;
 use React\MySQL\QueryResult;
 
-class MyConnection implements Connection
+class SimpleConnection implements Connection
 {
     /**
      * @var ConnectionInterface

@@ -13,8 +13,8 @@ $connectionPool = new ConnectionPool($loop, 'test:test@localhost:3308/test');
 
 $server = new StreamingServer(
     function (ServerRequestInterface $request) use ($connectionPool) {
-        $connection = $connectionPool->getConnection();
-        return $connection->query('select sleep(3);')
+        $connection = $connectionPool->getConnection(true);
+        return $connection->query('select sleep(7);')
             ->then(
                 function (array $result) use ($connection, $connectionPool) {
                     $connectionPool->closeConnection($connection);
@@ -31,7 +31,16 @@ $server = new StreamingServer(
                         $connectionPool->countConnections()
                     );
                 }
-            );
+            )
+            ->otherwise(function (Exception $exception) {
+                return new Response(
+                    500,
+                    array(
+                        'Content-Type' => 'text/plain',
+                    ),
+                    $exception->getMessage()
+                );
+            });
     }
 );
 

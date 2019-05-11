@@ -28,22 +28,31 @@ class ConnectionPool
      */
     private $factory;
 
+    /**
+     * @var LoopInterface
+     */
+    private $loop;
+
     public function __construct(LoopInterface $loop, string $connectionUri)
     {
         $this->connectionUri = $connectionUri;
         $this->available = new SplObjectStorage();
         $this->busy = new SplObjectStorage();
         $this->factory = new Factory($loop);
+        $this->loop = $loop;
     }
 
-    public function getConnection(): Connection
+    public function getConnection(bool $withTimeout = false): Connection
     {
         if ($this->available->count() > 0) {
             $this->available->rewind();
             $connection = $this->available->current();
             $this->available->detach($connection);
         } else {
-            $connection = new MyConnection($this->factory->createLazyConnection($this->connectionUri));
+            $lazyConnection = $this->factory->createLazyConnection($this->connectionUri);
+            $connection = $withTimeout ?
+                new TimerConnection($lazyConnection, $this->loop) :
+                new SimpleConnection($lazyConnection);
         }
         $this->busy->attach($connection);
 
