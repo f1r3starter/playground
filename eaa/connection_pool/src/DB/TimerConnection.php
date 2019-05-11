@@ -5,7 +5,6 @@ namespace App\DB;
 use React\EventLoop\LoopInterface;
 use React\MySQL\ConnectionInterface;
 use function React\Promise\Timer\timeout;
-use React\Promise\Timer\TimeoutException;
 
 class TimerConnection extends SimpleConnection
 {
@@ -31,9 +30,6 @@ class TimerConnection extends SimpleConnection
         return timeout(parent::query($sql), $this->timeout, $this->loop)
             ->then(function (array $result) {
                 return $result;
-            })
-            ->otherwise(function (TimeoutException $exception) {
-                throw $exception;
             });
     }
 }
