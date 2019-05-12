@@ -27,9 +27,6 @@ class TimerConnection extends SimpleConnection
 
     public function query(string $sql)
     {
-        return timeout(parent::query($sql), $this->timeout, $this->loop)
-            ->then(function (array $result) {
-                return $result;
-            });
+        return timeout(parent::query($sql), $this->timeout, $this->loop);
     }
 }
