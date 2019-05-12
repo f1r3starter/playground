@@ -18,11 +18,11 @@ class TimerConnection extends SimpleConnection
      */
     private $timeout;
 
-    public function __construct(ConnectionInterface $connection, LoopInterface $loop, int $timeout = 3)
+    public function __construct(ConnectionInterface $connection, LoopInterface $loop, Retryer $retryer, int $timeout = 3)
     {
         $this->loop = $loop;
         $this->timeout = $timeout;
-        parent::__construct($connection);
+        parent::__construct($connection, $retryer);
     }
 
     public function query(string $sql)

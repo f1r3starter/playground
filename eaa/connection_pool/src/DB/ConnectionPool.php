@@ -42,7 +42,7 @@ class ConnectionPool
         $this->loop = $loop;
     }
 
-    public function getConnection(bool $withTimeout = false): Connection
+    public function getConnection(bool $withTimeout = false, int $maxTries = 1): Connection
     {
         if ($this->available->count() > 0) {
             $this->available->rewind();
@@ -50,9 +50,10 @@ class ConnectionPool
             $this->available->detach($connection);
         } else {
             $lazyConnection = $this->factory->createLazyConnection($this->connectionUri);
+            $retryer = new QueryRetryer($maxTries);
             $connection = $withTimeout ?
-                new TimerConnection($lazyConnection, $this->loop) :
-                new SimpleConnection($lazyConnection);
+                new TimerConnection($lazyConnection, $this->loop, $retryer) :
+                new SimpleConnection($lazyConnection, $retryer);
         }
         $this->busy->attach($connection);
 
