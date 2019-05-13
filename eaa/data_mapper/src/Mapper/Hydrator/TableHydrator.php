@@ -54,6 +54,7 @@ class TableHydrator implements Hydrator
 
     /**
      * @param $object
+     * @param bool $withRelated
      *
      * @return array
      */

@@ -18,9 +18,9 @@ trait ProperyAccessor
     }
 
     /**
-     * @param        $object
+     * @param $object
      * @param string $attribute
-     * @param        $value
+     * @param $value
      */
     private function setProperty($object, string $attribute, $value): void
     {
