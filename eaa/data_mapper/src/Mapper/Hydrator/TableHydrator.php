@@ -2,12 +2,12 @@
 
 namespace App\Mapper\Hydrator;
 
-use App\Mapper\ProperyAccessor;
+use App\Mapper\PropertyAccessor;
 use App\Mapper\Reader\MetadataReader;
 
 class TableHydrator implements Hydrator
 {
-    use ProperyAccessor;
+    use PropertyAccessor;
 
     /**
      * @var MetadataReader

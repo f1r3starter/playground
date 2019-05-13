@@ -15,7 +15,7 @@ use PDO;
 
 class DataMapper
 {
-    use ProperyAccessor;
+    use PropertyAccessor;
 
     /**
      * @var string

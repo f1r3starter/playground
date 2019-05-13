@@ -2,7 +2,7 @@
 
 namespace App\Mapper;
 
-trait ProperyAccessor
+trait PropertyAccessor
 {
     /**
      * @param $object
