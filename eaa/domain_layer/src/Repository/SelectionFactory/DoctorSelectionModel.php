@@ -4,7 +4,7 @@
 namespace App\Repository\SelectionFactory;
 
 
-class DoctorSelectionModel
+class DoctorSelectionModel implements SelectionModel
 {
     /**
      * @var string

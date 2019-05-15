@@ -19,7 +19,7 @@ class DoctrorSelectionFactory implements SelectionFactory
         $this->connection = $connection;
     }
 
-    public function newSelection(DoctorSelectionModel $selectionModel, ?QueryBuilder $qb = null): void
+    public function newSelection(SelectionModel $selectionModel, ?QueryBuilder $qb = null): void
     {
         if (null === $qb) {
             $qb = $this->connection->createQueryBuilder('d')
