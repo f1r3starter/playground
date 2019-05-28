@@ -1,5 +1,6 @@
 <?php
 
+use App\Repository\SelectionFactory\DoctorSelectionFactory;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use Doctrine\ORM\Configuration;
@@ -12,6 +13,7 @@ $conn = array(
     'password' => '',
     'dbname'   => '',
 );
+
 $driver = new SimplifiedXmlDriver([__DIR__ . '/../config/mapping' => 'App\Entity']);
 $config = (new Configuration());
 $config->setAutoGenerateProxyClasses(true);
@@ -23,7 +25,9 @@ $config->setProxyNamespace('App\Proxy');
 $entityManager = EntityManager::create($conn, $config);
 
 
-$dr = $entityManager->getRepository(\App\Entity\Doctor::class);
-$doctor = $dr->getDoctorById(1);
+$dr = new \App\Repository\SelectionFactory\DoctorSelectionModel();
+$dr = $dr->setSpeciality('cardiolog');
 
-echo $doctor->getFirstName();
+$factory = new DoctorSelectionFactory($entityManager);
+
+print_r($factory->newSelection($dr));
