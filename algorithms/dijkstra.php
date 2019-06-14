@@ -1,3 +1,5 @@
 <?php
 
-function dijkstra($graphs) {}
+function dijkstra(array $graphs) {
+
+}
