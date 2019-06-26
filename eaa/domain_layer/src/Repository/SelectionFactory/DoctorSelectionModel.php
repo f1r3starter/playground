@@ -67,7 +67,7 @@ class DoctorSelectionModel implements SelectionModel
 
     /**
      * @param string $lastName
-     * 
+     *
      * @return DoctorSelectionModel
      */
     public function setLastName(string $lastName): DoctorSelectionModel

@@ -1,14 +1,10 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: andreyfilenko
- * Date: 2018-12-13
- * Time: 23:13
- */
+
 use Application\DumbClass;
 use Application\SimpleClass;
+use PHPUnit\Framework\TestCase;
 
-class SimpleClassTest extends \PHPUnit\Framework\TestCase
+class SimpleClassTest extends TestCase
 {
     public function testAdd()
     {
