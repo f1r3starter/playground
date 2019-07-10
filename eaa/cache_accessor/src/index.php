@@ -10,6 +10,7 @@ $cache = new \App\Cache\Cache(
 print_r($cache->firstQuery());
 print_r($cache->firstQuery());
 print_r($cache->firstQuery());
+print_r($cache->secondQuery());
 
 //First was calledArray
 //(
