@@ -24,3 +24,7 @@ print_r($cache->secondQuery());
 //(
 //    [0] => data1
 //)
+//Second was calledArray
+//(
+//    [0] => data2
+//)
