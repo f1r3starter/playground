@@ -6,7 +6,7 @@ function removeDuplicateCharacters($s)
         array_filter(
             count_chars($s),
             function ($v) {
-                return $v == 1;
+                return $v === 1;
             }
         )
     ));
