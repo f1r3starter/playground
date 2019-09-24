@@ -1,11 +1,11 @@
 <?php
 
 // Complete the checkMagazine function below.
-function checkMagazine($magazine, $note) {
+function checkMagazine($magazine, $note)
+{
     $magazine = array_count_values($magazine);
     $note = array_count_values($note);
-    foreach ($note as $notice => $counter)
-    {
+    foreach ($note as $notice => $counter) {
         if (!isset($magazine[$notice]) || $magazine[$notice] < $counter) {
             return 'No';
         }

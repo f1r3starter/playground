@@ -1,6 +1,7 @@
 <?php
 
-function firstNotDivisible($d, $s) {
+function firstNotDivisible($d, $s)
+{
     while (1) {
         $t = count($d);
         foreach ($d as $v)

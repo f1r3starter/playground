@@ -1,7 +1,8 @@
 <?php
 
-function firstMultiple($d, $s) {
-    for (;;) {
+function firstMultiple($d, $s)
+{
+    for (; ;) {
         foreach ($d as $v) {
             if ($s % $v) {
                 ++$s;

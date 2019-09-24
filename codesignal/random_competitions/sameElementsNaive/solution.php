@@ -1,5 +1,6 @@
 <?php
 
-function sameElementsNaive(...$a) {
+function sameElementsNaive(...$a)
+{
     return count(array_intersect(...$a));
 }

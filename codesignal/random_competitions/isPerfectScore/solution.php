@@ -1,5 +1,6 @@
 <?php
 
-function isPerfectScore(...$a) {
+function isPerfectScore(...$a)
+{
     return min($a);
 }

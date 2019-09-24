@@ -1,6 +1,7 @@
 <?php
 
-function brothersInTheBar($glasses) {
+function brothersInTheBar($glasses)
+{
     $i = 1;
     $r = 0;
     $s[] = [$glasses[0], 1];

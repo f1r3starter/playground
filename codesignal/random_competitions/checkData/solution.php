@@ -1,5 +1,6 @@
 <?php
 
-function checkData($i) {
+function checkData($i)
+{
     return strlen($i) == 3;
 }

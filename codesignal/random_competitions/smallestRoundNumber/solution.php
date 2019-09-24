@@ -1,5 +1,6 @@
 <?php
 
-function nearestRoundNumber($v) {
-    return ceil($v/10)*10;
+function nearestRoundNumber($v)
+{
+    return ceil($v / 10) * 10;
 }

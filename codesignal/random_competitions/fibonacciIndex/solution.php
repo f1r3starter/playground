@@ -1,11 +1,12 @@
 <?php
 
-function fibonacciIndex($n) {
+function fibonacciIndex($n)
+{
     $k = 1;
     $m = 0;
-    while ($n != strlen($f)){
+    while ($n != strlen($f)) {
         $f = $k + $m;
-        [$m,$k] = [$k,$f];
+        [$m, $k] = [$k, $f];
         $i++;
     }
     return $n == 1 ? 0 : ++$i;

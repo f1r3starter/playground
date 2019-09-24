@@ -1,7 +1,8 @@
 <?php
 
 // Complete the repeatedString function below.
-function repeatedString($s, $n) {
+function repeatedString($s, $n)
+{
     $s = str_split($s);
     $c = array_count_values($s);
     if (!isset($c['a'])) {

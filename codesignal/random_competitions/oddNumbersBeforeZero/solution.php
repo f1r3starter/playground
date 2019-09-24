@@ -1,6 +1,7 @@
 <?php
 
-function oddNumbersBeforeZero($s) {
+function oddNumbersBeforeZero($s)
+{
     $i = 0;
     while ($s[$i])
         $t += $s[$i++] & 1;

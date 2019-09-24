@@ -1,7 +1,8 @@
 <?php
 
 // Complete the isBalanced function below.
-function isBalanced($s) {
+function isBalanced($s)
+{
     $s = str_split($s);
     $t = [];
     foreach ($s as $l) {

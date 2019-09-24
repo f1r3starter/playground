@@ -1,6 +1,7 @@
 <?php
 
-function directionOfReading($n) {
+function directionOfReading($n)
+{
     $l = count($n);
     foreach ($n as $v) {
         $t[] = str_split(sprintf("%0{$l}d", $v));

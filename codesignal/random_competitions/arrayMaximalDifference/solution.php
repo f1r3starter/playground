@@ -1,5 +1,6 @@
 <?php
 
-function arrayMaximalDifference($i) {
+function arrayMaximalDifference($i)
+{
     return max($i) - min($i);
 }

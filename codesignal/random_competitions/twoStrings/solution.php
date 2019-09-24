@@ -1,11 +1,12 @@
 <?php
 
 // Complete the twoStrings function below.
-function twoStrings($s1, $s2) {
+function twoStrings($s1, $s2)
+{
     $s1 = str_split($s1);
     $s2 = str_split($s2);
 
-    return array_intersect($s1,$s2) ? 'YES' : 'NO';
+    return array_intersect($s1, $s2) ? 'YES' : 'NO';
 }
 
 $fptr = fopen(getenv("OUTPUT_PATH"), "w");
