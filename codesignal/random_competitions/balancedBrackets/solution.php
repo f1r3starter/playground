@@ -10,17 +10,15 @@ function isBalanced($s)
             $t[] = $l;
         } else {
             $m = array_pop($t);
-            if (($m === '[' && $l === ']')
-                || ($m === '{' && $l === '}')
-                || ($m === '(' && $l === ')')) {
-                continue;
+            if (empty($m) || ($m === '[' && $l !== ']')
+                || ($m === '{' && $l !== '}')
+                || ($m === '(' && $l !== ')')) {
+                return 'NO';
             }
-
-            return 'NO';
         }
     }
 
-    return 'YES';
+    return empty($t) ? 'YES' : 'NO';
 }
 
 $fptr = fopen(getenv("OUTPUT_PATH"), "w");
