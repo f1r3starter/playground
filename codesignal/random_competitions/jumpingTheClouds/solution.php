@@ -10,9 +10,9 @@ function jumpingOnClouds($c) {
     return $r - 1;
 }
 
-$fptr = fopen(getenv("OUTPUT_PATH"), "w");
+$fptr = fopen(getenv('OUTPUT_PATH'), 'wb');
 
-$stdin = fopen("php://stdin", "r");
+$stdin = fopen('php://stdin', 'rb');
 
 fscanf($stdin, "%d\n", $n);
 
