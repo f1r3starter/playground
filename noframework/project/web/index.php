@@ -1,21 +1,26 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
-require __DIR__.'/../vendor/autoload.php';
+require __DIR__ . '/../vendor/autoload.php';
 
+use App\Framework;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
+use Symfony\Component\HttpKernel\Controller\ControllerResolver;
+use Symfony\Component\Routing\Matcher\UrlMatcher;
+use Symfony\Component\Routing\RequestContext;
 
 $request = Request::createFromGlobals();
 $routes = include __DIR__ . '/../config/routes.php';
 
-$context = new \Symfony\Component\Routing\RequestContext();
-$matcher = new \Symfony\Component\Routing\Matcher\UrlMatcher($routes, $context);
+$context = new RequestContext();
+$matcher = new UrlMatcher($routes, $context);
 
-$controllerResolver = new \Symfony\Component\HttpKernel\Controller\ControllerResolver();
-$argumentResolver = new \Symfony\Component\HttpKernel\Controller\ArgumentResolver();
+$controllerResolver = new ControllerResolver();
+$argumentResolver = new ArgumentResolver();
 
-$framework = new \App\Framework($matcher, $controllerResolver, $argumentResolver);
+$framework = new Framework($matcher, $controllerResolver, $argumentResolver);
 $response = $framework->handle($request);
 
 $response->send();

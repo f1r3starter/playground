@@ -1,14 +1,17 @@
 <?php
 
-$routes = new \Symfony\Component\Routing\RouteCollection();
+use Symfony\Component\Routing\Route;
+use Symfony\Component\Routing\RouteCollection;
+
+$routes = new RouteCollection();
 
 $routes->add(
     'is_odd',
-    new \Symfony\Component\Routing\Route(
+    new Route(
         '/is_odd/{num}', [
-        'num' => null,
-        '_controller' => 'App\Controllers\OddController::index',
-    ]
+            'num' => null,
+            '_controller' => 'App\Controllers\OddController::index',
+        ]
     )
 );
 

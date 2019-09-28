@@ -10,6 +10,7 @@ namespace App\Tests;
 
 use App\Framework;
 use PHPUnit\Framework\TestCase;
+use RuntimeException;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
@@ -31,9 +32,29 @@ class FrameworkTest extends TestCase
         $this->assertEquals(404, $response->getStatusCode());
     }
 
+    private function getFrameworkForException($exception)
+    {
+        $matcher = $this->createMock(UrlMatcherInterface::class);
+
+        $matcher
+            ->expects($this->once())
+            ->method('match')
+            ->will($this->throwException($exception));
+
+        $matcher
+            ->expects($this->once())
+            ->method('getContext')
+            ->willReturn($this->createMock(RequestContext::class));
+
+        $controllerResolver = $this->createMock(ControllerResolverInterface::class);
+        $argumentResolver = $this->createMock(ArgumentResolverInterface::class);
+
+        return new Framework($matcher, $controllerResolver, $argumentResolver);
+    }
+
     public function testErrorHandling()
     {
-        $framework = $this->getFrameworkForException(new \RuntimeException());
+        $framework = $this->getFrameworkForException(new RuntimeException());
 
         $response = $framework->handle(new Request());
 
@@ -58,8 +79,7 @@ class FrameworkTest extends TestCase
         $matcher
             ->expects($this->once())
             ->method('getContext')
-            ->willReturn($this->createMock(RequestContext::class))
-        ;
+            ->willReturn($this->createMock(RequestContext::class));
 
         $controllerResolver = new ControllerResolver();
         $argumentResolver = new ArgumentResolver();
@@ -70,26 +90,5 @@ class FrameworkTest extends TestCase
 
         $this->assertEquals(200, $response->getStatusCode());
         $this->assertContains('Foo Bar', $response->getContent());
-    }
-
-    private function getFrameworkForException($exception)
-    {
-        $matcher = $this->createMock(UrlMatcherInterface::class);
-
-        $matcher
-            ->expects($this->once())
-            ->method('match')
-            ->will($this->throwException($exception));
-
-        $matcher
-            ->expects($this->once())
-            ->method('getContext')
-            ->willReturn($this->createMock(RequestContext::class))
-        ;
-
-        $controllerResolver = $this->createMock(ControllerResolverInterface::class);
-        $argumentResolver = $this->createMock(ArgumentResolverInterface::class);
-
-        return new Framework($matcher, $controllerResolver, $argumentResolver);
     }
 }

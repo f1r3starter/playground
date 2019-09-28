@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Exception;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolverInterface;
@@ -9,7 +10,8 @@ use Symfony\Component\HttpKernel\Controller\ControllerResolverInterface;
 use Symfony\Component\Routing\Exception\ResourceNotFoundException;
 use Symfony\Component\Routing\Matcher\UrlMatcherInterface;
 
-class Framework {
+class Framework
+{
 
     protected $matcher;
     protected $controllerResolver;
@@ -39,7 +41,7 @@ class Framework {
             return call_user_func_array($controller, $arguments);
         } catch (ResourceNotFoundException $exception) {
             return new Response('Not Found', 404);
-        } catch (\Exception $exception) {
+        } catch (Exception $exception) {
             return new Response('An error occurred', 500);
         }
     }
