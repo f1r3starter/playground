@@ -1,7 +1,7 @@
 <?php
 
 // Complete the countingValleys function below.
-function countingValleys($n, $s) {
+function countingValleys($s) {
     $h = str_split($s);
     $r = $v = 0;
     foreach ($h as $i => $a)
@@ -23,7 +23,7 @@ fscanf($stdin, "%d\n", $n);
 $s = '';
 fscanf($stdin, "%[^\n]", $s);
 
-$result = countingValleys($n, $s);
+$result = countingValleys($s);
 
 fwrite($fptr, $result . "\n");
 
