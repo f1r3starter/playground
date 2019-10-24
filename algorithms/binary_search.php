@@ -11,7 +11,7 @@ while ($length - $position >= 1) {
     ++$iterations;
     $index = (int)(($position + $length) / 2);
     if ($array[$index] === $searching) {
-        die(sprintf('Searching index is %d in %d iterations', $index, $iterations));
+        echo sprintf('Searching index is %d in %d iterations', $index, $iterations); break;
     } elseif ($array[$index] < $searching) {
         $position = $index;
     } else {
