@@ -1,21 +1,24 @@
 <?php
 
-$searching = 2;
+$searching = 17;
 
 $array = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 17, 19, 40, 42];
 
-$length = count($array);
-$iterations = $position = 0;
+$right = count($array);
+$iterations = 0;
+$left = 0;
 
-while ($length - $position >= 1) {
+while ($right - $left >= 1) {
     ++$iterations;
-    $index = (int)(($position + $length) / 2);
+    $index = (int)(($left + $right) / 2);
     if ($array[$index] === $searching) {
-        echo sprintf('Searching index is %d in %d iterations', $index, $iterations); break;
-    } elseif ($array[$index] < $searching) {
-        $position = $index;
+        die(sprintf('Searching index is %d in %d iterations', $index, $iterations));
+    }
+
+    if ($array[$index] < $searching) {
+        $left = $index;
     } else {
-        $length = $index;
+        $right = $index;
     }
 }
 
