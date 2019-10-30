@@ -7,8 +7,7 @@ function quick_sort($arr)
     }
     $pivotNum = $arr[floor(count($arr) / 2)];
     $result = $higher = $lower = [];
-    foreach ($arr as $num)
-    {
+    foreach ($arr as $num) {
         if ($num > $pivotNum) {
             $higher[] = $num;
         } elseif ($num < $pivotNum) {

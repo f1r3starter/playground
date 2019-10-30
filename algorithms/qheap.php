@@ -1,16 +1,27 @@
 <?php
 
-class HeapHop {
+class HeapHop
+{
     private $a = [];
     private $c = 0;
 
-    public function insert(int $val): void {
+    public function insert(int $val): void
+    {
         $this->c++;
         $this->a[$this->c] = $val;
         $this->swim($this->c);
     }
 
-    public function delete(int $val): void {
+    private function swim($i): void
+    {
+        while ($i > 1 && $this->a[$i] < $this->a[$i / 2]) {
+            [$this->a[$i], $this->a[$i / 2]] = [$this->a[$i / 2], $this->a[$i]];
+            $i /= 2;
+        }
+    }
+
+    public function delete(int $val): void
+    {
         $se = -1;
         foreach ($this->a as $in => $el) {
             if ($el === $val) {
@@ -24,10 +35,6 @@ class HeapHop {
             $se === 1 || $this->a[$se] > $this->a[$se / 2] ? $this->sink($se) : $this->swim($se);
             $this->a[$this->c + 1] = -1;
         }
-    }
-
-    public function getMin(): int {
-        return $this->a[1];
     }
 
     private function sink($i): void
@@ -46,12 +53,9 @@ class HeapHop {
         }
     }
 
-    private function swim($i): void
+    public function getMin(): int
     {
-        while ($i > 1 && $this->a[$i] < $this->a[$i / 2]) {
-            [$this->a[$i], $this->a[$i / 2]] = [$this->a[$i / 2], $this->a[$i]];
-            $i /= 2;
-        }
+        return $this->a[1];
     }
 }
 
