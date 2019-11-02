@@ -10,12 +10,12 @@ class Deque implements Iterable
     /**
      * @var Node|null
      */
-    private $first;
+    private $head;
 
     /**
      * @var Node|null
      */
-    private $last;
+    private $tail;
 
     /**
      * @return bool
@@ -38,14 +38,14 @@ class Deque implements Iterable
      */
     public function addFirst(object $item): void
     {
-        $newFirst = new Node($item);
+        $newHead = new Node($item);
         if ($this->isEmpty()) {
-            $this->first = $newFirst;
-            $this->last = $newFirst;
+            $this->head = $newHead;
+            $this->tail = $newHead;
         } else {
-            $this->first->setPrev($newFirst);
-            $newFirst->setNext($this->first);
-            $this->first = $newFirst;
+            $this->head->setPrev($newHead);
+            $newHead->setNext($this->head);
+            $this->head = $newHead;
         }
 
         ++$this->size;
@@ -54,17 +54,25 @@ class Deque implements Iterable
     // add the item to the back
     public function addLast($item): void
     {
+        $newTail = new Node($item);
+        if (null !== $this->tail) {
+            $newTail->setPrev($this->tail);
+            $this->tail->setNext($newTail);
+        }
+        $this->tail = $newTail;
+        $this->head = $this->head ?? $this->tail;
 
+        ++$this->size;
     }
 
     // remove and return the item from the front
-    public function removeFirst()
+    public function removeFirst(): object
     {
 
     }
 
     // remove and return the item from the back
-    public function removeLast()
+    public function removeLast(): object
     {
 
     }
