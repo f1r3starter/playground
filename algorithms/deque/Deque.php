@@ -75,7 +75,7 @@ class Deque implements DequeInterface
     public function removeFirst(): object
     {
         if (null === $this->head) {
-            throw new LogicException();
+            throw new \LogicException();
         }
 
         $value = $this->head->getValue();
