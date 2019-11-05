@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Iterator;
+use LogicException;
+
 class Deque implements DequeInterface
 {
     /**
@@ -75,7 +78,7 @@ class Deque implements DequeInterface
     public function removeFirst(): object
     {
         if (null === $this->head) {
-            throw new \LogicException();
+            throw new LogicException();
         }
 
         $value = $this->head->getValue();
@@ -99,7 +102,7 @@ class Deque implements DequeInterface
     public function removeLast(): object
     {
         if (null === $this->tail) {
-            throw new \LogicException();
+            throw new LogicException();
         }
 
         $value = $this->tail->getValue();
@@ -118,9 +121,9 @@ class Deque implements DequeInterface
     }
 
     /**
-     * @return \Iterator|void
+     * @return Iterator|void
      */
-    public function iterator(): \Iterator
+    public function iterator(): Iterator
     {
         return new DequeIterator($this->head);
     }

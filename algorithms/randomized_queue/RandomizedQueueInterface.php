@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Iterator;
+
 interface RandomizedQueueInterface
 {
     /**
@@ -30,7 +32,7 @@ interface RandomizedQueueInterface
     public function sample(): object;
 
     /**
-     * @return \Iterator
+     * @return Iterator
      */
-    public function iterator(): \Iterator;
+    public function iterator(): Iterator;
 }

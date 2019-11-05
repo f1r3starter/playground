@@ -2,7 +2,9 @@
 
 namespace App;
 
-class RandomizedQueueIterator implements \Iterator
+use Iterator;
+
+class RandomizedQueueIterator implements Iterator
 {
     /**
      * @var object[]

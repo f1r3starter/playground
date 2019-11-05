@@ -2,6 +2,8 @@
 
 namespace App;
 
+use Iterator;
+
 interface DequeInterface
 {
     /**
@@ -35,7 +37,7 @@ interface DequeInterface
     public function removeLast(): object;
 
     /**
-     * @return \Iterator
+     * @return Iterator
      */
-    public function iterator(): \Iterator;
+    public function iterator(): Iterator;
 }

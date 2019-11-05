@@ -2,7 +2,9 @@
 
 namespace App;
 
-class DequeIterator implements \Iterator
+use Iterator;
+
+class DequeIterator implements Iterator
 {
     /**
      * @var Node|null
