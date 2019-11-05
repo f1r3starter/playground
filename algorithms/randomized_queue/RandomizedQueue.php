@@ -2,6 +2,9 @@
 
 namespace App;
 
+use Iterator;
+use LogicException;
+
 class RandomizedQueue implements RandomizedQueueInterface
 {
     /**
@@ -45,7 +48,7 @@ class RandomizedQueue implements RandomizedQueueInterface
     public function dequeue(): object
     {
         if ($this->isEmpty()) {
-            throw new \LogicException();
+            throw new LogicException();
         }
 
         $randomIndex = $this->randomIndex();
@@ -62,16 +65,16 @@ class RandomizedQueue implements RandomizedQueueInterface
     public function sample(): object
     {
         if ($this->isEmpty()) {
-            throw new \LogicException();
+            throw new LogicException();
         }
 
         return $this->items[$this->randomIndex()];
     }
 
     /**
-     * @return \Iterator
+     * @return Iterator
      */
-    public function iterator(): \Iterator
+    public function iterator(): Iterator
     {
         return new RandomizedQueueIterator($this->items);
     }

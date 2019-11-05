@@ -1,8 +1,10 @@
 <?php
 
+use App\RandomizedQueue;
+
 require('vendor/autoload.php');
 
-$queue = new \App\RandomizedQueue();
+$queue = new RandomizedQueue();
 
 foreach (range(1, 100000) as $num) {
     $item = new stdClass();
