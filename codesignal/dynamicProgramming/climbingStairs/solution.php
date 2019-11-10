@@ -6,5 +6,6 @@ function climbingStairs($n) {
     for ($i = 0; $i <= $n; $i++) {
         [$num, $num2] = [$num2, $num + $num2];
     }
+
     return $num;
 }
