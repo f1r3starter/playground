@@ -25,7 +25,7 @@ class RGB
      * @var array
      */
     private $cost = [
-        0 => [
+        [
             self::RED => 0,
             self::GREEN => 0,
             self::BLUE => 0,
