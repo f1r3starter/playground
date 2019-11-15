@@ -22,9 +22,9 @@ interface DequeInterface
     public function addFirst(object $item): void;
 
     /**
-     * @param $item
+     * @param object $item
      */
-    public function addLast($item): void;
+    public function addLast(object $item): void;
 
     /**
      * @return object
