@@ -57,9 +57,9 @@ class Deque implements DequeInterface
     }
 
     /**
-     * @param $item
+     * @param object $item
      */
-    public function addLast($item): void
+    public function addLast(object $item): void
     {
         $newTail = new Node($item);
         if (null !== $this->tail) {
