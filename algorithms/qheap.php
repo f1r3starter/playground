@@ -59,9 +59,9 @@ class HeapHop
     }
 }
 
-$fptr = fopen("php://stdout", "w");
+$fptr = fopen("php://stdout", 'wb');
 
-$stdin = fopen("php://stdin", "r");
+$stdin = fopen("php://stdin", 'rb');
 
 fscanf($stdin, "%d\n", $q);
 
