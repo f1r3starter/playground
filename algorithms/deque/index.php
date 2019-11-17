@@ -23,7 +23,7 @@ assert(1334 === $deque->size());
 foreach (range(0, 666) as $value) {
     $head = $deque->removeFirst();
     $tail = $deque->removeLast();
-    assert($head->value ===  666 - $value);
+    assert($head->value === 666 - $value);
     assert($tail->value === $value);
 }
 
@@ -43,8 +43,7 @@ foreach (range(0, 666) as $value) {
 
 $iterator = $dequeToIterate->iterator();
 
-while ($iterator->valid())
-{
+while ($iterator->valid()) {
     $item = $iterator->current();
     $iterator->next();
 }

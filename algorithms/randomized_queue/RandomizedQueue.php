@@ -18,14 +18,6 @@ class RandomizedQueue implements RandomizedQueueInterface
     private $size;
 
     /**
-     * @return bool
-     */
-    public function isEmpty(): bool
-    {
-        return 0 === $this->size;
-    }
-
-    /**
      * @return int
      */
     public function size(): int
@@ -60,6 +52,22 @@ class RandomizedQueue implements RandomizedQueueInterface
     }
 
     /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return 0 === $this->size;
+    }
+
+    /**
+     * @return int
+     */
+    private function randomIndex(): int
+    {
+        return array_rand($this->items);
+    }
+
+    /**
      * @return object
      */
     public function sample(): object
@@ -77,13 +85,5 @@ class RandomizedQueue implements RandomizedQueueInterface
     public function iterator(): Iterator
     {
         return new RandomizedQueueIterator($this->items);
-    }
-
-    /**
-     * @return int
-     */
-    private function randomIndex(): int
-    {
-        return array_rand($this->items);
     }
 }

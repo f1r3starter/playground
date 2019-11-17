@@ -2,7 +2,8 @@
 
 namespace App;
 
-class Node {
+class Node
+{
     /**
      * @var object
      */
