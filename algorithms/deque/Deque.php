@@ -23,14 +23,6 @@ class Deque implements DequeInterface
     private $tail;
 
     /**
-     * @return bool
-     */
-    public function isEmpty(): bool
-    {
-        return $this->size === 0;
-    }
-
-    /**
      * @return int
      */
     public function size(): int
@@ -54,6 +46,14 @@ class Deque implements DequeInterface
         }
 
         ++$this->size;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isEmpty(): bool
+    {
+        return $this->size === 0;
     }
 
     /**
