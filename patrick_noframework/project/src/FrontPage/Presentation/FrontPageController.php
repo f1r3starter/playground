@@ -5,7 +5,7 @@
  * Date: 2019-01-06
  * Time: 21:54
  */
-declare(strict_types = 1);
+declare(strict_types=1);
 
 namespace SocialNews\FrontPage\Presentation;
 

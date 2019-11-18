@@ -9,6 +9,7 @@
 namespace SocialNews\Submission\Domain;
 
 
+use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -27,7 +28,7 @@ class Submission
      */
     private $title;
     /**
-     * @var \DateTimeImmutable
+     * @var DateTimeImmutable
      */
     private $creationDate;
     /**
@@ -35,13 +36,24 @@ class Submission
      */
     private $authorId;
 
-    public function __construct(UuidInterface $id, AuthorId $authorId, string $url, string $title, \DateTimeImmutable $creationDate)
+    public function __construct(UuidInterface $id, AuthorId $authorId, string $url, string $title, DateTimeImmutable $creationDate)
     {
         $this->id = $id;
         $this->url = $url;
         $this->title = $title;
         $this->creationDate = $creationDate;
         $this->authorId = $authorId;
+    }
+
+    public static function submit(UuidInterface $authorId, string $url, string $title): self
+    {
+        return new self(
+            Uuid::uuid4(),
+            AuthorId::fromUuid($authorId),
+            $url,
+            $title,
+            new DateTimeImmutable()
+        );
     }
 
     /**
@@ -69,9 +81,9 @@ class Submission
     }
 
     /**
-     * @return \DateTimeImmutable
+     * @return DateTimeImmutable
      */
-    public function getCreationDate(): \DateTimeImmutable
+    public function getCreationDate(): DateTimeImmutable
     {
         return $this->creationDate;
     }
@@ -79,16 +91,5 @@ class Submission
     public function getAuthorId(): AuthorId
     {
         return $this->authorId;
-    }
-
-    public static function submit(UuidInterface $authorId, string $url, string $title): self
-    {
-        return new self(
-            Uuid::uuid4(),
-            AuthorId::fromUuid($authorId),
-            $url,
-            $title,
-            new \DateTimeImmutable()
-        );
     }
 }

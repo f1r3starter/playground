@@ -2,13 +2,15 @@
 
 declare(strict_types=1);
 
+use Doctrine\DBAL\Connection;
+
 define('ROOTDIR', dirname(__DIR__));
 
 require ROOTDIR . '/vendor/autoload.php';
 
 $injector = require ROOTDIR . '/src/Dependencies.php';
 
-$connection = $injector->make(\Doctrine\DBAL\Connection::class);
+$connection = $injector->make(Connection::class);
 
 function availableMigrations()
 {

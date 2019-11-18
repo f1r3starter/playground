@@ -1,17 +1,19 @@
 <?php
 
-declare(strict_types = 1);
+declare(strict_types=1);
 
 define('ROOTDIR', dirname(__DIR__));
 
 require ROOTDIR . '/vendor/autoload.php';
 
 use FastRoute\Dispatcher;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Tracy\Debugger;
 
-\Tracy\Debugger::enable(false);
+Debugger::enable(false);
 
-$request = \Symfony\Component\HttpFoundation\Request::createFromGlobals();
+$request = Request::createFromGlobals();
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
     $routes = require __DIR__ . '/Routes.php';

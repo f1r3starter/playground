@@ -1,5 +1,5 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
 return [
     [
@@ -7,7 +7,7 @@ return [
         '/',
         'SocialNews\FrontPage\Presentation\FrontPageController#show'
     ],
-   [
+    [
         'GET',
         '/submit',
         'SocialNews\Submission\Presentation\SubmissionController#show'

@@ -41,6 +41,11 @@ class SubmissionForm
         $this->url = $url;
     }
 
+    public function hasValidationErrors(): bool
+    {
+        return !empty($this->getValidationErrors());
+    }
+
     public function getValidationErrors(): array
     {
         $errors = [];
@@ -61,11 +66,6 @@ class SubmissionForm
         }
 
         return $errors;
-    }
-
-    public function hasValidationErrors(): bool
-    {
-        return !empty($this->getValidationErrors());
     }
 
     public function toCommand(AuthenticatedUser $user): SubmitLink
