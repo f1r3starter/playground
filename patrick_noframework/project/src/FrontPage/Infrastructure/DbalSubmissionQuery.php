@@ -43,8 +43,7 @@ class DbalSubmissionQuery implements SubmissionQuery
         $rows = $qb->execute()->fetchAll();
 
         $submissions = [];
-        foreach ($rows as $row)
-        {
+        foreach ($rows as $row) {
             $submissions[] = new Submission($row['url'], $row['title'], $row['nickname']);
         }
 

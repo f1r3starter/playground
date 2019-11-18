@@ -9,6 +9,7 @@
 namespace SocialNews\User\Infrastructure;
 
 
+use DateTimeImmutable;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Types\Type;
 use Ramsey\Uuid\Uuid;
@@ -53,10 +54,8 @@ class DbalUserRepository implements UserRepository
 
     public function save(User $user): void
     {
-        foreach ($user->getRecordedEvents() as $recordedEvent)
-        {
-            if ($recordedEvent instanceof UserWasLoggedIn)
-            {
+        foreach ($user->getRecordedEvents() as $recordedEvent) {
+            if ($recordedEvent instanceof UserWasLoggedIn) {
                 $this->session->set('userId', $user->getId()->toString());
                 continue;
             }
@@ -90,22 +89,20 @@ class DbalUserRepository implements UserRepository
 
     private function createUserFromRow(array $row): ?User
     {
-        if (!$row)
-        {
+        if (!$row) {
             return null;
         }
 
         $lastFailedLoginAttempt = null;
-        if ($row['last_failed_login_attempt'])
-        {
-            $lastFailedLoginAttempt = new \DateTimeImmutable($row['last_failed_login_attempt']);
+        if ($row['last_failed_login_attempt']) {
+            $lastFailedLoginAttempt = new DateTimeImmutable($row['last_failed_login_attempt']);
         }
 
         return new User(
             Uuid::fromString($row['id']),
             $row['nickname'],
             $row['password_hash'],
-            new \DateTimeImmutable($row['created_at']),
+            new DateTimeImmutable($row['created_at']),
             $row['failed_login_attempts'],
             $lastFailedLoginAttempt
         );

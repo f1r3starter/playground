@@ -70,8 +70,7 @@ class LoginController
             $request->get('password')
         ));
 
-        if ($this->session->get('userId') === null)
-        {
+        if ($this->session->get('userId') === null) {
             $this->session->getFlashBag()->add('errors', 'Invalid username or password');
             return new RedirectResponse('/login');
         }

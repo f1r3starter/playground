@@ -9,6 +9,7 @@
 namespace SocialNews\Submission\Presentation;
 
 
+use LogicException;
 use SocialNews\Framework\Rbac\AuthenticatedUser;
 use SocialNews\Framework\Rbac\Permission\SubmitLink;
 use SocialNews\Framework\Rbac\User;
@@ -93,9 +94,8 @@ class SubmissionController
             return $response;
         }
 
-        if (!$this->user instanceof AuthenticatedUser)
-        {
-            throw new \LogicException('Only authenticated user can submit links');
+        if (!$this->user instanceof AuthenticatedUser) {
+            throw new LogicException('Only authenticated user can submit links');
         }
 
         $this->submitLinkHandler->handle($form->toCommand($this->user));

@@ -3,26 +3,26 @@
 declare(strict_types=1);
 
 use Auryn\Injector;
+use Doctrine\DBAL\Connection;
+use SocialNews\Framework\Csrf\SymfonySessionTokenStorage;
+use SocialNews\Framework\Csrf\TokenStorage;
+use SocialNews\Framework\Dbal\ConnectionFactory;
+use SocialNews\Framework\Dbal\DatabaseUrl;
+use SocialNews\Framework\Rbac\SymfonySessionCurrentUserFactory;
+use SocialNews\Framework\Rbac\User;
+use SocialNews\Framework\Rendering\TemplateDirectory;
 use SocialNews\Framework\Rendering\TemplateRenderer;
 use SocialNews\Framework\Rendering\TwigTemplateRendererFactory;
-use SocialNews\Framework\Rendering\TemplateDirectory;
 use SocialNews\FrontPage\Application\SubmissionQuery;
 use SocialNews\FrontPage\Infrastructure\DbalSubmissionQuery;
-use SocialNews\Framework\Dbal\DatabaseUrl;
-use Doctrine\DBAL\Connection;
-use SocialNews\Framework\Dbal\ConnectionFactory;
-use SocialNews\Framework\Csrf\TokenStorage;
-use SocialNews\Framework\Csrf\SymfonySessionTokenStorage;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Component\HttpFoundation\Session\Session;
 use SocialNews\Submission\Domain\SubmissionRepository;
 use SocialNews\Submission\Infrastructure\DbalSubmissionRepository;
-use SocialNews\User\Domain\UserRepository;
-use SocialNews\User\Infrastructure\DbalUserRepository;
 use SocialNews\User\Application\NicknameTakenQuery;
+use SocialNews\User\Domain\UserRepository;
 use SocialNews\User\Infrastructure\DbalNicknameTakenQuery;
-use SocialNews\Framework\Rbac\User;
-use SocialNews\Framework\Rbac\SymfonySessionCurrentUserFactory;
+use SocialNews\User\Infrastructure\DbalUserRepository;
+use Symfony\Component\HttpFoundation\Session\Session;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 
 $injector = new Injector();
 

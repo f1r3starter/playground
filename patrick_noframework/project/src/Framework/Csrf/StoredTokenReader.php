@@ -26,8 +26,7 @@ class StoredTokenReader
     {
         $token = $this->tokenStorage->retrieve($key);
 
-        if (null !== $token)
-        {
+        if (null !== $token) {
             return $token;
         }
 

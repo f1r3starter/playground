@@ -46,6 +46,11 @@ class RegistrationUserForm
         $this->nicknameTakenQuery = $nicknameTakenQuery;
     }
 
+    public function hasValidationErrors(): bool
+    {
+        return !empty($this->getValidationErrors());
+    }
+
     public function getValidationErrors(): array
     {
         $errors = [];
@@ -57,8 +62,7 @@ class RegistrationUserForm
             $errors[] = 'Invalid token';
         }
 
-        if ($this->nicknameTakenQuery->execute($this->nickname))
-        {
+        if ($this->nicknameTakenQuery->execute($this->nickname)) {
             $errors[] = 'Nickname has been already taken';
         }
 
@@ -75,11 +79,6 @@ class RegistrationUserForm
         }
 
         return $errors;
-    }
-
-    public function hasValidationErrors(): bool
-    {
-        return !empty($this->getValidationErrors());
     }
 
     public function toCommand(): RegisterUser

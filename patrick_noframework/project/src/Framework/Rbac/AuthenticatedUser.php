@@ -40,10 +40,8 @@ class AuthenticatedUser implements User
 
     public function hasPermissions(Permission $permission): bool
     {
-        foreach ($this->roles as $role)
-        {
-            if ($role->hasPermission($permission))
-            {
+        foreach ($this->roles as $role) {
+            if ($role->hasPermission($permission)) {
                 return true;
             }
         }

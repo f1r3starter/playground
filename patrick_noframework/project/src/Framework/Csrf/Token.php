@@ -21,12 +21,9 @@ class Token
         $this->token = $token;
     }
 
-    /**
-     * @return string
-     */
-    public function toString(): string
+    public static function generate(): self
     {
-        return $this->token;
+        return new self(bin2hex(random_bytes(256)));
     }
 
     public function equals(Token $token): bool
@@ -34,8 +31,11 @@ class Token
         return $this->token === $token->toString();
     }
 
-    public static function generate(): self
+    /**
+     * @return string
+     */
+    public function toString(): string
     {
-        return new self(bin2hex(random_bytes(256)));
+        return $this->token;
     }
 }

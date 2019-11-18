@@ -9,6 +9,7 @@
 namespace SocialNews\User\Domain;
 
 
+use DateTimeImmutable;
 use Ramsey\Uuid\Uuid;
 use Ramsey\Uuid\UuidInterface;
 
@@ -27,7 +28,7 @@ class User
      */
     private $passwordHash;
     /**
-     * @var \DateTimeImmutable
+     * @var DateTimeImmutable
      */
     private $createdAt;
     /**
@@ -35,7 +36,7 @@ class User
      */
     private $failedAttempts;
     /**
-     * @var \DateTimeImmutable|null
+     * @var DateTimeImmutable|null
      */
     private $lastFailedLoginAttempt;
 
@@ -48,9 +49,9 @@ class User
         UuidInterface $id,
         string $nickname,
         string $passwordHash,
-        \DateTimeImmutable $createdAt,
+        DateTimeImmutable $createdAt,
         int $failedAttempts,
-        ?\DateTimeImmutable $lastFailedLoginAttempt
+        ?DateTimeImmutable $lastFailedLoginAttempt
     )
     {
         $this->id = $id;
@@ -67,7 +68,7 @@ class User
             Uuid::uuid4(),
             $nickname,
             password_hash($password, PASSWORD_DEFAULT),
-            new \DateTimeImmutable(),
+            new DateTimeImmutable(),
             0,
             null
         );
@@ -83,7 +84,7 @@ class User
         }
 
         $this->failedAttempts++;
-        $this->lastFailedLoginAttempt = new \DateTimeImmutable();
+        $this->lastFailedLoginAttempt = new DateTimeImmutable();
     }
 
     /**
@@ -111,9 +112,9 @@ class User
     }
 
     /**
-     * @return \DateTimeImmutable
+     * @return DateTimeImmutable
      */
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getCreatedAt(): DateTimeImmutable
     {
         return $this->createdAt;
     }
@@ -127,9 +128,9 @@ class User
     }
 
     /**
-     * @return \DateTimeImmutable|null
+     * @return DateTimeImmutable|null
      */
-    public function getLastFailedLoginAttempt(): ?\DateTimeImmutable
+    public function getLastFailedLoginAttempt(): ?DateTimeImmutable
     {
         return $this->lastFailedLoginAttempt;
     }
