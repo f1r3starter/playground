@@ -18,4 +18,4 @@ $a_temp = rtrim(fgets(STDIN));
 
 $a = array_map('intval', preg_split('/ /', $a_temp, -1, PREG_SPLIT_NO_EMPTY));
 
-fputs(STDOUT, calculate($a, $n));
+fwrite(STDOUT, calculate($a, $n));

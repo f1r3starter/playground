@@ -86,5 +86,3 @@ for ($q_itr = 0; $q_itr < $q; $q_itr++) {
 }
 fclose($stdin);
 fclose($fptr);
-
-?>
