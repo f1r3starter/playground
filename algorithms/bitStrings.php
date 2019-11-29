@@ -1,6 +1,6 @@
 <?php
 
-$stdin = fopen('php://stdin', 'rb');
+$stdin = fopen(STDIN);
 fscanf($stdin, '%[^\n]', $arr_temp);
 [$n, $hasZeros, $hasOnes] = array_map('intval', preg_split('/ /', $arr_temp, -1, PREG_SPLIT_NO_EMPTY));
 
