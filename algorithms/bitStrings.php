@@ -5,7 +5,7 @@ fscanf($stdin, '%[^\n]', $arr_temp);
 [$n, $hasZeros, $hasOnes] = array_map('intval', preg_split('/ /', $arr_temp, -1, PREG_SPLIT_NO_EMPTY));
 
 $result[0][0] = 0;
-while(!feof($stdin)) {
+while (!feof($stdin)) {
     $line = fgets($stdin);
     $chars = count_chars($line);
     $zeros = $chars[ord('0')] ?? 0;
