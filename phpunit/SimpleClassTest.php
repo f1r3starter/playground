@@ -6,7 +6,7 @@ use PHPUnit\Framework\TestCase;
 
 class SimpleClassTest extends TestCase
 {
-    public function testAdd()
+    public function testAdd(): void
     {
         $dumbClass = $this->getMockBuilder(DumbClass::class)
             ->setMethods(['add'])
@@ -21,7 +21,7 @@ class SimpleClassTest extends TestCase
         $simpleClass->add(2,3);
     }
 
-    public function testProphecy()
+    public function testProphecy(): void
     {
         $dumbClass = $this->prophesize(DumbClass::class);
 
