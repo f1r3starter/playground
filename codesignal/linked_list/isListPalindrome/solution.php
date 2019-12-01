@@ -11,7 +11,8 @@
 //   }
 // }
 //
-function isListPalindrome($l) {
+function isListPalindrome($l)
+{
     $res = [];
     do {
         $res[] = $l->value;

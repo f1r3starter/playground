@@ -11,7 +11,8 @@
 //   }
 // }
 //
-function addTwoHugeNumbers($a, $b) {
+function addTwoHugeNumbers($a, $b)
+{
     $con = true;
     $res = $res2 = [];
     while ($con) {
@@ -33,12 +34,12 @@ function addTwoHugeNumbers($a, $b) {
         $res = $mid;
     }
     $end = [];
-    for ($i = 0; $i < count($res); $i++){
+    for ($i = 0; $i < count($res); $i++) {
         $sum = (isset($res2[$i])) ? ((int)$res[$i] + (int)$res2[$i]) : $res[$i];
-        if (strlen($sum) > 4 && isset($res[$i+1])) {
-            $res[$i+1] += floor($sum / 10000);
+        if (strlen($sum) > 4 && isset($res[$i + 1])) {
+            $res[$i + 1] += floor($sum / 10000);
             $end[] = $sum % 10000;
-        } elseif(strlen($sum) > 4 && !isset($res[$i+1])) {
+        } elseif (strlen($sum) > 4 && !isset($res[$i + 1])) {
             $end[] = $sum % 10000;
             $end[] = floor($sum / 10000);
         } else {

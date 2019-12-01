@@ -11,7 +11,8 @@
 //   }
 // }
 //
-function mergeTwoLinkedLists($l1, $l2) {
+function mergeTwoLinkedLists($l1, $l2)
+{
     $result = [];
     while (true) {
         if ($l1 && $l2) {

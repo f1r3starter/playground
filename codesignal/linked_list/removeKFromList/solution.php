@@ -11,7 +11,8 @@
 //   }
 // }
 //
-function removeKFromList($l, $k) {
+function removeKFromList($l, $k)
+{
     $res = [];
     while ($l !== null) {
         if ($l->value !== $k) {

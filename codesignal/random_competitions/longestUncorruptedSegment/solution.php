@@ -1,6 +1,7 @@
 <?php
 
-function longestUncorruptedSegment($s, $d) {
+function longestUncorruptedSegment($s, $d)
+{
     $k = $i = 0;
     $r = [0, 0];
     do {

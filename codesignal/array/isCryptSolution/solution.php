@@ -1,6 +1,7 @@
 <?php
 
-function isCryptSolution($crypt, $solution) {
+function isCryptSolution($crypt, $solution)
+{
     foreach ($solution as $sub) {
         $crypt[0] = str_replace($sub[0], $sub[1], $crypt[0]);
         $crypt[1] = str_replace($sub[0], $sub[1], $crypt[1]);
@@ -9,7 +10,7 @@ function isCryptSolution($crypt, $solution) {
             return false;
         }
     }
-    if ((int)$crypt[0] + (int)$crypt[1] === (int)$crypt[2]){
+    if ((int)$crypt[0] + (int)$crypt[1] === (int)$crypt[2]) {
         return true;
     } else {
         return false;
