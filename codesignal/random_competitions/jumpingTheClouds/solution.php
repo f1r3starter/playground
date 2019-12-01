@@ -1,10 +1,11 @@
 <?php
 
 // Complete the jumpingOnClouds function below.
-function jumpingOnClouds($c, $n) {
+function jumpingOnClouds($c, $n)
+{
     $r = 0;
     for ($i = 0; $i < $n; $i++) {
-        isset($c[$i+2]) && $c[$i+2] === 0 ? $i++ : '';
+        isset($c[$i + 2]) && $c[$i + 2] === 0 ? $i++ : '';
         $r++;
     }
     return $r - 1;

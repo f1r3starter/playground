@@ -1,6 +1,7 @@
 <?php
 
-function reverseNodesInKGroups($l, $k) {
+function reverseNodesInKGroups($l, $k)
+{
     $r = $s = [];
     do {
         $s[] = $l->value;

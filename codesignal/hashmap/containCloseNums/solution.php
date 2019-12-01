@@ -1,6 +1,7 @@
 <?php
 
-function containsCloseNums($nums, $k) {
+function containsCloseNums($nums, $k)
+{
     $vals = $res = [];
     foreach ($nums as $ke => $v) {
         if (isset($vals[$v]) && !$res[$v]) {

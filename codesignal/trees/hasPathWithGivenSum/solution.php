@@ -13,7 +13,8 @@
 //     $this->right = null;
 //   }
 // }
-function hasPathWithGivenSum($t, $s) {
+function hasPathWithGivenSum($t, $s)
+{
     if ($t === null) {
         return $s === 0;
     }

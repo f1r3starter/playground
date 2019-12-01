@@ -1,11 +1,11 @@
 <?php
 
 // Complete the countingValleys function below.
-function countingValleys($s) {
+function countingValleys($s)
+{
     $h = str_split($s);
     $r = $v = 0;
-    foreach ($h as $i => $a)
-    {
+    foreach ($h as $i => $a) {
         $a === 'D' ? --$r : ++$r;
         if ($r === 0 && $a === 'U') {
             ++$v;

@@ -1,6 +1,7 @@
 <?php
 
-function rearrangeLastN($l, $n) {
+function rearrangeLastN($l, $n)
+{
     $a = [];
     while ($l != null) {
         $a[] = $l->value;
