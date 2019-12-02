@@ -28,8 +28,7 @@ class Migration20190114
         $this->createSubmissionTable($schema);
 
         $queries = $schema->toSql($this->connection->getDatabasePlatform());
-        foreach ($queries as $query)
-        {
+        foreach ($queries as $query) {
             $this->connection->executeQuery($query);
         }
     }
