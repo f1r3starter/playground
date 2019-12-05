@@ -34,7 +34,7 @@ function addTwoHugeNumbers($a, $b)
         $res = $mid;
     }
     $end = [];
-    for ($i = 0; $i < count($res); $i++) {
+    for ($i = 0, $iMax = count($res); $i < $iMax; $i++) {
         $sum = (isset($res2[$i])) ? ((int)$res[$i] + (int)$res2[$i]) : $res[$i];
         if (strlen($sum) > 4 && isset($res[$i + 1])) {
             $res[$i + 1] += floor($sum / 10000);
