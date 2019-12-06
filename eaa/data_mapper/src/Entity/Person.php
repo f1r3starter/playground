@@ -68,7 +68,7 @@ class Person
      *
      * @return self
      */
-    public function setLastName(string $lastName)
+    public function setLastName(string $lastName): self
     {
         $this->lastName = $lastName;
 
@@ -88,7 +88,7 @@ class Person
      *
      * @return self
      */
-    public function setEmail(Email $email)
+    public function setEmail(Email $email): self
     {
         $this->email = $email;
 

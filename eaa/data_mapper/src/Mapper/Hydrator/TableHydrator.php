@@ -4,6 +4,7 @@ namespace App\Mapper\Hydrator;
 
 use App\Mapper\PropertyAccessor;
 use App\Mapper\Reader\MetadataReader;
+use App\Mapper\Structure\Table;
 
 class TableHydrator implements Hydrator
 {
@@ -33,6 +34,7 @@ class TableHydrator implements Hydrator
         $table = $this->createTableForClass($className);
         $entity = new $className;
         foreach ($table->getColumns() as $column) {
+            $columnName = $table->getName() . $column->getName();
             if ($column->getRelatedClass()) {
                 $relatedObject = $this->hydrate($row, $column->getRelatedClass());
                 $this->setProperty(
@@ -40,11 +42,11 @@ class TableHydrator implements Hydrator
                     $column->getPropertyName(),
                     $relatedObject
                 );
-            } elseif (isset($row[$table->getName() . $column->getName()])) {
+            } elseif (isset($row[$columnName])) {
                 $this->setProperty(
                     $entity,
                     $column->getPropertyName(),
-                    $row[$table->getName() . $column->getName()]
+                    $row[$columnName]
                 );
             }
         }
@@ -78,7 +80,12 @@ class TableHydrator implements Hydrator
         return $row;
     }
 
-    private function createTableForClass(string $className)
+    /**
+     * @param string $className
+     *
+     * @return Table
+     */
+    private function createTableForClass(string $className): Table
     {
         return $this->reader->prepareTable($className);
     }
