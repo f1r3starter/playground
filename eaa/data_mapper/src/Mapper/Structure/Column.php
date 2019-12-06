@@ -17,17 +17,17 @@ class Column
     /**
      * @var bool
      */
-    private $primary = false;
+    private $primary;
 
     /**
      * @var string|null
      */
-    private $relatedClass = null;
+    private $relatedClass;
 
     /**
      * @var Table|null
      */
-    private $relatedTable = null;
+    private $relatedTable;
 
     /**
      * Column constructor.

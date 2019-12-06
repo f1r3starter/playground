@@ -26,7 +26,7 @@ class MysqlStatementBuilder implements StatementBuilder
     public function find(): string
     {
         $columns = implode(', ', $this->getColumns(true));
-        $joins = implode(" ", $this->getJoins());
+        $joins = implode(' ', $this->getJoins());
         return "SELECT {$columns} 
                 FROM {$this->table->getName()} {$joins} 
                 WHERE {$this->table->getName()}.{$this->table->getPrimaryKey()->getName()} = ?";

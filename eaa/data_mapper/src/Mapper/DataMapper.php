@@ -5,11 +5,11 @@ namespace App\Mapper;
 use App\DB\MyPDO;
 use App\Mapper\Hydrator\Hydrator;
 use App\Mapper\Hydrator\TableHydrator;
+use App\Mapper\Query\MysqlStatementBuilder;
+use App\Mapper\Query\StatementBuilder;
 use App\Mapper\Reader\AnnotationReader;
 use App\Mapper\Reader\MetadataReader;
 use App\Mapper\Structure\Table;
-use App\Mapper\Query\MysqlStatementBuilder;
-use App\Mapper\Query\StatementBuilder;
 use DomainException;
 use PDO;
 
@@ -48,7 +48,8 @@ class DataMapper
         MetadataReader $metadataReader = null,
         Hydrator $hydrator = null,
         StatementBuilder $statementBuilder = null
-    ) {
+    )
+    {
         $metadataReader = $metadataReader ?? new AnnotationReader();
         $this->className = $className;
         $this->pdo = $pdo;
@@ -73,7 +74,9 @@ class DataMapper
 
     public function save($entity)
     {
-        if ($identity = $this->getProperty($entity, $this->table->getPrimaryKey()->getPropertyName())) {
+        if (null !== $this->table->getPrimaryKey()
+            && $identity = $this->getProperty($entity, $this->table->getPrimaryKey()->getPropertyName())
+        ) {
             $values = $this->hydrator->dehydrate($entity);
             $values[] = $identity;
             $query = $this->statementBuilder->update();
@@ -86,17 +89,21 @@ class DataMapper
             $query
         )->execute(array_values($values));
 
-        $this->setProperty($entity, $this->table->getPrimaryKey()->getPropertyName(), $this->pdo->lastInsertId());
+        if (null !== $this->table->getPrimaryKey()) {
+            $this->setProperty($entity, $this->table->getPrimaryKey()->getPropertyName(), $this->pdo->lastInsertId());
+        }
 
         return $entity;
     }
 
-    public function delete($entity)
+    public function delete($entity): void
     {
-        $identity = $this->getProperty($entity, $this->table->getPrimaryKey()->getPropertyName());
+        if (null !== $this->table->getPrimaryKey()) {
+            $identity = $this->getProperty($entity, $this->table->getPrimaryKey()->getPropertyName());
 
-        $this->pdo->prepare(
-            $this->statementBuilder->delete()
-        )->execute([$identity]);
+            $this->pdo->prepare(
+                $this->statementBuilder->delete()
+            )->execute([$identity]);
+        }
     }
 }

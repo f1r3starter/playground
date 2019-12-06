@@ -4,6 +4,10 @@ namespace App\Mapper\Reader;
 
 use App\Mapper\Structure\Table;
 use App\Mapper\Structure\Column;
+use InvalidArgumentException;
+use ParseError;
+use ReflectionClass;
+use ReflectionException;
 
 class AnnotationReader implements MetadataReader
 {
@@ -15,19 +19,19 @@ class AnnotationReader implements MetadataReader
      * @param string $className
      *
      * @return Table
-     * @throws \ReflectionException
+     * @throws ReflectionException
      */
     public function prepareTable(string $className): Table
     {
         if (!class_exists($className)) {
-            throw new \InvalidArgumentException(sprintf('Class %s does not exists', $className));
+            throw new InvalidArgumentException(sprintf('Class %s does not exists', $className));
         }
 
-        $class = new \ReflectionClass($className);
+        $class = new ReflectionClass($className);
         $tableParams = $this->parseDocBlock($class->getDocComment(), self::TABLE_CONVENTION);
 
         if (!isset($tableParams['name'])) {
-            throw new \ParseError(sprintf('Table name annotation for class %s is required', $className));
+            throw new ParseError(sprintf('Table name annotation for class %s is required', $className));
         }
 
         $table = new Table($tableParams['name']);
@@ -35,7 +39,7 @@ class AnnotationReader implements MetadataReader
         foreach ($class->getProperties() as $property) {
             $columnParams = $this->parseDocBlock($property->getDocComment(), self::COLUMN_CONVENTION);
             if (!isset($columnParams['name'])) {
-                throw new \ParseError(sprintf('Table name for property %s in class %s is required', $property->getName(), $className));
+                throw new ParseError(sprintf('Table name for property %s in class %s is required', $property->getName(), $className));
             }
 
             $relatedClass = $columnParams['relatedClass'] ?? null;

@@ -56,6 +56,4 @@ class Email
 
         return $this;
     }
-
-
 }
