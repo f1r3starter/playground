@@ -16,7 +16,8 @@ while (!feof($stdin)) {
         }
     }
 }
-fclose($stdin);
 $stdout = fopen(getenv('OUTPUT_PATH'), 'wb');
 fwrite($stdout, $result[$hasZeros][$hasOnes] - 1);
+
+fclose($stdin);
 fclose($stdout);
