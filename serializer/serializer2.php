@@ -23,12 +23,12 @@ class Test {
         $this->second = $first;
     }
 
-    public function getFirst()
+    public function getFirst(): Field
     {
         return $this->first;
     }
 
-    public function getSecond()
+    public function getSecond(): Field
     {
         return $this->second;
     }
@@ -58,3 +58,4 @@ $serialized = $serializer->serialize($obj, JsonEncoder::FORMAT);
 $normalizer = new ObjectNormalizer(null, null, null, new ReflectionExtractor());
 $serializer = new Serializer([new DateTimeNormalizer(), $normalizer]);
 $newObj = $serializer->deserialize($serialized, Test::class);
+
