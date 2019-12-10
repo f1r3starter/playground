@@ -2,6 +2,7 @@
 
 namespace App\DB;
 
+use InvalidArgumentException;
 use React\EventLoop\LoopInterface;
 use React\MySQL\Factory;
 use SplObjectStorage;
@@ -65,7 +66,7 @@ class ConnectionPool
         if ($this->busy->contains($connection)) {
             $this->busy->detach($connection);
         } else {
-            throw new \InvalidArgumentException('There are no such connection in this pool');
+            throw new InvalidArgumentException('There are no such connection in this pool');
         }
         $this->available->attach($connection);
     }
