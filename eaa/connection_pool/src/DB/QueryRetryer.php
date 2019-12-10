@@ -2,6 +2,8 @@
 
 namespace App\DB;
 
+use RuntimeException;
+
 class QueryRetryer implements Retryer
 {
     /**
@@ -25,7 +27,7 @@ class QueryRetryer implements Retryer
             ++$this->tries;
             return $connection->query($sql);
         } else {
-            throw new \RuntimeException('Cannot proceed query, max tries limit has been hit');
+            throw new RuntimeException('Cannot proceed query, max tries limit has been hit');
         }
     }
 }
