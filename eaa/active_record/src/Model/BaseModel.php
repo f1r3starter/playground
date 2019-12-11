@@ -10,22 +10,22 @@ use PDO;
 abstract class BaseModel
 {
     /**
+     * @var string
+     */
+    protected $idColumn = 'id';
+    /**
      * @var MyPDO
      */
     private $pdo;
 
-    /**
-     * @var string
-     */
-    protected $idColumn = 'id';
-
-    abstract protected function getAttributes(): array;
-
-    abstract protected function getTableName(): string;
-
     public function __construct(MyPDO $pdo)
     {
         $this->pdo = $pdo;
+    }
+
+    public function save(): void
+    {
+        $this->{$this->getIdColumn()} ? $this->update() : $this->insert();
     }
 
     /**
@@ -44,9 +44,43 @@ abstract class BaseModel
         $this->idColumn = $column;
     }
 
-    public function save(): void
+    private function update(): void
     {
-        $this->{$this->getIdColumn()} ? $this->update() : $this->insert();
+        $parameters = array_map(function ($attribute) {
+            return "$attribute = ?";
+        }, $this->getAttributes());
+
+        $values = array_map(function ($attribute) {
+            return $this->$attribute;
+        }, $this->getAttributes());
+
+        $values[] = $this->{$this->idColumn};
+        $parametersString = implode(', ', $parameters);
+
+        $this->pdo->prepare(
+            "UPDATE {$this->getTableName()} SET $parametersString WHERE {$this->idColumn} = ?"
+        )->execute($values);
+    }
+
+    abstract protected function getAttributes(): array;
+
+    abstract protected function getTableName(): string;
+
+    private function insert(): void
+    {
+        $parameters = implode(',', $this->getAttributes());
+        $dumbValues = implode(',',
+            array_fill(0, count($this->getAttributes()), '?')
+        );
+        $realValues = array_map(function ($attribute) {
+            return $this->$attribute;
+        }, $this->getAttributes());
+
+        $this->pdo->prepare(
+            "INSERT INTO {$this->getTableName()} ($parameters) VALUES ($dumbValues)"
+        )->execute($realValues);
+
+        $this->{$this->getIdColumn()} = $this->pdo->lastInsertId();
     }
 
     public function delete(): void
@@ -72,47 +106,12 @@ abstract class BaseModel
             throw new DomainException(sprintf('Model with id %s not found', $id));
         }
 
-        array_walk($row, function($value, $column) {
+        array_walk($row, function ($value, $column) {
             if (property_exists($this, $column)) {
                 $this->{$column} = $value;
             }
         });
 
         return $this;
-    }
-
-    private function insert(): void
-    {
-        $parameters = implode(',', $this->getAttributes());
-        $dumbValues = implode(',',
-            array_fill(0, count($this->getAttributes()), '?')
-        );
-        $realValues = array_map(function ($attribute) {
-            return $this->$attribute;
-        }, $this->getAttributes());
-
-        $this->pdo->prepare(
-            "INSERT INTO {$this->getTableName()} ($parameters) VALUES ($dumbValues)"
-        )->execute($realValues);
-
-        $this->{$this->getIdColumn()} = $this->pdo->lastInsertId();
-    }
-
-    private function update(): void
-    {
-        $parameters = array_map(function ($attribute) {
-            return "$attribute = ?";
-        }, $this->getAttributes());
-
-        $values = array_map(function ($attribute) {
-            return $this->$attribute;
-        }, $this->getAttributes());
-
-        $values[] = $this->{$this->idColumn};
-        $parametersString = implode(', ', $parameters);
-
-        $this->pdo->prepare(
-            "UPDATE {$this->getTableName()} SET $parametersString WHERE {$this->idColumn} = ?"
-        )->execute($values);
     }
 }

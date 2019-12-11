@@ -15,7 +15,7 @@ $newPerson->setFirstName('Elon')
 
 $newPerson->save();
 
-$oldPerson =  new Person($myPdo);
+$oldPerson = new Person($myPdo);
 
 $oldPerson->findById(1)
     ->setFirstName('Neil')

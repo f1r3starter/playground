@@ -24,16 +24,6 @@ class Person extends BaseModel
      */
     protected $email;
 
-    protected function getAttributes(): array
-    {
-        return ['firstName', 'lastName', 'email'];
-    }
-
-    protected function getTableName(): string
-    {
-        return 'person';
-    }
-
     /**
      * @return int|null
      */
@@ -108,5 +98,15 @@ class Person extends BaseModel
         $this->email = $email;
 
         return $this;
+    }
+
+    protected function getAttributes(): array
+    {
+        return ['firstName', 'lastName', 'email'];
+    }
+
+    protected function getTableName(): string
+    {
+        return 'person';
     }
 }
