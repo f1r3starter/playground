@@ -7,6 +7,7 @@ use App\Entity\Doctor;
 use App\Repository\DoctorRepository;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\QueryBuilder;
+use LogicException;
 
 class DoctorSelectionFactory extends DoctorRepository implements SelectionFactory
 {
@@ -27,7 +28,7 @@ class DoctorSelectionFactory extends DoctorRepository implements SelectionFactor
     public function newSelection(SelectionModel $selectionModel, ?QueryBuilder $qb = null): array
     {
         if (!$selectionModel instanceof DoctorSelectionModel) {
-            throw new \LogicException('Wrong selection model for this factory');
+            throw new LogicException('Wrong selection model for this factory');
         }
         $qb = $qb ?? $this->em->createQueryBuilder()
                 ->select('d')

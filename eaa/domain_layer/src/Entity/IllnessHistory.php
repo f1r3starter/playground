@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+
 class IllnessHistory
 {
     /**
@@ -12,20 +14,20 @@ class IllnessHistory
     /**
      * @var string
      */
-    private $name = '';
+    private $name;
 
     /**
      * @var string
      */
-    private $description = '';
+    private $description;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $dateTimeFound;
 
     /**
-     * @var \DateTime|null
+     * @var DateTime|null
      */
     private $dateTimeHealed;
 
@@ -39,12 +41,12 @@ class IllnessHistory
      */
     private $diagnosedBy;
 
-    public static function addRecordToIllnessHistory(string $name, string $description, \DateTime $dateTimeFound, Patient $patient, Doctor $diagnosedBy, ?\DateTime $dateTimeHealed = null)
+    public static function addRecordToIllnessHistory(string $name, string $description, DateTime $dateTimeFound, Patient $patient, Doctor $diagnosedBy, ?DateTime $dateTimeHealed = null)
     {
         return new self($name, $description, $dateTimeFound, $patient, $diagnosedBy, $dateTimeHealed);
     }
 
-    private function __construct(string $name, string $description, \DateTime $dateTimeFound, Patient $patient, Doctor $diagnosedBy, ?\DateTime $dateTimeHealed)
+    private function __construct(string $name, string $description, DateTime $dateTimeFound, Patient $patient, Doctor $diagnosedBy, ?DateTime $dateTimeHealed)
     {
         $this->name = $name;
         $this->description = $description;
@@ -103,7 +105,7 @@ class IllnessHistory
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateTimeFound()
     {
@@ -111,7 +113,7 @@ class IllnessHistory
     }
 
     /**
-     * @param \DateTime|null $dateTimeHealed
+     * @param DateTime|null $dateTimeHealed
      *
      * @return IllnessHistory
      */
@@ -125,7 +127,7 @@ class IllnessHistory
     /**
      * Get dateTimeHealed.
      *
-     * @return \DateTime|null
+     * @return DateTime|null
      */
     public function getDateTimeHealed()
     {

@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use DateTime;
+
 class Appointment
 {
     /**
@@ -10,7 +12,7 @@ class Appointment
     private $id;
 
     /**
-     * @var \DateTime
+     * @var DateTime
      */
     private $dateTime;
 
@@ -27,16 +29,16 @@ class Appointment
     /**
      * @param Doctor $doctor
      * @param Patient $patient
-     * @param \DateTime $dateTime
+     * @param DateTime $dateTime
      *
      * @return self
      */
-    public static function createAppointment(Doctor $doctor, Patient $patient, \DateTime $dateTime): self
+    public static function createAppointment(Doctor $doctor, Patient $patient, DateTime $dateTime): self
     {
         return new self($doctor, $patient, $dateTime);
     }
 
-    private function __construct(Doctor $doctor, Patient $patient, \DateTime $dateTime)
+    private function __construct(Doctor $doctor, Patient $patient, DateTime $dateTime)
     {
         $this->doctor = $doctor;
         $this->patient = $patient;
@@ -52,11 +54,11 @@ class Appointment
     }
 
     /**
-     * @param \DateTime $dateTime
+     * @param DateTime $dateTime
      *
      * @return self
      */
-    public function changeDateTime(\DateTime $dateTime): self
+    public function changeDateTime(DateTime $dateTime): self
     {
         $this->dateTime = $dateTime;
 
@@ -64,7 +66,7 @@ class Appointment
     }
 
     /**
-     * @return \DateTime
+     * @return DateTime
      */
     public function getDateTime()
     {
