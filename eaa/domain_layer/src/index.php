@@ -1,6 +1,7 @@
 <?php
 
 use App\Repository\SelectionFactory\DoctorSelectionFactory;
+use App\Repository\SelectionFactory\DoctorSelectionModel;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
 use Doctrine\ORM\Configuration;
@@ -25,7 +26,7 @@ $config->setProxyNamespace('App\Proxy');
 $entityManager = EntityManager::create($conn, $config);
 
 
-$dr = new \App\Repository\SelectionFactory\DoctorSelectionModel();
+$dr = new DoctorSelectionModel();
 $dr = $dr->setSpeciality('cardiolog');
 
 $factory = new DoctorSelectionFactory($entityManager);
