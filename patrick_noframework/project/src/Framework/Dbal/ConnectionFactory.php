@@ -22,7 +22,6 @@ class ConnectionFactory
 
     public function __construct(DatabaseUrl $databaseUrl)
     {
-
         $this->databaseUrl = $databaseUrl;
     }
 

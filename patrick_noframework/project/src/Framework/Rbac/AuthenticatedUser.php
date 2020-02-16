@@ -25,7 +25,6 @@ class AuthenticatedUser implements User
 
     public function __construct(UuidInterface $id, array $roles)
     {
-
         $this->id = $id;
         $this->roles = $roles;
     }

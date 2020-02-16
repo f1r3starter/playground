@@ -17,7 +17,6 @@ class Token
 
     public function __construct(string $token)
     {
-
         $this->token = $token;
     }
 

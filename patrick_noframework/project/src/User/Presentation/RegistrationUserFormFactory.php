@@ -26,7 +26,6 @@ class RegistrationUserFormFactory
 
     public function __construct(StoredTokenValidator $storedTokenValidator, NicknameTakenQuery $nicknameTakenQuery)
     {
-
         $this->storedTokenValidator = $storedTokenValidator;
         $this->nicknameTakenQuery = $nicknameTakenQuery;
     }

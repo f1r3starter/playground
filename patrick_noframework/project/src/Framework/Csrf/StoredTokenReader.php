@@ -18,7 +18,6 @@ class StoredTokenReader
 
     public function __construct(TokenStorage $tokenStorage)
     {
-
         $this->tokenStorage = $tokenStorage;
     }
 

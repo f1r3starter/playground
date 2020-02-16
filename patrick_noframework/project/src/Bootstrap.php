@@ -15,12 +15,14 @@ Debugger::enable(false);
 
 $request = Request::createFromGlobals();
 
-$dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-    $routes = require __DIR__ . '/Routes.php';
-    foreach ($routes as $route) {
-        $r->addRoute(...$route);
+$dispatcher = FastRoute\simpleDispatcher(
+    function (FastRoute\RouteCollector $r) {
+        $routes = require __DIR__ . '/Routes.php';
+        foreach ($routes as $route) {
+            $r->addRoute(...$route);
+        }
     }
-});
+);
 
 $routeInfo = $dispatcher->dispatch($request->getMethod(), $request->getPathInfo());
 

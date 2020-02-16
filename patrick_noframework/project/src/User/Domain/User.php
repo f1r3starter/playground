@@ -52,8 +52,7 @@ class User
         DateTimeImmutable $createdAt,
         int $failedAttempts,
         ?DateTimeImmutable $lastFailedLoginAttempt
-    )
-    {
+    ) {
         $this->id = $id;
         $this->nickname = $nickname;
         $this->passwordHash = $passwordHash;
@@ -80,6 +79,7 @@ class User
             $this->failedAttempts = 0;
             $this->lastFailedLoginAttempt = null;
             $this->recordedEvents[] = new UserWasLoggedIn();
+
             return;
         }
 

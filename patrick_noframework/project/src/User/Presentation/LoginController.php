@@ -39,8 +39,12 @@ class LoginController
      */
     private $logInHandler;
 
-    public function __construct(TemplateRenderer $templateRenderer, StoredTokenValidator $storedTokenValidator, Session $session, LogInHandler $logInHandler)
-    {
+    public function __construct(
+        TemplateRenderer $templateRenderer,
+        StoredTokenValidator $storedTokenValidator,
+        Session $session,
+        LogInHandler $logInHandler
+    ) {
         $this->templateRenderer = $templateRenderer;
         $this->storedTokenValidator = $storedTokenValidator;
         $this->session = $session;
@@ -50,6 +54,7 @@ class LoginController
     public function show(): Response
     {
         $content = $this->templateRenderer->render('Login.html.twig');
+
         return new Response($content);
     }
 
@@ -62,20 +67,25 @@ class LoginController
             new Token((string)$request->get('token'))
         )) {
             $this->session->getFlashBag()->add('errors', 'Invalid token');
+
             return new RedirectResponse('/login');
         }
 
-        $this->logInHandler->handle(new LogIn(
-            $request->get('nickname'),
-            $request->get('password')
-        ));
+        $this->logInHandler->handle(
+            new LogIn(
+                $request->get('nickname'),
+                $request->get('password')
+            )
+        );
 
         if ($this->session->get('userId') === null) {
             $this->session->getFlashBag()->add('errors', 'Invalid username or password');
+
             return new RedirectResponse('/login');
         }
 
         $this->session->getFlashBag()->add('success', 'You have logged in');
+
         return new RedirectResponse('/');
     }
 }

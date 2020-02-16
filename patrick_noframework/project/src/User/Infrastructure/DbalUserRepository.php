@@ -33,7 +33,6 @@ class DbalUserRepository implements UserRepository
 
     public function __construct(Connection $connection, Session $session)
     {
-
         $this->connection = $connection;
         $this->session = $session;
     }
@@ -42,12 +41,14 @@ class DbalUserRepository implements UserRepository
     {
         $qb = $this->connection->createQueryBuilder();
         $qb->insert('users');
-        $qb->values([
-            'id' => $qb->createNamedParameter($user->getId()->toString()),
-            'nickname' => $qb->createNamedParameter($user->getNickname()),
-            'password_hash' => $qb->createNamedParameter($user->getPasswordHash()),
-            'created_at' => $qb->createNamedParameter($user->getCreatedAt(), Type::DATETIME),
-        ]);
+        $qb->values(
+            [
+                'id' => $qb->createNamedParameter($user->getId()->toString()),
+                'nickname' => $qb->createNamedParameter($user->getNickname()),
+                'password_hash' => $qb->createNamedParameter($user->getPasswordHash()),
+                'created_at' => $qb->createNamedParameter($user->getCreatedAt(), Type::DATETIME),
+            ]
+        );
 
         $qb->execute();
     }
@@ -68,7 +69,10 @@ class DbalUserRepository implements UserRepository
             ->set('nickname', $qb->createNamedParameter($user->getNickname()))
             ->set('password_hash', $qb->createNamedParameter($user->getPasswordHash()))
             ->set('failed_login_attempts', $qb->createNamedParameter($user->getFailedAttempts()))
-            ->set('last_failed_login_attempt', $qb->createNamedParameter($user->getLastFailedLoginAttempt(), Type::DATETIME))
+            ->set(
+                'last_failed_login_attempt',
+                $qb->createNamedParameter($user->getLastFailedLoginAttempt(), Type::DATETIME)
+            )
             ->execute();
     }
 

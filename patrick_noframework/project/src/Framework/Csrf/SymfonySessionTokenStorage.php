@@ -13,7 +13,6 @@ class SymfonySessionTokenStorage implements TokenStorage
 
     public function __construct(SessionInterface $session)
     {
-
         $this->session = $session;
     }
 

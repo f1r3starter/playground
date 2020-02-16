@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 /**
  * Created by PhpStorm.
@@ -29,8 +30,11 @@ class TwigTemplateRendererFactory
      */
     private $session;
 
-    public function __construct(TemplateDirectory $templateDirectory, StoredTokenReader $storedTokenReader, Session $session)
-    {
+    public function __construct(
+        TemplateDirectory $templateDirectory,
+        StoredTokenReader $storedTokenReader,
+        Session $session
+    ) {
         $this->templateDirectory = $templateDirectory;
         $this->storedTokenReader = $storedTokenReader;
         $this->session = $session;

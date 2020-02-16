@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Created by PhpStorm.
  * User: andreyfilenko
@@ -30,9 +31,13 @@ class FrontPageController
 
     public function show()
     {
-        $response = $this->templateRenderer->render('FrontPage.html.twig', [
-            'submissions' => $this->submissionQuery->execute()
-        ]);
+        $response = $this->templateRenderer->render(
+            'FrontPage.html.twig',
+            [
+                'submissions' => $this->submissionQuery->execute()
+            ]
+        );
+
         return new Response($response);
     }
 }

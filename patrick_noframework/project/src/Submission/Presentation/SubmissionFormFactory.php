@@ -21,7 +21,6 @@ class SubmissionFormFactory
 
     public function __construct(StoredTokenValidator $storedTokenValidator)
     {
-
         $this->storedTokenValidator = $storedTokenValidator;
     }
 

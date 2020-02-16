@@ -37,8 +37,13 @@ class RegistrationUserForm
      */
     private $nicknameTakenQuery;
 
-    public function __construct(NicknameTakenQuery $nicknameTakenQuery, StoredTokenValidator $storedTokenValidator, string $token, string $nickname, string $password)
-    {
+    public function __construct(
+        NicknameTakenQuery $nicknameTakenQuery,
+        StoredTokenValidator $storedTokenValidator,
+        string $token,
+        string $nickname,
+        string $password
+    ) {
         $this->storedTokenValidator = $storedTokenValidator;
         $this->token = $token;
         $this->nickname = $nickname;

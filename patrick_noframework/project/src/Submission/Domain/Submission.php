@@ -36,8 +36,13 @@ class Submission
      */
     private $authorId;
 
-    public function __construct(UuidInterface $id, AuthorId $authorId, string $url, string $title, DateTimeImmutable $creationDate)
-    {
+    public function __construct(
+        UuidInterface $id,
+        AuthorId $authorId,
+        string $url,
+        string $title,
+        DateTimeImmutable $creationDate
+    ) {
         $this->id = $id;
         $this->url = $url;
         $this->title = $title;
