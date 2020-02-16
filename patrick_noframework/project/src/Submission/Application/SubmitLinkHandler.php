@@ -21,7 +21,6 @@ class SubmitLinkHandler
 
     public function __construct(SubmissionRepository $submissionRepository)
     {
-
         $this->submissionRepository = $submissionRepository;
     }
 

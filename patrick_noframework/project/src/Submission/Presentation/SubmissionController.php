@@ -44,13 +44,13 @@ class SubmissionController
      */
     private $user;
 
-    public function __construct(TemplateRenderer $templateRenderer,
-                                SubmissionFormFactory $submissionFormFactory,
-                                Session $session,
-                                SubmitLinkHandler $submitLinkHandler,
-                                User $user
-    )
-    {
+    public function __construct(
+        TemplateRenderer $templateRenderer,
+        SubmissionFormFactory $submissionFormFactory,
+        Session $session,
+        SubmitLinkHandler $submitLinkHandler,
+        User $user
+    ) {
         $this->templateRenderer = $templateRenderer;
         $this->session = $session;
         $this->submitLinkHandler = $submitLinkHandler;
@@ -69,6 +69,7 @@ class SubmissionController
             return new RedirectResponse('/login');
         }
         $content = $this->templateRenderer->render('Submission.html.twig');
+
         return new Response(
             $content
         );

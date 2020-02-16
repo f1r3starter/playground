@@ -36,8 +36,12 @@ class RegistrationController
      */
     private $registerUserHandler;
 
-    public function __construct(TemplateRenderer $templateRenderer, RegistrationUserFormFactory $formFactory, Session $session, RegisterUserHandler $registerUserHandler)
-    {
+    public function __construct(
+        TemplateRenderer $templateRenderer,
+        RegistrationUserFormFactory $formFactory,
+        Session $session,
+        RegisterUserHandler $registerUserHandler
+    ) {
         $this->templateRenderer = $templateRenderer;
         $this->formFactory = $formFactory;
         $this->session = $session;
@@ -47,6 +51,7 @@ class RegistrationController
     public function show(): Response
     {
         $content = $this->templateRenderer->render('Registration.html.twig');
+
         return new Response($content);
     }
 
@@ -58,6 +63,7 @@ class RegistrationController
             foreach ($registrationForm->getValidationErrors() as $error) {
                 $this->session->getFlashBag()->add('errors', $error);
             }
+
             return $response;
         }
         $this->registerUserHandler->handle($registrationForm->toCommand());

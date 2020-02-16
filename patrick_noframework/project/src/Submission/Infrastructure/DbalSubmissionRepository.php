@@ -22,7 +22,6 @@ class DbalSubmissionRepository implements SubmissionRepository
 
     public function __construct(Connection $connection)
     {
-
         $this->connection = $connection;
     }
 
@@ -30,13 +29,15 @@ class DbalSubmissionRepository implements SubmissionRepository
     {
         $qb = $this->connection->createQueryBuilder();
         $qb->insert('submissions');
-        $qb->values([
-            'id' => $qb->createNamedParameter($submission->getId()->toString()),
-            'title' => $qb->createNamedParameter($submission->getTitle()),
-            'url' => $qb->createNamedParameter($submission->getUrl()),
-            'created_at' => $qb->createNamedParameter($submission->getCreationDate(), 'datetime'),
-            'author_user_id' => $qb->createNamedParameter($submission->getAuthorId()->toString())
-        ]);
+        $qb->values(
+            [
+                'id' => $qb->createNamedParameter($submission->getId()->toString()),
+                'title' => $qb->createNamedParameter($submission->getTitle()),
+                'url' => $qb->createNamedParameter($submission->getUrl()),
+                'created_at' => $qb->createNamedParameter($submission->getCreationDate(), 'datetime'),
+                'author_user_id' => $qb->createNamedParameter($submission->getAuthorId()->toString())
+            ]
+        );
 
         $qb->execute();
     }

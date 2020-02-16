@@ -21,7 +21,6 @@ class DbalNicknameTakenQuery implements NicknameTakenQuery
 
     public function __construct(Connection $connection)
     {
-
         $this->connection = $connection;
     }
 

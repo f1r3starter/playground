@@ -30,6 +30,7 @@ $injector->delegate(
     TemplateRenderer::class,
     function () use ($injector): TemplateRenderer {
         $factory = $injector->make(TwigTemplateRendererFactory::class);
+
         return $factory->create();
     }
 );
@@ -49,15 +50,23 @@ $injector->define(
     [':url' => 'sqlite:///' . ROOTDIR . '/storage/db.sqlite3']
 );
 
-$injector->delegate(Connection::class, function () use ($injector): Connection {
-    $factory = $injector->make(ConnectionFactory::class);
-    return $factory->create();
-});
+$injector->delegate(
+    Connection::class,
+    function () use ($injector): Connection {
+        $factory = $injector->make(ConnectionFactory::class);
 
-$injector->delegate(User::class, function () use ($injector): User {
-    $factory = $injector->make(SymfonySessionCurrentUserFactory::class);
-    return $factory->create();
-});
+        return $factory->create();
+    }
+);
+
+$injector->delegate(
+    User::class,
+    function () use ($injector): User {
+        $factory = $injector->make(SymfonySessionCurrentUserFactory::class);
+
+        return $factory->create();
+    }
+);
 
 $injector->share(Connection::class);
 

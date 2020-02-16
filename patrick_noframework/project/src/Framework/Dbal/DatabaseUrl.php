@@ -18,7 +18,6 @@ class DatabaseUrl
 
     public function __construct(string $url)
     {
-
         $this->url = $url;
     }
 
