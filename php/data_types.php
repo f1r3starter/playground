@@ -13,7 +13,7 @@ $dataTypes = [
     'iterable' => new ArrayIterator([1, 2, 3]),
     'moreIterable' => function () { yield 1 ; },
     'null' => null,
-    'resource' => tmpfile()
+    'resource' => tmpfile(),
 ];
 
 array_walk($dataTypes, function($variable, $typeName) {
