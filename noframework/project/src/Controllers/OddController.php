@@ -17,9 +17,7 @@ class OddController
     public function index(Request $request, $num)
     {
         $oddChecker = new OddChecker();
-        if ($oddChecker->isOdd($num)) {
-            return new Response('Number is odd');
-        }
-        return new Response('Number is even');
+
+        return new Response(sprintf('Number is %s' , $oddChecker->isOdd($num) ? 'odd' : 'even'));
     }
 }
