@@ -1,5 +1,5 @@
 <?php
-$_fp = fopen("php://stdin", "rb");
+$_fp = fopen('php://stdin', 'rb');
 /* Enter your code here. Read input from STDIN. Print output to STDOUT */
 $stdin = fopen('php://stdin', 'rb');
 $stdout = fopen(getenv('OUTPUT_PATH'), 'wb');
