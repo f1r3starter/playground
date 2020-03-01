@@ -10,7 +10,7 @@ use InvalidArgumentException;
 
 class CalculateRecognition
 {
-    private $revenueRecognition;
+    private RevenueRecognition $revenueRecognition;
 
     public function __construct(RevenueRecognition $revenueRecognition)
     {
