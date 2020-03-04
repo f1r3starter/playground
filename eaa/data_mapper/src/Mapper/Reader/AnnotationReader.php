@@ -2,8 +2,8 @@
 
 namespace App\Mapper\Reader;
 
-use App\Mapper\Structure\Table;
 use App\Mapper\Structure\Column;
+use App\Mapper\Structure\Table;
 use InvalidArgumentException;
 use ParseError;
 use ReflectionClass;
@@ -39,7 +39,9 @@ class AnnotationReader implements MetadataReader
         foreach ($class->getProperties() as $property) {
             $columnParams = $this->parseDocBlock($property->getDocComment(), self::COLUMN_CONVENTION);
             if (!isset($columnParams['name'])) {
-                throw new ParseError(sprintf('Table name for property %s in class %s is required', $property->getName(), $className));
+                throw new ParseError(
+                    sprintf('Table name for property %s in class %s is required', $property->getName(), $className)
+                );
             }
 
             $relatedClass = $columnParams['relatedClass'] ?? null;

@@ -9,15 +9,15 @@ class Patient extends Person
      */
     private $illness = '';
 
-    public static function createPatientCard(string $firstName, string $lastName, string $gender, string $illness): self
-    {
-        return new self($firstName, $lastName, $gender, $illness);
-    }
-
     protected function __construct(string $firstName, string $lastName, string $gender, string $illness)
     {
         $this->illness = $illness;
         parent::__construct($firstName, $lastName, $gender);
+    }
+
+    public static function createPatientCard(string $firstName, string $lastName, string $gender, string $illness): self
+    {
+        return new self($firstName, $lastName, $gender, $illness);
     }
 
     /**

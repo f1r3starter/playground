@@ -2,7 +2,7 @@
 
 namespace App\Mapper\Structure;
 
-use \ArrayObject;
+use ArrayObject;
 
 class Table
 {

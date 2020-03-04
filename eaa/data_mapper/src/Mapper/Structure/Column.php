@@ -31,14 +31,20 @@ class Column
 
     /**
      * Column constructor.
+     *
      * @param string $columnName
      * @param string $propertyName
      * @param bool $primary
      * @param string $relatedClass
      * @param Table|null $relatedTable
      */
-    public function __construct(string $columnName, string $propertyName, bool $primary = false, string $relatedClass = null, Table $relatedTable = null)
-    {
+    public function __construct(
+        string $columnName,
+        string $propertyName,
+        bool $primary = false,
+        string $relatedClass = null,
+        Table $relatedTable = null
+    ) {
         $this->name = $columnName;
         $this->propertyName = $propertyName;
         $this->primary = $primary;

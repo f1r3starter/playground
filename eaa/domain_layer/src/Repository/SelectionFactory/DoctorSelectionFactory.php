@@ -18,6 +18,7 @@ class DoctorSelectionFactory extends DoctorRepository implements SelectionFactor
 
     /**
      * DoctorSelectionFactory constructor.
+     *
      * @param EntityManager $em
      */
     public function __construct(EntityManager $em)

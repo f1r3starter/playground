@@ -8,17 +8,17 @@ use Doctrine\ORM\QueryBuilder;
 
 class AppointmentRepository extends EntityRepository
 {
-    private function getQueryBuilder(): QueryBuilder
-    {
-        return $this->createQueryBuilder('a');
-    }
-
     public function getTodayAppointments(): array
     {
         return $this->getQueryBuilder()
             ->andWhere('DATE(a.dateTime) = CURDATE()')
             ->getQuery()
             ->getResult();
+    }
+
+    private function getQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('a');
     }
 
     public function getDoctorAppointmentsHistory(Doctor $doctor): array

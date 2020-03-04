@@ -2,24 +2,24 @@
 
 use App\Repository\SelectionFactory\DoctorSelectionFactory;
 use App\Repository\SelectionFactory\DoctorSelectionModel;
+use Doctrine\ORM\Configuration;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\Mapping\Driver\SimplifiedXmlDriver;
-use Doctrine\ORM\Configuration;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
 $conn = array(
-    'driver'   => 'pdo_mysql',
-    'user'     => '',
+    'driver' => 'pdo_mysql',
+    'user' => '',
     'password' => '',
-    'dbname'   => '',
+    'dbname' => '',
 );
 
 $driver = new SimplifiedXmlDriver([__DIR__ . '/../config/mapping' => 'App\Entity']);
 $config = (new Configuration());
 $config->setAutoGenerateProxyClasses(true);
 $config->setMetadataDriverImpl($driver);
-$config->setProxyDir(__DIR__  . '/Proxy');
+$config->setProxyDir(__DIR__ . '/Proxy');
 $config->setProxyNamespace('App\Proxy');
 
 

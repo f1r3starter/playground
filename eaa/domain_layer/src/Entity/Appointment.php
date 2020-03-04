@@ -26,6 +26,13 @@ class Appointment
      */
     private $doctor;
 
+    private function __construct(Doctor $doctor, Patient $patient, DateTime $dateTime)
+    {
+        $this->doctor = $doctor;
+        $this->patient = $patient;
+        $this->dateTime = $dateTime;
+    }
+
     /**
      * @param Doctor $doctor
      * @param Patient $patient
@@ -36,13 +43,6 @@ class Appointment
     public static function createAppointment(Doctor $doctor, Patient $patient, DateTime $dateTime): self
     {
         return new self($doctor, $patient, $dateTime);
-    }
-
-    private function __construct(Doctor $doctor, Patient $patient, DateTime $dateTime)
-    {
-        $this->doctor = $doctor;
-        $this->patient = $patient;
-        $this->dateTime = $dateTime;
     }
 
     /**

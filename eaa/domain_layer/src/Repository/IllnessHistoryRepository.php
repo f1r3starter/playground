@@ -8,11 +8,6 @@ use Doctrine\ORM\QueryBuilder;
 
 class IllnessHistoryRepository extends EntityRepository
 {
-    private function getQueryBuilder(): QueryBuilder
-    {
-        return $this->createQueryBuilder('ih');
-    }
-
     public function getPatientIllnessHistory(Patient $patient): array
     {
         return $this->getQueryBuilder()
@@ -20,5 +15,10 @@ class IllnessHistoryRepository extends EntityRepository
             ->setParameter('patient', $patient)
             ->getQuery()
             ->getResult();
+    }
+
+    private function getQueryBuilder(): QueryBuilder
+    {
+        return $this->createQueryBuilder('ih');
     }
 }

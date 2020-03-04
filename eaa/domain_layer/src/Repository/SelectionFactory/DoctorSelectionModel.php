@@ -31,11 +31,13 @@ class DoctorSelectionModel implements SelectionModel
 
     /**
      * @param string $speciality
+     *
      * @return DoctorSelectionModel
      */
     public function setSpeciality(string $speciality): DoctorSelectionModel
     {
         $this->speciality = $speciality;
+
         return $this;
     }
 
@@ -49,11 +51,13 @@ class DoctorSelectionModel implements SelectionModel
 
     /**
      * @param string $firstName
+     *
      * @return DoctorSelectionModel
      */
     public function setFirstName(string $firstName): DoctorSelectionModel
     {
         $this->firstName = $firstName;
+
         return $this;
     }
 

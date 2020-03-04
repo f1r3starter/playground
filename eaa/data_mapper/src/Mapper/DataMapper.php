@@ -48,8 +48,7 @@ class DataMapper
         MetadataReader $metadataReader = null,
         Hydrator $hydrator = null,
         StatementBuilder $statementBuilder = null
-    )
-    {
+    ) {
         $metadataReader = $metadataReader ?? new AnnotationReader();
         $this->className = $className;
         $this->pdo = $pdo;
@@ -66,7 +65,9 @@ class DataMapper
         )->fetch(PDO::FETCH_ASSOC);
 
         if (!$row) {
-            throw new DomainException(sprintf('Entity of class %s with identity %s not found', $this->className, $identity));
+            throw new DomainException(
+                sprintf('Entity of class %s with identity %s not found', $this->className, $identity)
+            );
         }
 
         return $this->hydrator->hydrate($row, $this->className);

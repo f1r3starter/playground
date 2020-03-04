@@ -12,6 +12,12 @@ class Doctor extends Person
      */
     private $speciality;
 
+    protected function __construct(string $firstName, string $lastName, string $gender, string $speciality)
+    {
+        $this->speciality = $speciality;
+        parent::__construct($firstName, $lastName, $gender);
+    }
+
     /**
      * @param string $firstName
      * @param string $lastName
@@ -23,12 +29,6 @@ class Doctor extends Person
     public static function hireDoctor(string $firstName, string $lastName, string $gender, string $speciality): self
     {
         return new self($firstName, $lastName, $gender, $speciality);
-    }
-
-    protected function __construct(string $firstName, string $lastName, string $gender, string $speciality)
-    {
-        $this->speciality = $speciality;
-        parent::__construct($firstName, $lastName, $gender);
     }
 
     /**
