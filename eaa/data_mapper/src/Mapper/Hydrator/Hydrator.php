@@ -5,7 +5,7 @@ namespace App\Mapper\Hydrator;
 interface Hydrator
 {
     /**
-     * @param array  $row
+     * @param array $row
      * @param string $className
      *
      * @return mixed

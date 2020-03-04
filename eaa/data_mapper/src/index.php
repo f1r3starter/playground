@@ -2,10 +2,10 @@
 
 require('../vendor/autoload.php');
 
-use App\Entity\Person;
-use App\Entity\Email;
-use App\Mapper\DataMapper;
 use App\DB\MyPDO;
+use App\Entity\Email;
+use App\Entity\Person;
+use App\Mapper\DataMapper;
 
 $myPdo = new MyPDO('mysql:host=127.0.0.1;dbname=;charset=utf8', '', '', null);
 

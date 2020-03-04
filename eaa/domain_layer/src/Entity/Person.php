@@ -42,6 +42,16 @@ class Person
     }
 
     /**
+     * Get firstName.
+     *
+     * @return string
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
      * Set firstName.
      *
      * @param string $firstName
@@ -56,13 +66,13 @@ class Person
     }
 
     /**
-     * Get firstName.
+     * Get lastName.
      *
      * @return string
      */
-    public function getFirstName()
+    public function getLastName()
     {
-        return $this->firstName;
+        return $this->lastName;
     }
 
     /**
@@ -80,13 +90,13 @@ class Person
     }
 
     /**
-     * Get lastName.
+     * Get gender.
      *
      * @return string
      */
-    public function getLastName()
+    public function getGender()
     {
-        return $this->lastName;
+        return $this->gender;
     }
 
     /**
@@ -101,15 +111,5 @@ class Person
         $this->gender = $gender;
 
         return $this;
-    }
-
-    /**
-     * Get gender.
-     *
-     * @return string
-     */
-    public function getGender()
-    {
-        return $this->gender;
     }
 }

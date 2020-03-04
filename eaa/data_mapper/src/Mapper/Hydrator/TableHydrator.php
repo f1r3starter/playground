@@ -55,6 +55,16 @@ class TableHydrator implements Hydrator
     }
 
     /**
+     * @param string $className
+     *
+     * @return Table
+     */
+    private function createTableForClass(string $className): Table
+    {
+        return $this->reader->prepareTable($className);
+    }
+
+    /**
      * @param $object
      * @param bool $withRelated
      *
@@ -68,7 +78,8 @@ class TableHydrator implements Hydrator
             $row[$table->getName() . $column->getName()] = null;
             if ($column->getRelatedClass()) {
                 $relatedRow = $this->dehydrate($this->getProperty($object, $column->getPropertyName()), $withRelated);
-                $row[$table->getName() . $column->getName()] = $relatedRow[$column->getRelatedTable()->getName() . $column->getRelatedTable()->getPrimaryKey()->getName()];
+                $row[$table->getName() . $column->getName()] = $relatedRow[$column->getRelatedTable()->getName(
+                ) . $column->getRelatedTable()->getPrimaryKey()->getName()];
                 if ($withRelated) {
                     $row = array_merge($row, $relatedRow);
                 }
@@ -78,15 +89,5 @@ class TableHydrator implements Hydrator
         }
 
         return $row;
-    }
-
-    /**
-     * @param string $className
-     *
-     * @return Table
-     */
-    private function createTableForClass(string $className): Table
-    {
-        return $this->reader->prepareTable($className);
     }
 }

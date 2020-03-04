@@ -41,19 +41,31 @@ class IllnessHistory
      */
     private $diagnosedBy;
 
-    public static function addRecordToIllnessHistory(string $name, string $description, DateTime $dateTimeFound, Patient $patient, Doctor $diagnosedBy, ?DateTime $dateTimeHealed = null)
-    {
-        return new self($name, $description, $dateTimeFound, $patient, $diagnosedBy, $dateTimeHealed);
-    }
-
-    private function __construct(string $name, string $description, DateTime $dateTimeFound, Patient $patient, Doctor $diagnosedBy, ?DateTime $dateTimeHealed)
-    {
+    private function __construct(
+        string $name,
+        string $description,
+        DateTime $dateTimeFound,
+        Patient $patient,
+        Doctor $diagnosedBy,
+        ?DateTime $dateTimeHealed
+    ) {
         $this->name = $name;
         $this->description = $description;
         $this->dateTimeFound = $dateTimeFound;
         $this->dateTimeHealed = $dateTimeHealed;
         $this->patient = $patient;
         $this->diagnosedBy = $diagnosedBy;
+    }
+
+    public static function addRecordToIllnessHistory(
+        string $name,
+        string $description,
+        DateTime $dateTimeFound,
+        Patient $patient,
+        Doctor $diagnosedBy,
+        ?DateTime $dateTimeHealed = null
+    ) {
+        return new self($name, $description, $dateTimeFound, $patient, $diagnosedBy, $dateTimeHealed);
     }
 
     /**
@@ -113,6 +125,16 @@ class IllnessHistory
     }
 
     /**
+     * Get dateTimeHealed.
+     *
+     * @return DateTime|null
+     */
+    public function getDateTimeHealed()
+    {
+        return $this->dateTimeHealed;
+    }
+
+    /**
      * @param DateTime|null $dateTimeHealed
      *
      * @return IllnessHistory
@@ -123,17 +145,6 @@ class IllnessHistory
 
         return $this;
     }
-
-    /**
-     * Get dateTimeHealed.
-     *
-     * @return DateTime|null
-     */
-    public function getDateTimeHealed()
-    {
-        return $this->dateTimeHealed;
-    }
-
 
     /**
      * Get patient.

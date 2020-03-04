@@ -10,17 +10,17 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 // replace with mechanism to retrieve EntityManager in your app
 $conn = array(
-    'driver'   => 'pdo_mysql',
-    'user'     => '',
+    'driver' => 'pdo_mysql',
+    'user' => '',
     'password' => '',
-    'dbname'   => '',
+    'dbname' => '',
 );
 
 $driver = new SimplifiedXmlDriver([__DIR__ . '/../config/mapping' => 'App\Entity']);
 $config = (new Configuration());
 $config->setAutoGenerateProxyClasses(true);
 $config->setMetadataDriverImpl($driver);
-$config->setProxyDir(__DIR__  . '/../src/Proxy');
+$config->setProxyDir(__DIR__ . '/../src/Proxy');
 $config->setProxyNamespace('App\Proxy');
 
 $entityManager = EntityManager::create($conn, $config);
