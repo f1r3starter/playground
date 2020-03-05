@@ -11,10 +11,13 @@ class DatabaseRevenue extends UpdateCommand
                   (:contractId, :amount, :dateSigned),
                   (:contractId, :amount, DATE_ADD(:dateSigned, INTERVAL 30 DAYS)),
                   (:contractId, :amount, DATE_ADD(:dateSigned, INTERVAL 60 DAYS))"
-        )->execute([
-            ':contractId' => $contract['id'],
-            ':amount' => $contract['revenue'] / 3, // for simplicity, I just divided by 3, would not do it in real life :)
-            ':dateSigned' => $contract['dateSigned']
-        ]);
+        )->execute(
+            [
+                ':contractId' => $contract['id'],
+                ':amount' => $contract['revenue'] / 3,
+                // for simplicity, I just divided by 3, would not do it in real life :)
+                ':dateSigned' => $contract['dateSigned']
+            ]
+        );
     }
 }
