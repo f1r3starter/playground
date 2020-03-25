@@ -1,3 +1,3 @@
 # playground
 
-My repository for playing
+My repository for playing and things
