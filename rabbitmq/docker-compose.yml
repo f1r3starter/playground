@@ -1,19 +1,33 @@
-# Docker-compose for Graylog
+version: '3'  # requires Docker Compose 1.13 or later
 
-rabbit1:
-  image: "rabbitmq:3-management"
-  hostname: "rabbit1"
-  environment:
-    RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
-    RABBITMQ_DEFAULT_USER: "rabbitmq"
-    RABBITMQ_DEFAULT_PASS: "rabbitmq"
-    RABBITMQ_DEFAULT_VHOST: "/"
-  ports:
-    - "15672:15672"
-    - "5672:5672"
-  labels:
-    NAME: "rabbitmq1"
-  volumes:
-    - "./enabled_plugins:/etc/rabbitmq/enabled_plugins"
-    #- "./rabbitmq.config:/etc/rabbitmq/rabbitmq.config:ro"
-    #- "./autocluster-0.4.1.ez:/usr/lib/rabbitmq/lib/rabbitmq_server-3.5.5/plugins/autocluster-0.4.1.ez"
+# This section describes the various containers (services).
+services:
+
+  rabbitmq:
+    image: 'rabbitmq:3.8.3-management-alpine'
+    ports:
+      - '5672:5672'
+      - '15672:15672'
+    networks:
+      - network
+
+  consumer:
+    image: 'php:7.4-cli-alpine'
+    environment:
+      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+    volumes:
+      - ./consumer:/consumer
+    networks:
+      - network
+
+  publisher:
+    image: 'php:7.4-cli-alpine'
+    environment:
+      AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
+    volumes:
+      - ./publisher:/publisher
+    networks:
+      - network
+
+networks:
+  network: {}
