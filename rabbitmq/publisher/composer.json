@@ -1,0 +1,13 @@
+{
+    "name": "andreyfilenko/rabbitmq",
+    "type": "project",
+    "require": {
+        "php-amqplib/php-amqplib": "^2.11"
+    },
+    "authors": [
+        {
+            "name": "f1r3starter",
+            "email": "andrey.filenochko@gmail.com"
+        }
+    ]
+}
