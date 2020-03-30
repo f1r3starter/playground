@@ -13,6 +13,7 @@ services:
 
   consumer:
     image: 'php:7.4-cli-alpine'
+    tty: true
     environment:
       AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
     volumes:
@@ -22,6 +23,7 @@ services:
 
   publisher:
     image: 'php:7.4-cli-alpine'
+    tty: true
     environment:
       AMQP_URL: 'amqp://rabbitmq?connection_attempts=5&retry_delay=5'
     volumes:
