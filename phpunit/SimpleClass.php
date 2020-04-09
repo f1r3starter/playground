@@ -12,7 +12,7 @@ class SimpleClass
     /**
      * @var DumbClass
      */
-    private $summarizer;
+    private DumbClass $summarizer;
 
     public function __construct(DumbClass $summarizer)
     {
