@@ -7,5 +7,5 @@ sudo mv minikube /usr/local/bin
 
 minikube start --driver=virtualbox
 
-
 kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10
+
