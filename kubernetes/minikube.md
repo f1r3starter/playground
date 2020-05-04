@@ -5,7 +5,7 @@ curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/miniku
   
 sudo mv minikube /usr/local/bin
 
-minikube start --driver=virtualbox -p <insert-name>
+minikube start --driver=hyperkit -p <insert-name>
 
 kubectl create deployment hello-minikube --image=k8s.gcr.io/echoserver:1.10
 
